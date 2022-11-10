@@ -1,70 +1,151 @@
-# Getting Started with Create React App
+# EasyHire
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Description
 
-## Available Scripts
+Are you looking for someone to design a logo or build a website for you but don't know where to find? Look no further because EasyHire is here to solve that problem. Individual and businesses now can list their job on our website and wait for a suitable bid from a freelancer on the site!
 
-In the project directory, you can run:
+## User Story
 
-### `npm start`
+EasyHire is a platform that connects freelancers with individual and businesses that are looking to hire. When signing up, each User should provide a name, an email and a password to create an account.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Authentication
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- As a user, I can sign in with my email and password.
+- As a user, I can register a new account by name, email and password.
+- As a user, I can stay signed in after refreshing the page
 
-### `npm test`
+### Users
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- As a user, I can list a new job.
+- As a user, I can view and update my profile info.
+- As a user, I can choose to become a freelancer.
+- As a user, I can view profile of a freelancer.
+- As a user, I can view list of all freelancers.
 
-### `npm run build`
+### Jobs
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- As a user, I can view all jobs listed.
+- As a user, I can view my job listings.
+- As a user, I can edit my job listings.
+- As a user, I can delete my job listings.
+- As a freelancer, I can bid for a listed job.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Reviews
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- As a user, I can review a freelancer that finished my job.
+- As a user, I can see all the reviews of a freelancer.
 
-### `npm run eject`
+### Bids
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- As a freelancer, I can bid for listed jobs.
+- As a freelancer, I can change my bids.
+- As a freelancer, I can cancel my bids.
+- As a freelancer, I can view all my bids.
+- As a user, I can accept or reject bids on my job listings.
+- As a user, I can view all the bids on my job listings.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## API endpoints
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Auth APIs
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+> - @route POST /auth/login
+> - @description Log in with email and password
+> - @body {email, password}
+> - @access public
 
-## Learn More
+### Job APIs
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+> - @route GET /jobs?page=1&limit=10
+> - @description Get job list with pagination
+> - @body
+> - @access public
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> - @route GET /jobs/:id
+> - @description Get job detail
+> - @body
+> - @access login required
 
-### Code Splitting
+> - @route GET /jobs/:id/bids
+> - @description Get all bids of a job
+> - @body
+> - @access login required
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+> - @route POST /jobs
+> - @description List a new job
+> - @body {title, industry, description, image}
+> - @access login required
 
-### Analyzing the Bundle Size
+> - @route PUT /jobs/:id
+> - @description Edit a listed job
+> - @body {title, industry, description, image}
+> - @access login required
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+> - @route DELETE /jobs/:id
+> - @description Delete a job listing
+> - @body
+> - @access login required
 
-### Making a Progressive Web App
+### User APIs
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+> - @route GET /users/freelancers
+> - @description Get all users with the freelancer role
+> - @body
+> - @access public
 
-### Advanced Configuration
+> - @route GET /users/me
+> - @description Get current user profile
+> - @body
+> - @access login required
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+> - @route GET /users/:id
+> - @description Get profile of a user
+> - @body
+> - @access login required
 
-### Deployment
+> - @route GET /users/:id/bids
+> - @description Get all bids of current user
+> - @body
+> - @access login required
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> - @route POST /users
+> - @description Register for a new user
+> - @body {name, email, password}
+> - @access public
 
-### `npm run build` fails to minify
+> - @route PUT /users/:id
+> - @description Update user profile
+> - @body {name, role, industry, company, skills, avatarUrl, about me}
+> - @access login required
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Review APIs
+
+> - @route GET /reviews/:userId
+> - @description Get all reviews of a user
+> - @body
+> - @access login required
+
+> - @route POST /reviews/:jobId
+> - @description Write a review for a user
+> - @body {rating, comment}
+> - @access login required
+
+### Bid APIs
+
+> - @route POST /bids/:jobId
+> - @description Bid for a job
+> - @body {price}
+> - @access login required
+
+> - @route PUT /bids/:id
+> - @description Update a bid
+> - @body {price}
+> - @access login required
+
+> - @route DELETE /bids/:id
+> - @description Delete a bid
+> - @body {status}
+> - @access login required
+
+## Entity Relationship Diagram
+
+![](https://i.imgur.com/7FNmLWE.png)
