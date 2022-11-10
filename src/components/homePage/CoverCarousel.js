@@ -15,17 +15,27 @@ function CoverCarousel() {
         showStatus={false}
         showArrows={false}
         interval={7000}
-        sx={{ position: "absolute" }}
       >
-        <Box sx={{ height: "90vh" }}>
-          <img src="./covers/cover1.png" alt="cover1" />
-        </Box>
-        <Box sx={{ height: "90vh" }}>
-          <img src="./covers/cover2.jpg" alt="cover2" />
-        </Box>
-        <Box sx={{ height: "90vh" }}>
-          <img src="./covers/cover3.png" alt="cover3" />
-        </Box>
+        <Box
+          component="img"
+          src="./covers/cover1.png"
+          alt="cover1"
+          sx={{ height: { xs: "50vh", md: "90vh" } }}
+        />
+
+        <Box
+          component="img"
+          src="./covers/cover2.jpg"
+          alt="cover2"
+          sx={{ height: { xs: "50vh", md: "90vh" } }}
+        />
+
+        <Box
+          component="img"
+          src="./covers/cover3.png"
+          alt="cover3"
+          sx={{ height: { xs: "50vh", md: "90vh" } }}
+        />
       </Carousel>
     </Box>
   );

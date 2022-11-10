@@ -7,12 +7,16 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AuthRequire from "./AuthRequire";
+import FreelancerListPage from "../pages/FreelancerListPage";
+import JobListPage from "../pages/JobListPage";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="/freelancers" element={<FreelancerListPage />} />
+        <Route path="/jobs" element={<JobListPage />} />
       </Route>
 
       <Route element={<BlankLayout />}>
