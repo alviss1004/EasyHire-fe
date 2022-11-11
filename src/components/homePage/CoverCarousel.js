@@ -20,21 +20,21 @@ function CoverCarousel() {
           component="img"
           src="./covers/cover1.png"
           alt="cover1"
-          sx={{ height: { xs: "50vh", md: "90vh" } }}
+          sx={{ height: { xs: "50vh", md: "95vh" } }}
         />
 
         <Box
           component="img"
           src="./covers/cover2.jpg"
           alt="cover2"
-          sx={{ height: { xs: "50vh", md: "90vh" } }}
+          sx={{ height: { xs: "50vh", md: "95vh" } }}
         />
 
         <Box
           component="img"
           src="./covers/cover3.png"
           alt="cover3"
-          sx={{ height: { xs: "50vh", md: "90vh" } }}
+          sx={{ height: { xs: "50vh", md: "95vh" } }}
         />
       </Carousel>
     </Box>

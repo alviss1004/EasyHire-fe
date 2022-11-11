@@ -11,7 +11,7 @@ import { Stack, Link, Divider, Avatar } from "@mui/material";
 
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import Logo from "../components/Logo";
+import Logo from "../components/misc/Logo";
 
 function MainHeader() {
   const { user, logout } = useAuth();

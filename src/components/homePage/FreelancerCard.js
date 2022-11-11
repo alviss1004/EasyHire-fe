@@ -10,7 +10,11 @@ function FreelancerCard({ freelancer }) {
   const navigate = useNavigate();
 
   return (
-    <Card variant="outlined">
+    <Card
+      variant="outlined"
+      sx={{ mr: 5 }}
+      onClick={() => navigate("/freelancers/:id")}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
