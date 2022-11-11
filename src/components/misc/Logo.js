@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";

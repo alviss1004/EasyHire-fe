@@ -1,8 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { faker } from "@faker-js/faker";
 import { Stack } from "@mui/system";
+import EastIcon from "@mui/icons-material/East";
 import JobCard from "./JobCard";
+import { useNavigate } from "react-router-dom";
 
 const createRandomJob = () => {
   let skillList = [];
@@ -28,6 +30,8 @@ Array.from({ length: 5 }).forEach(() => {
 });
 
 function LatestJobs() {
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ mt: 7 }}>
       <Typography
@@ -43,6 +47,16 @@ function LatestJobs() {
         Latest Jobs
       </Typography>
       <Stack spacing={2} justifyContent="center" alignItems="center">
+        <Button
+          endIcon={<EastIcon />}
+          onClick={() => navigate("/jobs")}
+          sx={{
+            fontWeight: { xs: 800, md: 600 },
+            fontSize: 15,
+          }}
+        >
+          See more{" "}
+        </Button>
         {jobs.map((job) => (
           <JobCard key={job.jobId} job={job} />
         ))}

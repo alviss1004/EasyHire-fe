@@ -8,7 +8,7 @@ function HomePage() {
   return (
     <div>
       <Helmet>
-        <style>{"body { background-color: #FCF9F9; }"}</style>
+        <style>{"body { background-color: #F0F3F5; }"}</style>
       </Helmet>
       <CoverCarousel />
       <PopularFreelancers />

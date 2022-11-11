@@ -33,6 +33,22 @@ function MainHeader() {
     };
   });
 
+  const styleVisible = {
+    top: 0,
+    position: "fixed",
+    transition: "top 0.3s ease-out",
+    backgroundColor: "#161A19",
+  };
+
+  const styleNonVisible = {
+    top: "-80px",
+    position: "fixed",
+    transition: "top 0.3s ease-out",
+    backgroundColor: "#161A19",
+  };
+
+  const style = visible ? styleVisible : styleNonVisible;
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -107,7 +123,7 @@ function MainHeader() {
 
   return (
     <Box>
-      <AppBar position="static" sx={{ backgroundColor: "#161A19" }}>
+      <AppBar sx={style}>
         <Toolbar variant="dense">
           <IconButton
             onClick={() => navigate("/")}
@@ -135,8 +151,7 @@ function MainHeader() {
                 fontFamily: "Verdana",
                 ":hover": { filter: "brightness(50%)", transition: "0.2s" },
                 ":active": {
-                  textDecoration: "underline",
-                  filter: "brightness(100%)",
+                  filter: "brightness(150%)",
                 },
               }}
               color="inherit"
@@ -151,13 +166,12 @@ function MainHeader() {
                 fontFamily: "Verdana",
                 ":hover": { filter: "brightness(50%)", transition: "0.2s" },
                 ":active": {
-                  textDecoration: "underline",
-                  filter: "brightness(100%)",
+                  filter: "brightness(150%)",
                 },
               }}
               color="inherit"
               component={RouterLink}
-              // to="/tvshows/1"
+              to="/jobs"
             >
               Browse Jobs
             </Link>
@@ -167,13 +181,12 @@ function MainHeader() {
                 fontFamily: "Verdana",
                 ":hover": { filter: "brightness(50%)", transition: "0.2s" },
                 ":active": {
-                  textDecoration: "underline",
-                  filter: "brightness(100%)",
+                  filter: "brightness(150%)",
                 },
               }}
               color="inherit"
               component={RouterLink}
-              // to="/movies/1"
+              to="/freelancers"
             >
               Our Freelancers
             </Link>
@@ -212,8 +225,7 @@ function MainHeader() {
                   fontFamily: "Verdana",
                   ":hover": { filter: "brightness(50%)", transition: "0.2s" },
                   ":active": {
-                    textDecoration: "underline",
-                    filter: "brightness(100%)",
+                    filter: "brightness(150%)",
                   },
                 }}
                 color="inherit"
@@ -228,8 +240,7 @@ function MainHeader() {
                   fontFamily: "Verdana",
                   ":hover": { filter: "brightness(50%)", transition: "0.2s" },
                   ":active": {
-                    textDecoration: "underline",
-                    filter: "brightness(100%)",
+                    filter: "brightness(150%)",
                   },
                 }}
                 color="inherit"
