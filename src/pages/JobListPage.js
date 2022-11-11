@@ -1,4 +1,11 @@
-import { Alert, Box, Container, Stack } from "@mui/material";
+import {
+  Breadcrumbs,
+  Container,
+  Link,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
@@ -11,6 +18,7 @@ import JobSort from "../features/job/JobSort";
 import JobList from "../features/job/JobList";
 import { Helmet } from "react-helmet";
 import { faker } from "@faker-js/faker";
+import { Link as RouterLink } from "react-router-dom";
 
 const createRandomJob = () => {
   let skillList = [];
@@ -51,39 +59,55 @@ function JobListPage() {
   const filterJobs = applyFilter(jobs, filters);
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        minHeight: "100vh",
-        minWidth: "75vw",
-        mt: 14,
-      }}
-    >
-      <Helmet>
-        <style>{"body { background-color: #F0F3F5; }"}</style>
-      </Helmet>
-      <Stack sx={{ mr: 2 }}>
-        <FormProvider methods={methods}>
-          <JobFilter resetFilter={reset} />
-        </FormProvider>
-      </Stack>
-      <Stack sx={{ flexGrow: 1 }}>
-        <FormProvider methods={methods}>
-          <Stack
-            spacing={2}
-            direction={{ xs: "column", sm: "row" }}
-            alignItems={{ sm: "center" }}
-            justifyContent="space-between"
-            mb={2}
-          >
-            <JobSearch />
-            <JobSort />
-          </Stack>
-        </FormProvider>
-        <JobList jobs={filterJobs} />
-      </Stack>
-    </Container>
+    <>
+      <Container>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 3, mt: 12 }}>
+          <Link underline="hover" color="inherit" component={RouterLink} to="/">
+            Home
+          </Link>
+          <Typography>Jobs</Typography>
+        </Breadcrumbs>
+      </Container>
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          minHeight: "100vh",
+          minWidth: "75vw",
+        }}
+      >
+        <Helmet>
+          <style>{"body { background-color: #F0F3F5; }"}</style>
+        </Helmet>
+        <Stack sx={{ mr: 2 }}>
+          <FormProvider methods={methods}>
+            <JobFilter resetFilter={reset} />
+          </FormProvider>
+        </Stack>
+        <Stack sx={{ flexGrow: 1 }}>
+          <FormProvider methods={methods}>
+            <Stack
+              spacing={2}
+              direction={{ xs: "column", sm: "row" }}
+              alignItems={{ sm: "center" }}
+              justifyContent="space-between"
+              mb={2}
+            >
+              <JobSearch />
+              <JobSort />
+              <Pagination
+                count={10}
+                variant="outlined"
+                shape="rounded"
+                showFirstButton
+                showLastButton
+              />
+            </Stack>
+          </FormProvider>
+          <JobList jobs={filterJobs} />
+        </Stack>
+      </Container>
+    </>
   );
 }
 

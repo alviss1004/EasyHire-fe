@@ -23,6 +23,7 @@ function JobFilter({ resetFilter }) {
         backgroundColor: "#FFF",
         borderRadius: "1px solid black",
         boxShadow: 1,
+        mb: { xs: 5 },
       }}
     >
       <Stack spacing={3} sx={{ p: 3, width: 250 }}>
