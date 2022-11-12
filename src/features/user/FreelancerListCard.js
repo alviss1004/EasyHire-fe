@@ -31,13 +31,14 @@ function FreelancerListCard({ freelancer }) {
             height={{ xs: "250px", md: "150px" }}
             width={{ xs: "250px", md: "150px" }}
             marginTop={3}
+            sx={{ borderRadius: "50%" }}
             alt="avatar"
           />
           <CardContent>
             <Stack spacing={{ xs: 0, md: 1.5 }}>
               <Typography
                 variant="h5"
-                sx={{ color: "#2E82D2", fontWeight: 600, letterSpacing: 1 }}
+                sx={{ color: "#21BBB5", fontWeight: 600, letterSpacing: 1 }}
                 gutterBottom
                 fontFamily={"Roboto"}
               >
@@ -92,7 +93,7 @@ function FreelancerListCard({ freelancer }) {
               >
                 <Box sx={{ width: { xs: "100%", md: "80%" } }}>
                   <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                    <Typography sx={{ fontSize: 18, overflow: "hidden" }}>
+                    <Typography variant="body1" sx={{ overflow: "hidden" }}>
                       {freelancer.aboutMe}
                     </Typography>
                   </Box>

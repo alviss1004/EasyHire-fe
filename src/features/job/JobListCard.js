@@ -34,7 +34,7 @@ function JobCard({ job }) {
               >
                 {job.name}
               </Typography>
-              <Typography sx={{ fontSize: 18, overflow: "hidden" }}>
+              <Typography variant="body1" sx={{ overflow: "hidden" }}>
                 {job.description}
               </Typography>
               <Stack

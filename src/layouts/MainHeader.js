@@ -139,7 +139,7 @@ function MainHeader() {
             direction={{ xs: "column", sm: "row" }}
             my={1}
             sx={{
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", sm: "flex" },
               alignItems: "center",
               justifyContent: "center",
               ml: 2,

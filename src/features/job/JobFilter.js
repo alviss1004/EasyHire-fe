@@ -26,7 +26,11 @@ function JobFilter({ resetFilter }) {
         mb: { xs: 5 },
       }}
     >
-      <Stack spacing={3} sx={{ p: 3, width: 250 }}>
+      <Stack
+        direction={{ xs: "column", sm: "row", md: "column" }}
+        spacing={{ xs: 3, sm: 7, md: 3 }}
+        sx={{ p: 3, width: { sm: "80%", lg: 250 } }}
+      >
         <Stack direction="column" spacing={1}>
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Industry

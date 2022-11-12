@@ -60,7 +60,7 @@ function JobListPage() {
 
   return (
     <>
-      <Container>
+      <Container sx={{ ml: "13%" }}>
         <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 3, mt: 12 }}>
           <Link underline="hover" color="inherit" component={RouterLink} to="/">
             Home

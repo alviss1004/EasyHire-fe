@@ -54,7 +54,7 @@ function PopularFreelancers() {
             <FreelancerCard key={freelancer.userId} freelancer={freelancer} />
           ))}
         </Marquee>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mr: 2, mt: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mr: 4, mt: 2 }}>
           <Button
             variant="contained"
             endIcon={<EastIcon />}
