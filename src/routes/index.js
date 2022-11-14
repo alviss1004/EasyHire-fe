@@ -18,7 +18,7 @@ function Router() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/freelancers" element={<FreelancerListPage />} />
-        <Route path="/freelancers/:id" element={<UserProfilePage />} />
+        <Route path="/users/:id" element={<UserProfilePage />} />
         <Route path="/jobs" element={<JobListPage />} />
         <Route path="/jobs/:id" element={<JobDetailPage />} />
       </Route>

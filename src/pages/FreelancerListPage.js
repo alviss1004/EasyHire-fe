@@ -52,7 +52,7 @@ function FreelancerListPage() {
           mt: 12,
         }}
       >
-        <Breadcrumbs aria-label="breadcrumb">
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
           <Link underline="hover" color="inherit" component={RouterLink} to="/">
             Home
           </Link>

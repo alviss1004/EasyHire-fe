@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FMultiCheckbox, FRadioGroup } from "../../components/form";
 
 export const SORT_BY_OPTIONS = [
@@ -41,7 +41,13 @@ function JobFilter({ resetFilter }) {
             sx={{ width: 2 }}
           />
         </Stack>
-
+        <Divider
+          variant="middle"
+          sx={{
+            borderBottomWidth: 1,
+            backgroundColor: "rgba(152, 152, 152 ,0.4)",
+          }}
+        />
         <Stack spacing={1}>
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Skill
@@ -52,7 +58,13 @@ function JobFilter({ resetFilter }) {
             row={false}
           />
         </Stack>
-
+        <Divider
+          variant="middle"
+          sx={{
+            borderBottomWidth: 1,
+            backgroundColor: "rgba(152, 152, 152 ,0.4)",
+          }}
+        />
         <Stack spacing={1}>
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Highest Bid

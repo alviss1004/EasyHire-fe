@@ -28,7 +28,7 @@ function PopularFreelancers() {
 
   return (
     <>
-      <Box sx={{ mt: { xs: 3, md: 7 } }}>
+      <Box>
         <Divider
           variant="middle"
           sx={{

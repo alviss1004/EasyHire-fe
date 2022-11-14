@@ -60,14 +60,16 @@ function JobListPage() {
 
   return (
     <>
-      <Container sx={{ ml: "13%" }}>
-        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 3, mt: 12 }}>
-          <Link underline="hover" color="inherit" component={RouterLink} to="/">
-            Home
-          </Link>
-          <Typography>Jobs</Typography>
-        </Breadcrumbs>
-      </Container>
+      <Breadcrumbs
+        separator="›"
+        aria-label="breadcrumb"
+        sx={{ mb: 3, mt: 12, ml: "14%" }}
+      >
+        <Link underline="hover" color="inherit" component={RouterLink} to="/">
+          Home
+        </Link>
+        <Typography>Jobs</Typography>
+      </Breadcrumbs>
       <Container
         sx={{
           display: "flex",
