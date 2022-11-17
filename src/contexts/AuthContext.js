@@ -47,18 +47,14 @@ const reducer = (state, action) => {
       const {
         name,
         avatarUrl,
-        coverUrl,
         aboutMe,
-        city,
-        country,
         company,
         jobTitle,
+        industry,
         facebookLink,
         instagramLink,
         linkedinLink,
         twitterLink,
-        friendCount,
-        postCount,
       } = action.payload;
       return {
         ...state,
@@ -66,18 +62,14 @@ const reducer = (state, action) => {
           ...state.user,
           name,
           avatarUrl,
-          coverUrl,
           aboutMe,
-          city,
-          country,
           company,
           jobTitle,
+          industry,
           facebookLink,
           instagramLink,
           linkedinLink,
           twitterLink,
-          friendCount,
-          postCount,
         },
       };
     default:
@@ -110,7 +102,7 @@ function AuthProvider({ children }) {
           setSession(accessToken);
 
           const response = await apiService.get("/users/me");
-          const user = response.data;
+          const user = response.data.data.user;
 
           dispatch({
             type: INITIALIZE,
@@ -148,7 +140,7 @@ function AuthProvider({ children }) {
 
   const login = async ({ email, password }, callback) => {
     const response = await apiService.post("/auth/login", { email, password });
-    const { user, accessToken } = response.data;
+    const { user, accessToken } = response.data.data;
 
     setSession(accessToken);
     dispatch({

@@ -13,7 +13,7 @@ function FreelancerCard({ freelancer }) {
     <Card
       variant="outlined"
       sx={{ mr: 5 }}
-      onClick={() => navigate("/freelancers/:id")}
+      onClick={() => navigate("/users/:id")}
     >
       <CardActionArea>
         <CardMedia

@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import {
+  Box,
   Breadcrumbs,
   Chip,
   Container,
@@ -207,7 +208,14 @@ function JobDetailPage() {
               type="submit"
               variant="contained"
               loading={isSubmitting}
-              sx={{ maxHeight: "55px", backgroundColor: "#E53838" }}
+              sx={{
+                maxHeight: "55px",
+                backgroundColor: "#E53838",
+                ":hover": {
+                  filter: "brightness(120%)",
+                  backgroundColor: "#E53838",
+                },
+              }}
             >
               Place Your Bid
             </LoadingButton>

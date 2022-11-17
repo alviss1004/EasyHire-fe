@@ -11,7 +11,7 @@ function Stats() {
       spacing={{ xs: 2, md: 30 }}
       sx={{
         width: "100%",
-        minHeight: "150px",
+        minHeight: "180px",
         backgroundColor: "#4EDAC0",
         my: 10,
         p: 3,

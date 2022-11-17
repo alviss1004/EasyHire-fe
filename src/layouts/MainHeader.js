@@ -7,14 +7,15 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { Stack, Link, Divider, Avatar } from "@mui/material";
+import { Stack, Link, Divider, Avatar, Button } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/misc/Logo";
 
 function MainHeader() {
-  const { user, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   let navigate = useNavigate();
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
@@ -97,7 +98,7 @@ function MainHeader() {
 
       <MenuItem
         onClick={handleMenuClose}
-        to="/"
+        to={`/users/${user?._id}`}
         component={RouterLink}
         sx={{ mx: 1 }}
       >
@@ -192,21 +193,39 @@ function MainHeader() {
             </Link>
           </Stack>
           <Box sx={{ flexGrow: 1 }} />
-          {user ? (
+          {isAuthenticated ? (
             <Stack
-              spacing={{ xs: 1, md: 3, lg: 5 }}
-              direction={{ xs: "column", md: "row", lg: "row" }}
+              spacing={{ xs: 3, sm: 0, md: 3, lg: 5 }}
+              direction="row"
               my={1}
               sx={{
+                mr: { md: 2 },
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <Avatar
-                src={user.avatarUrl}
-                alt={user.name}
-                onClick={handleProfileMenuOpen}
-              />
+              <Button
+                variant="contained"
+                onClick={() => navigate("/jobs/post")}
+                sx={{
+                  backgroundColor: "#E53838",
+                  ":hover": {
+                    filter: "brightness(120%)",
+                    backgroundColor: "#E53838",
+                  },
+                }}
+              >
+                Post a Job
+              </Button>
+              <Box>
+                <Avatar
+                  src={user.avatarUrl}
+                  alt={user.name}
+                  onClick={handleProfileMenuOpen}
+                  sx={{ ":hover": { cursor: "pointer" } }}
+                />
+              </Box>
+              {renderMenu}
             </Stack>
           ) : (
             <Stack

@@ -13,6 +13,15 @@ import { fCurrency } from "../../utils/numberFormat";
 
 function JobCard({ job }) {
   const navigate = useNavigate();
+
+  const truncateString = (str, num = 150) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
   return (
     <Card
       variant="outlined"
@@ -25,6 +34,7 @@ function JobCard({ job }) {
             direction={{ xs: "column", md: "row" }}
             justifyContent="space-between"
             alignItems="center"
+            spacing={{ xs: 2, md: 0 }}
           >
             <Box sx={{ width: { xs: "100%", md: "80%" } }}>
               <Typography
@@ -35,7 +45,7 @@ function JobCard({ job }) {
                 {job.name}
               </Typography>
               <Typography variant="body1" sx={{ overflow: "hidden" }}>
-                {job.description}
+                {truncateString(job.description)}
               </Typography>
               <Stack
                 my={{ xs: 2, md: 1 }}

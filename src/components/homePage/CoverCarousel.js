@@ -5,6 +5,7 @@ import { Carousel } from "react-responsive-carousel";
 import { Box } from "@mui/system";
 import { Button, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -37,11 +38,12 @@ theme.typography.body1 = {
 };
 
 function CoverCarousel() {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.75, ease: "easeOut" }}
     >
       <Box sx={{ position: "relative", display: "flex" }}>
         <Box
@@ -87,6 +89,7 @@ function CoverCarousel() {
             <Button
               variant="contained"
               size="large"
+              onClick={() => navigate("/jobs/post")}
               sx={{
                 ml: "20%",
                 backgroundColor: "#E53838",

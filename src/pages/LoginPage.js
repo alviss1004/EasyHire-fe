@@ -12,6 +12,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { styled } from "@mui/system";
 
 import { useNavigate, useLocation, Link as RouterLink } from "react-router-dom";
 
@@ -32,6 +33,22 @@ const defaultValues = {
   password: "",
   remember: true,
 };
+
+const StyledLink = styled(RouterLink)({
+  textDecoration: "none",
+  "&:hover": {
+    textDecoration: "none",
+  },
+  "&:active": {
+    textDecoration: "none",
+  },
+  "&:link": {
+    textDecoration: "none",
+  },
+  "&:visited": {
+    textDecoration: "none",
+  },
+});
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -79,37 +96,39 @@ function LoginPage() {
       </Helmet>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              component="span"
+          <StyledLink to="/" sx={{ textDecoration: "none" }}>
+            <Box
               sx={{
-                fontFamily: "Josefin Sans, serif",
-                fontSize: "3.4rem",
-                fontWeight: "bold",
-                color: "#000",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              Easy
-            </Typography>
-            <Typography
-              component="span"
-              sx={{
-                fontFamily: "Lobster, serif",
-                fontSize: "4rem",
-                fontWeight: "bold",
-                letterSpacing: 2,
-                color: "#33E2B6",
-              }}
-            >
-              Hire
-            </Typography>
-          </Box>
+              <Typography
+                component="span"
+                sx={{
+                  fontFamily: "Josefin Sans, serif",
+                  fontSize: "3.4rem",
+                  fontWeight: "bold",
+                  color: "#000",
+                }}
+              >
+                Easy
+              </Typography>
+              <Typography
+                component="span"
+                sx={{
+                  fontFamily: "Lobster, serif",
+                  fontSize: "4rem",
+                  fontWeight: "bold",
+                  letterSpacing: 2,
+                  color: "#33E2B6",
+                }}
+              >
+                Hire
+              </Typography>
+            </Box>
+          </StyledLink>
           {!!errors.responseError && (
             <Alert severity="error">{errors.responseError.message}</Alert>
           )}
