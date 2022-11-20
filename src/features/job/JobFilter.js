@@ -28,6 +28,7 @@ function JobFilter({ resetFilter }) {
     >
       <Stack
         direction={{ xs: "column", sm: "row", md: "column" }}
+        alignItems={{ sm: "center", md: "stretch" }}
         spacing={{ xs: 3, sm: 7, md: 3 }}
         sx={{ p: 3, width: { sm: "80%", lg: 250 } }}
       >

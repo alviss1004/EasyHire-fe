@@ -36,7 +36,7 @@ const UpdateUserSchema = yup.object().shape({
 
 function AccountGeneral() {
   const { user } = useAuth();
-  // const isLoading = useSelector((state) => state.user.isLoading);
+  const isLoading = useSelector((state) => state.user.isLoading);
   const dispatch = useDispatch();
 
   const defaultValues = {
@@ -143,7 +143,7 @@ function AccountGeneral() {
               <LoadingButton
                 type="submit"
                 variant="contained"
-                loading={isSubmitting /*|| isLoading*/}
+                loading={isSubmitting || isLoading}
               >
                 Save Changes
               </LoadingButton>

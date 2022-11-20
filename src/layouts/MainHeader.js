@@ -62,7 +62,7 @@ function MainHeader() {
     try {
       handleMenuClose();
       await logout(() => {
-        navigate("/login");
+        navigate("/");
       });
     } catch (error) {
       console.error(error);
@@ -98,7 +98,7 @@ function MainHeader() {
 
       <MenuItem
         onClick={handleMenuClose}
-        to={`/users/${user?._id}`}
+        to={`/me/profile`}
         component={RouterLink}
         sx={{ mx: 1 }}
       >
@@ -113,7 +113,21 @@ function MainHeader() {
       >
         Account Settings
       </MenuItem>
-
+      {!user?.isFreelancer ? (
+        <MenuItem
+          onClick={handleMenuClose}
+          component={RouterLink}
+          sx={{
+            color: "#FFF",
+            backgroundColor: "#31B9B3",
+            ":hover": {
+              backgroundColor: "#36B49F",
+            },
+          }}
+        >
+          Become a Freelancer
+        </MenuItem>
+      ) : null}
       <Divider sx={{ borderStyle: "dashed" }} />
 
       <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
@@ -195,7 +209,7 @@ function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
           {isAuthenticated ? (
             <Stack
-              spacing={{ xs: 3, sm: 0, md: 3, lg: 5 }}
+              spacing={{ xs: 3, sm: 1, md: 3, lg: 5 }}
               direction="row"
               my={1}
               sx={{

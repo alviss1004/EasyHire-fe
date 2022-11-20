@@ -2,8 +2,14 @@ import { faker } from "@faker-js/faker";
 import {
   Box,
   Breadcrumbs,
+  Button,
   Chip,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Link,
   Typography,
@@ -49,6 +55,7 @@ const defaultValues = {
 
 function JobDetailPage() {
   const theme = createTheme();
+  const [open, setOpen] = React.useState(false);
 
   const methods = useForm({
     resolver: yupResolver(bidSchema),
@@ -56,13 +63,19 @@ function JobDetailPage() {
   });
   const {
     handleSubmit,
-    reset,
-    setError,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   const onSubmit = () => {
     console.log("submitting");
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -203,11 +216,10 @@ function JobDetailPage() {
             sx={{ width: { xs: "100%", md: "75%" } }}
           >
             <FTextField name="bid" label="Your bid" />
-            <LoadingButton
+            <Button
               fullWidth
-              type="submit"
               variant="contained"
-              loading={isSubmitting}
+              onClick={handleClickOpen}
               sx={{
                 maxHeight: "55px",
                 backgroundColor: "#E53838",
@@ -218,7 +230,37 @@ function JobDetailPage() {
               }}
             >
               Place Your Bid
-            </LoadingButton>
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">
+                {"Bid confirmation"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to bid? You cannot edit your bid after.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  autoFocus
+                  onClick={handleClose}
+                  sx={{ color: "#F22C35", fontWeight: 600 }}
+                >
+                  Cancel
+                </Button>
+                <LoadingButton
+                  type="submit"
+                  loading={isSubmitting}
+                  sx={{ fontWeight: 600 }}
+                >
+                  Confirm
+                </LoadingButton>
+              </DialogActions>
+            </Dialog>
           </Stack>
         </FormProvider>
         <Stack

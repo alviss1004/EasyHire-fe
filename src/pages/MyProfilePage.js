@@ -1,31 +1,38 @@
 import React, { useState } from "react";
 import { Container, Tab, Box, Tabs, Typography } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import ShareIcon from "@mui/icons-material/Share";
-import AccountGeneral from "../features/user/AccountGeneral";
-import AccountSocialLinks from "../features/user/AccountSocialLinks";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import PaidIcon from "@mui/icons-material/Paid";
 import { capitalCase } from "change-case";
+import AccountProfile from "../features/user/AccountProfile";
+import AccountListings from "../features/user/AccountListings";
+import AccountBids from "../features/user/AccountBids";
 
-function AccountPage() {
+function MyProfilePage() {
   const [currentTab, setCurrentTab] = useState("general");
 
-  const ACCOUNT_TABS = [
+  const MYPROFILE_TABS = [
     {
       value: "general",
       icon: <AccountBoxIcon sx={{ fontSize: 30 }} />,
-      component: <AccountGeneral />,
+      component: <AccountProfile />,
     },
     {
-      value: "social_links",
-      icon: <ShareIcon sx={{ fontSize: 30 }} />,
-      component: <AccountSocialLinks profile={{}} />,
+      value: "my listings",
+      icon: <FormatListBulletedIcon sx={{ fontSize: 30 }} />,
+      component: <AccountListings profile={{}} />,
+    },
+    {
+      value: "my bids",
+      icon: <PaidIcon sx={{ fontSize: 30 }} />,
+      component: <AccountBids profile={{}} />,
     },
   ];
 
   return (
     <Container sx={{ mt: 10 }}>
-      <Typography variant="h5" gutterBottom>
-        Account Settings
+      <Typography variant="h5" fontWeight={600} gutterBottom>
+        My Profile
       </Typography>
       <Tabs
         value={currentTab}
@@ -34,7 +41,7 @@ function AccountPage() {
         allowScrollButtonsMobile
         onChange={(e, value) => setCurrentTab(value)}
       >
-        {ACCOUNT_TABS.map((tab) => (
+        {MYPROFILE_TABS.map((tab) => (
           <Tab
             disableRipple
             key={tab.value}
@@ -47,7 +54,7 @@ function AccountPage() {
 
       <Box sx={{ mb: 5 }} />
 
-      {ACCOUNT_TABS.map((tab) => {
+      {MYPROFILE_TABS.map((tab) => {
         const isMatched = tab.value === currentTab;
         return isMatched && <Box key={tab.value}>{tab.component}</Box>;
       })}
@@ -55,4 +62,4 @@ function AccountPage() {
   );
 }
 
-export default AccountPage;
+export default MyProfilePage;

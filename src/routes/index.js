@@ -13,7 +13,8 @@ import JobListPage from "../pages/JobListPage";
 import JobDetailPage from "../pages/JobDetailPage";
 import UserDetailPage from "../pages/UserDetailPage";
 import PostJobPage from "../pages/PostJobPage";
-import AccountPage from "../pages/AccountPage";
+import AccountSettingPage from "../pages/AccountSettingPage";
+import MyProfilePage from "../pages/MyProfilePage";
 
 function Router() {
   return (
@@ -34,7 +35,8 @@ function Router() {
         <Route path="/jobs/:id" element={<JobDetailPage />} />
         <Route path="/users/:id" element={<UserDetailPage />} />
         <Route path="/jobs/post" element={<PostJobPage />} />
-        <Route path="/account" element={<AccountPage />} />
+        <Route path="/account" element={<AccountSettingPage />} />
+        <Route path="/me/profile" element={<MyProfilePage />} />
       </Route>
 
       <Route element={<BlankLayout />}>

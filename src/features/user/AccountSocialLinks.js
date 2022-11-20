@@ -33,7 +33,7 @@ const SOCIAL_LINKS = [
 
 function AccountSocialLinks() {
   const { user } = useAuth();
-  // const isLoading = useSelector((state) => state.user.isLoading);
+  const isLoading = useSelector((state) => state.user.isLoading);
 
   const defaultValues = {
     facebookLink: user?.facebookLink || "",
@@ -74,7 +74,7 @@ function AccountSocialLinks() {
           <LoadingButton
             type="submit"
             variant="contained"
-            loading={isSubmitting /*|| isLoading*/}
+            loading={isSubmitting || isLoading}
           >
             Save Changes
           </LoadingButton>

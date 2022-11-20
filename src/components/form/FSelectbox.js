@@ -1,7 +1,7 @@
 import { useFormContext, Controller } from "react-hook-form";
 import { Select } from "@mui/material";
 
-function FSelect({ name, children, ...other }) {
+function FSelectbox({ name, children, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -9,15 +9,7 @@ function FSelect({ name, children, ...other }) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <Select
-          {...field}
-          select
-          fullWidth
-          SelectProps={{ native: true }}
-          error={!!error}
-          helperText={error?.message}
-          {...other}
-        >
+        <Select {...field} fullWidth error={!!error} {...other}>
           {children}
         </Select>
       )}
@@ -25,4 +17,4 @@ function FSelect({ name, children, ...other }) {
   );
 }
 
-export default FSelect;
+export default FSelectbox;

@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
+import { FREELANCERS_PER_PAGE } from "../../app/config";
 import { cloudinaryUpload } from "../../utils/cloudinary";
+import { stringify } from "query-string";
 
 const initialState = {
   isLoading: false,
   error: null,
   updatedProfile: null,
   selectedUser: null,
+  freelancersById: {},
+  currentPageFreelancers: [],
+  totalFreelancers: 0,
+  totalPages: 1,
 };
 
 const slice = createSlice({
@@ -23,10 +29,9 @@ const slice = createSlice({
       state.error = action.payload;
     },
 
-    getUserSuccess(state, action) {
+    getUserByIdSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-
       state.selectedUser = action.payload;
     },
     updateUserProfileSuccess(state, action) {
@@ -34,31 +39,57 @@ const slice = createSlice({
       state.error = null;
       state.updatedProfile = action.payload;
     },
+    getFreelancersSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.currentPageFreelancers = [];
+      const { freelancers, totalPages, count } = action.payload;
+      freelancers.forEach((freelancer) => {
+        state.freelancersById[freelancer._id] = freelancer;
+        if (!state.currentPageFreelancers.includes(freelancer._id))
+          state.currentPageFreelancers.push(freelancer._id);
+      });
+      state.totalFreelancers = count;
+      state.totalPages = totalPages;
+    },
   },
 });
 
-export const getUser = (id) => async (dispatch) => {
+export const getUserById = (id) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const response = await apiService.get(`/users/${id}`);
-    dispatch(slice.actions.getUserSuccess(response.data));
+    dispatch(slice.actions.getUserByIdSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error));
     toast.error(error.message);
   }
 };
 
+export const getFreelancers =
+  ({ page, limit = FREELANCERS_PER_PAGE }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const query = { page, limit };
+      const response = await apiService.get(
+        `/users/freelancers?${stringify(query)}`
+      );
+      dispatch(slice.actions.getFreelancersSuccess(response.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+    }
+  };
+
 export const updateUserProfile =
   ({
     userId,
     name,
     avatarUrl,
-    coverUrl,
     aboutMe,
-    city,
-    country,
     company,
     jobTitle,
+    industry,
     facebookLink,
     instagramLink,
     linkedinLink,
@@ -70,12 +101,10 @@ export const updateUserProfile =
       const data = {
         userId,
         name,
-        coverUrl,
         aboutMe,
-        city,
-        country,
         company,
         jobTitle,
+        industry,
         facebookLink,
         instagramLink,
         linkedinLink,
