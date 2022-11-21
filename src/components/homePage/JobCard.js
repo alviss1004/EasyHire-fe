@@ -9,6 +9,7 @@ import {
 import { Box } from "@mui/system";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { fToNow } from "../../utils/formatTime";
 import { fCurrency } from "../../utils/numberFormat";
 
 function JobCard({ job }) {
@@ -17,7 +18,7 @@ function JobCard({ job }) {
     <Card
       variant="outlined"
       sx={{ width: "70%" }}
-      onClick={() => navigate("/jobs/:id")}
+      onClick={() => navigate(`/jobs/${job._id}`)}
     >
       <CardActionArea>
         <CardContent>
@@ -32,7 +33,7 @@ function JobCard({ job }) {
                 sx={{ color: "#2E82D2", fontWeight: 600 }}
                 gutterBottom
               >
-                {job.name}
+                {job.title}
               </Typography>
               <Typography sx={{ fontSize: 18, overflow: "hidden" }}>
                 {job.description}
@@ -57,25 +58,6 @@ function JobCard({ job }) {
                   sx={{ mr: 1 }}
                 />
               </Stack>
-              <Stack
-                my={{ xs: 2, md: 1 }}
-                flexDirection="row"
-                alignItems="center"
-                flexWrap="wrap"
-              >
-                <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
-                  Skills required:
-                </Typography>
-                {job.skills.map((skill) => (
-                  <Chip
-                    key={`${job.jobId}`}
-                    label={`${job.name}`}
-                    size="small"
-                    variant="outlined"
-                    sx={{ mr: 0.5 }}
-                  />
-                ))}
-              </Stack>
             </Box>
             <Stack
               direction="column"
@@ -84,15 +66,24 @@ function JobCard({ job }) {
               spacing={1}
               sx={{ mr: 3 }}
             >
-              <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
-                Highest Bid: {fCurrency(job.highestBid)}
-              </Typography>
+              <Box sx={{ position: "relative", top: { xs: 5, md: -20 } }}>
+                <Typography
+                  sx={{ position: "relative", top: -15, fontSize: 15 }}
+                >
+                  Posted {fToNow(job.createdAt)}
+                </Typography>
+              </Box>
               {job.bidCount === 0 ? (
                 <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
                   No Bids Yet
                 </Typography>
               ) : (
-                <Typography> {job.bidCount} Bids </Typography>
+                <>
+                  <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
+                    Highest Bid: {fCurrency(job.highestBid)}
+                  </Typography>
+                  <Typography> {job.bidCount} Bids </Typography>
+                </>
               )}
             </Stack>
           </Stack>

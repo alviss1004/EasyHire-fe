@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { stringify } from "query-string";
 import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
 import { JOBS_PER_PAGE } from "../../app/config";
@@ -7,8 +8,12 @@ import { cloudinaryUpload } from "../../utils/cloudinary";
 const initialState = {
   isLoading: false,
   error: null,
+  selectedJob: null,
   jobsById: {},
+  latestJobs: [],
   currentPageJobs: [],
+  totalJobs: 0,
+  totalPages: 1,
 };
 
 const slice = createSlice({
@@ -22,104 +27,92 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    createPostSuccess(state, action) {
+    createJobSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const newPost = action.payload;
-      if (state.currentPagePosts.length % JOBS_PER_PAGE === 0)
-        state.currentPagePosts.pop();
-      state.postsById[newPost._id] = newPost;
-      state.currentPagePosts.unshift(newPost._id);
     },
-    // getPostsSuccess(state, action) {
-    //   state.isLoading = false;
-    //   state.error = null;
-
-    //   const { posts, count } = action.payload;
-    //   posts.forEach((post) => {
-    //     state.postsById[post._id] = post;
-    //     if (!state.currentPagePosts.includes(post._id))
-    //       state.currentPagePosts.push(post._id);
-    //   });
-    //   state.totalPosts = count;
-    // },
-    // sendPostReactionSuccess(state, action) {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   const { postId, reactions } = action.payload;
-    //   state.postsById[postId].reactions = reactions;
-    // },
-    // resetPosts(state, action) {
-    //   state.postsById = {};
-    //   state.currentPagePosts = [];
-    // },
-    // deletePostSuccess(state, action) {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   const { postId } = action.payload;
-    //   state.postsById[postId] = null;
-    // },
+    getJobsSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.currentPageJobs = [];
+      const { jobs, totalPages, count } = action.payload;
+      state.allJobs = jobs;
+      jobs.forEach((job) => {
+        state.jobsById[job._id] = job;
+        if (!state.currentPageJobs.includes(job._id))
+          state.currentPageJobs.push(job._id);
+      });
+      state.totalJobs = count;
+      state.totalPages = totalPages;
+    },
+    getLatestJobsSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.latestJobs = [];
+      const { jobs } = action.payload;
+      state.latestJobs = jobs;
+    },
+    getJobByIdSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.selectedJob = action.payload.job;
+    },
   },
 });
 
-export const createPost =
-  ({ content, image }) =>
+export const createJob =
+  ({ title, industry, description, image }) =>
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      console.log("CONTENT", content);
       // upload image to cloudinary
       const imageUrl = await cloudinaryUpload(image);
-      const response = await apiService.post("/posts", {
-        content,
+      const response = await apiService.post("/jobs", {
+        title,
+        industry,
+        description,
         image: imageUrl,
       });
-      dispatch(slice.actions.createPostSuccess(response.data));
-      toast.success("Post successfully");
+      dispatch(slice.actions.createJobSuccess(response.data.data));
+      toast.success("Create job successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
     }
   };
 
-// export const getPosts =
-//   ({ userId, page = 1, limit = JOBS_PER_PAGE }) =>
-//   async (dispatch) => {
-//     dispatch(slice.actions.startLoading());
-//     try {
-//       const params = { page, limit };
-//       const response = await apiService.get(`/posts/user/${userId}`, {
-//         params,
-//       });
-//       if (page === 1) dispatch(slice.actions.resetPosts());
-//       dispatch(slice.actions.getPostsSuccess(response.data));
-//     } catch (error) {
-//       dispatch(slice.actions.hasError(error.message));
-//       toast.error(error.message);
-//     }
-//   };
+export const getJobs =
+  ({ page, limit = JOBS_PER_PAGE }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const query = { page, limit };
+      const response = await apiService.get(`/jobs?${stringify(query)}`);
+      dispatch(slice.actions.getJobsSuccess(response.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+    }
+  };
+export const getLatestJobs = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get(`/jobs/latest`);
+    dispatch(slice.actions.getLatestJobsSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
 
-// export const sendPostReaction =
-//   ({ postId, emoji }) =>
-//   async (dispatch) => {
-//     dispatch(slice.actions.startLoading());
-//     try {
-//       const response = await apiService.post(`/reactions`, {
-//         targetType: "Post",
-//         targetId: postId,
-//         emoji,
-//       });
-//       dispatch(
-//         slice.actions.sendPostReactionSuccess({
-//           postId,
-//           reactions: response.data,
-//         })
-//       );
-//     } catch (error) {
-//       dispatch(slice.actions.hasError(error.message));
-//       toast.error(error.message);
-//     }
-//   };
+export const getJobById = (id) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get(`/jobs/${id}`);
+    dispatch(slice.actions.getJobByIdSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error));
+    toast.error(error.message);
+  }
+};
 
 // export const deletePost =
 //   ({ postId, userId }) =>

@@ -4,18 +4,20 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PaidIcon from "@mui/icons-material/Paid";
 import { capitalCase } from "change-case";
-import AccountProfile from "../features/user/AccountProfile";
 import AccountListings from "../features/user/AccountListings";
 import AccountBids from "../features/user/AccountBids";
+import UserDetailInfo from "../features/user/UserDetailInfo";
+import useAuth from "../hooks/useAuth";
 
 function MyProfilePage() {
   const [currentTab, setCurrentTab] = useState("general");
+  const { user } = useAuth();
 
   const MYPROFILE_TABS = [
     {
       value: "general",
       icon: <AccountBoxIcon sx={{ fontSize: 30 }} />,
-      component: <AccountProfile />,
+      component: <UserDetailInfo user={user} />,
     },
     {
       value: "my listings",

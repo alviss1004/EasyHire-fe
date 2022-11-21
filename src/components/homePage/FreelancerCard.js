@@ -13,12 +13,12 @@ function FreelancerCard({ freelancer }) {
     <Card
       variant="outlined"
       sx={{ mr: 5 }}
-      onClick={() => navigate("/users/:id")}
+      onClick={() => navigate(`users/${freelancer._id}`)}
     >
       <CardActionArea>
         <CardMedia
           component="img"
-          image={freelancer.avatar}
+          image={freelancer.avatarUrl}
           alt="avatar"
           sx={{ height: { xs: "100px", md: "300px" } }}
         />
@@ -42,7 +42,7 @@ function FreelancerCard({ freelancer }) {
             </Typography>
             <Rating
               name="freelancer-rating"
-              value={freelancer.rating / 2}
+              value={freelancer.rating}
               precision={0.5}
               size="small"
               readOnly

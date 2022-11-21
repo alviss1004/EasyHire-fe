@@ -9,20 +9,15 @@ import LoadingScreen from "../../components/misc/LoadingScreen";
 function FreelancerList() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const {
-    freelancersById,
-    currentPageFreelancers,
-    totalFreelancers,
-    totalPages,
-    isLoading,
-  } = useSelector((state) => state.user);
+  const { freelancersById, currentPageFreelancers, totalPages, isLoading } =
+    useSelector((state) => state.user);
 
   const freelancers = currentPageFreelancers.map(
     (freelancerId) => freelancersById[freelancerId]
   );
 
   useEffect(() => {
-    dispatch(getFreelancers({ page, limit: 10 }));
+    dispatch(getFreelancers({ page, limit: FREELANCERS_PER_PAGE }));
   }, [dispatch, page]);
 
   const handleChangePage = (event, newPage) => {
@@ -48,13 +43,12 @@ function FreelancerList() {
               page={page}
               onChange={handleChangePage}
               variant="outlined"
-              shape="rounded"
               showFirstButton
               showLastButton
             />
           </Stack>
           <Stack spacing={2} justifyContent="center" alignItems="center">
-            {freelancers.map((freelancer) => (
+            {freelancers?.map((freelancer) => (
               <FreelancerCard key={freelancer._id} freelancer={freelancer} />
             ))}
           </Stack>

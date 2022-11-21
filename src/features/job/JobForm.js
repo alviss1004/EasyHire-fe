@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { FormProvider, FSelect, FTextField } from "../../components/form";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Alert, alpha, MenuItem } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Alert, alpha } from "@mui/material";
 import { Stack } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
+import { useDispatch } from "react-redux";
+import { createJob } from "./jobSlice";
 
 const JobPostSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -36,7 +38,7 @@ const industries = [
 
 function JobForm() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
 
   const methods = useForm({
     resolver: yupResolver(JobPostSchema),
@@ -50,9 +52,9 @@ function JobForm() {
   } = methods;
 
   const onSubmit = async (data) => {
-    const from = location.state?.from?.pathname || "/";
     try {
-      console.log(data);
+      dispatch(createJob(data));
+      navigate(`/jobs`);
     } catch (error) {
       reset();
       setError("responseError", error);

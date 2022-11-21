@@ -1,11 +1,4 @@
-import {
-  Breadcrumbs,
-  Container,
-  Link,
-  Pagination,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Breadcrumbs, Container, Link, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Helmet } from "react-helmet";
 import FreelancerList from "../features/user/FreelancerList";

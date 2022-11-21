@@ -39,7 +39,7 @@ const CommentPost = ({ setPage }) => {
           sx={{
             marginBottom: 2,
             display: "flex",
-            justifyContent: "start",
+            justifyContent: "flex-start",
             p: "1rem",
           }}
         >

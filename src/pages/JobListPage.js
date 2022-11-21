@@ -6,49 +6,39 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
-import apiService from "../app/apiService";
 import orderBy from "lodash/orderBy";
-import LoadingScreen from "../components/misc/LoadingScreen";
 import JobFilter from "../features/job/JobFilter";
 import JobSearch from "../features/job/JobSearch";
 import JobSort from "../features/job/JobSort";
 import JobList from "../features/job/JobList";
 import { Helmet } from "react-helmet";
-import { faker } from "@faker-js/faker";
 import { Link as RouterLink } from "react-router-dom";
-
-const createRandomJob = () => {
-  let skillList = [];
-  Array.from({ length: 3 }).forEach(() => {
-    skillList.push(faker.company.bsBuzz());
-  });
-  const newJob = {
-    jobId: faker.datatype.uuid(),
-    name: faker.name.jobTitle(),
-    description: faker.commerce.productDescription(),
-    industry: faker.name.jobArea(),
-    skills: skillList,
-    highestBid: Math.floor(Math.random() * (100 - 10) + 10),
-    bidCount: Math.floor(Math.random() * 30),
-  };
-  return newJob;
-};
-
-let jobs = [];
-
-Array.from({ length: 7 }).forEach(() => {
-  jobs.push(createRandomJob());
-});
+import { useDispatch, useSelector } from "react-redux";
+import { getJobs } from "../features/job/jobSlice";
+import { JOBS_PER_PAGE } from "../app/config";
 
 function JobListPage() {
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  const { jobsById, currentPageJobs, totalPages, isLoading } = useSelector(
+    (state) => state.job
+  );
+
+  const jobs = currentPageJobs.map((jobId) => jobsById[jobId]);
+
+  useEffect(() => {
+    dispatch(getJobs({ page, limit: JOBS_PER_PAGE }));
+  }, [dispatch, page]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
   const defaultValues = {
-    gender: [],
-    category: "All",
-    priceRange: "",
-    sortBy: "featured",
+    industry: "All",
+    sortBy: "newest",
     searchQuery: "",
   };
   const methods = useForm({
@@ -56,6 +46,7 @@ function JobListPage() {
   });
   const { watch, reset } = methods;
   const filters = watch();
+
   const filterJobs = applyFilter(jobs, filters);
 
   return (
@@ -98,15 +89,16 @@ function JobListPage() {
               <JobSearch />
               <JobSort />
               <Pagination
-                count={10}
+                count={totalPages}
+                page={page}
+                onChange={handleChangePage}
                 variant="outlined"
-                shape="rounded"
                 showFirstButton
                 showLastButton
               />
             </Stack>
           </FormProvider>
-          <JobList jobs={filterJobs} />
+          <JobList jobs={filterJobs} loading={isLoading} />
         </Stack>
       </Container>
     </>
@@ -118,34 +110,38 @@ function applyFilter(jobs, filters) {
   let filteredJobs = jobs;
 
   // SORT BY
-  if (sortBy === "featured") {
-    filteredJobs = orderBy(jobs, ["sold"], ["desc"]);
-  }
   if (sortBy === "newest") {
     filteredJobs = orderBy(jobs, ["createdAt"], ["desc"]);
   }
 
+  if (sortBy === "highestBidAsc") {
+    filteredJobs = orderBy(jobs, ["highestBid"], ["asc"]);
+  }
+
+  if (sortBy === "highestBidDesc") {
+    filteredJobs = orderBy(jobs, ["highestBid"], ["desc"]);
+  }
+
+  if (sortBy === "averageBidAsc") {
+    filteredJobs = orderBy(jobs, ["averageBid"], ["asc"]);
+  }
+
+  if (sortBy === "averageBidDesc") {
+    filteredJobs = orderBy(jobs, ["averageBid"], ["desc"]);
+  }
+
   // FILTER JOBS
   if (filters.industry !== "All") {
-    filteredJobs = jobs.filter((job) => filters.gender === job.gender);
+    filteredJobs = jobs.filter((job) => filters.industry === job.industry);
   }
-  if (filters.skill !== "All") {
-    filteredJobs = jobs.filter((job) => job.skill === filters.skill);
-  }
-  if (filters.priceRange) {
-    filteredJobs = jobs.filter((job) => {
-      if (filters.priceRange === "below") {
-        return job.price < 25;
-      }
-      if (filters.priceRange === "between") {
-        return job.price >= 25 && job.price <= 75;
-      }
-      return job.price > 75;
-    });
-  }
+
   if (filters.searchQuery) {
-    filteredJobs = jobs.filter((job) =>
-      job.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
+    filteredJobs = jobs.filter(
+      (job) =>
+        job.title.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+        job.description
+          .toLowerCase()
+          .includes(filters.searchQuery.toLowerCase())
     );
   }
   return filteredJobs;

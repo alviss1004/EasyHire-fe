@@ -12,6 +12,8 @@ const initialState = {
   selectedUser: null,
   freelancersById: {},
   currentPageFreelancers: [],
+  featuredFreelancers: [],
+  userListings: [],
   totalFreelancers: 0,
   totalPages: 1,
 };
@@ -28,17 +30,6 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-
-    getUserByIdSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.selectedUser = action.payload;
-    },
-    updateUserProfileSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.updatedProfile = action.payload;
-    },
     getFreelancersSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -51,6 +42,28 @@ const slice = createSlice({
       });
       state.totalFreelancers = count;
       state.totalPages = totalPages;
+    },
+    getFeaturedFreelancersSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { freelancers } = action.payload;
+      state.featuredFreelancers = freelancers;
+    },
+    getUserListingsSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { myJobs } = action.payload;
+      state.userListings = myJobs;
+    },
+    getUserByIdSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.selectedUser = action.payload.user;
+    },
+    updateUserProfileSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.updatedProfile = action.payload;
     },
   },
 });
@@ -80,6 +93,26 @@ export const getFreelancers =
       dispatch(slice.actions.hasError(error.message));
     }
   };
+
+export const getFeaturedFreelancers = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get(`/users/freelancers/featured`);
+    dispatch(slice.actions.getFeaturedFreelancersSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+
+export const getUserListings = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get(`/users/me/jobs`);
+    dispatch(slice.actions.getUserListingsSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
 
 export const updateUserProfile =
   ({

@@ -128,7 +128,11 @@ function AccountGeneral() {
               <FTextField name="jobTitle" label="Job Title" />
               <FTextField name="company" label="Company" />
 
-              <FSelect name="industry" helperText="Please select industry">
+              <FSelect
+                name="industry"
+                label="Industry"
+                helperText="Please select industry"
+              >
                 {industries.map((industry) => (
                   <option key={industry} value={industry} defaultValue={""}>
                     {industry}

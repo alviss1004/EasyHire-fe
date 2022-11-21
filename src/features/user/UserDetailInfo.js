@@ -15,6 +15,7 @@ function UserDetailInfo({ user }) {
     flexShrink: 0,
     marginRight: theme.spacing(2),
   }));
+
   return (
     <Container
       justifyContent="center"
@@ -58,6 +59,7 @@ function UserDetailInfo({ user }) {
               <Stack direction="row" spacing={3} sx={{ p: 1, mb: 1 }}>
                 <Link
                   href={`https://${user?.linkedinLink}`}
+                  target="_blank"
                   sx={{ textDecoration: "none" }}
                 >
                   <IconStyle color="#006097">
@@ -66,6 +68,7 @@ function UserDetailInfo({ user }) {
                 </Link>
                 <Link
                   href={`https://${user?.twitterLink}`}
+                  target="_blank"
                   sx={{ textDecoration: "none" }}
                 >
                   <IconStyle color="#1877F2">
@@ -74,6 +77,7 @@ function UserDetailInfo({ user }) {
                 </Link>
                 <Link
                   href={`https://${user?.facebookLink}`}
+                  target="_blank"
                   sx={{ textDecoration: "none" }}
                 >
                   <IconStyle color="#1C9CEA">
@@ -82,6 +86,7 @@ function UserDetailInfo({ user }) {
                 </Link>
                 <Link
                   href={`https://${user?.instagramLink}`}
+                  target="_blank"
                   sx={{ textDecoration: "none" }}
                 >
                   <IconStyle color="#D7336D">
@@ -112,6 +117,7 @@ function UserDetailInfo({ user }) {
             <Stack direction="row" sx={{ p: 1, mb: 1 }}>
               <Link
                 href={`https://${user?.linkedinLink}`}
+                target="_blank"
                 sx={{ textDecoration: "none" }}
               >
                 <IconStyle color="#006097">
@@ -120,6 +126,7 @@ function UserDetailInfo({ user }) {
               </Link>
               <Link
                 href={`https://${user?.twitterLink}`}
+                target="_blank"
                 sx={{ textDecoration: "none" }}
               >
                 <IconStyle color="#1877F2">
@@ -128,6 +135,7 @@ function UserDetailInfo({ user }) {
               </Link>
               <Link
                 href={`https://${user?.facebookLink}`}
+                target="_blank"
                 sx={{ textDecoration: "none" }}
               >
                 <IconStyle color="#1C9CEA">
@@ -136,6 +144,7 @@ function UserDetailInfo({ user }) {
               </Link>
               <Link
                 href={`https://${user?.instagramLink}`}
+                target="_blank"
                 sx={{ textDecoration: "none" }}
               >
                 <IconStyle color="#D7336D">
@@ -200,7 +209,7 @@ function UserDetailInfo({ user }) {
               )}
               <Rating
                 name="user-rating"
-                value={user?.rating / 2}
+                value={user ? user.rating : 0}
                 precision={0.5}
                 size="small"
                 readOnly

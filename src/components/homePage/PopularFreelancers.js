@@ -1,30 +1,21 @@
-import React from "react";
-import { faker } from "@faker-js/faker";
+import React, { useEffect } from "react";
 import FreelancerCard from "./FreelancerCard";
 import { Box } from "@mui/system";
 import { Button, Divider, Typography } from "@mui/material";
 import EastIcon from "@mui/icons-material/East";
 import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
+import { useDispatch, useSelector } from "react-redux";
+import { getFeaturedFreelancers } from "../../features/user/userSlice";
 
 function PopularFreelancers() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { featuredFreelancers } = useSelector((state) => state.user);
 
-  const createRandomFreelancer = () => {
-    const newFreelancer = {
-      userId: faker.datatype.uuid(),
-      name: faker.internet.userName(),
-      avatar: faker.image.avatar(),
-      rating: Math.floor(Math.random() * 10),
-    };
-    return newFreelancer;
-  };
-
-  let freelancers = [];
-
-  Array.from({ length: 10 }).forEach(() => {
-    freelancers.push(createRandomFreelancer());
-  });
+  useEffect(() => {
+    dispatch(getFeaturedFreelancers());
+  }, [dispatch]);
 
   return (
     <>
@@ -50,8 +41,8 @@ function PopularFreelancers() {
           Featured Freelancers
         </Typography>
         <Marquee gradient={false} speed={30}>
-          {freelancers.map((freelancer) => (
-            <FreelancerCard key={freelancer.userId} freelancer={freelancer} />
+          {featuredFreelancers.map((freelancer) => (
+            <FreelancerCard key={freelancer._id} freelancer={freelancer} />
           ))}
         </Marquee>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mr: 4, mt: 2 }}>
