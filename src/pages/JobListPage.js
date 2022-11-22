@@ -3,16 +3,17 @@ import {
   Container,
   Link,
   Pagination,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
   Stack,
   Typography,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
-import { FormProvider } from "../components/form";
-import { useForm } from "react-hook-form";
-import orderBy from "lodash/orderBy";
-import JobFilter from "../features/job/JobFilter";
-import JobSearch from "../features/job/JobSearch";
-import JobSort from "../features/job/JobSort";
 import JobList from "../features/job/JobList";
 import { Helmet } from "react-helmet";
 import { Link as RouterLink } from "react-router-dom";
@@ -20,9 +21,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { getJobs } from "../features/job/jobSlice";
 import { JOBS_PER_PAGE } from "../app/config";
 
+const FILTER_INDUSTRY_OPTIONS = [
+  "All",
+  "Arts & Entertainment",
+  "Accommodation & Food Services",
+  "Architecture & Design",
+  "Business & Finance",
+  "Educational Services",
+  "Engineering",
+  "Healthcare & Social Assistance",
+  "Manufacturing",
+  "Music & Audio",
+  "Programming & Technology",
+];
+const SORTBY_OPTIONS = [
+  { value: "newest", label: "Newest" },
+  { value: "highestBidAsc", label: "Highest Bid: Low to High" },
+  { value: "highestBidDesc", label: "Highest Bid: High to Low" },
+  { value: "averageBidAsc", label: "Average Bid: Low to High" },
+  { value: "averageBidDesc", label: "Average Bid: High to Low" },
+];
+
 function JobListPage() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
+  const [sortBy, setSortBy] = useState("Newest");
+  const [industry, setIndustry] = useState("All");
+  const [search, setSearch] = useState("");
   const { jobsById, currentPageJobs, totalPages, isLoading } = useSelector(
     (state) => state.job
   );
@@ -30,24 +55,12 @@ function JobListPage() {
   const jobs = currentPageJobs.map((jobId) => jobsById[jobId]);
 
   useEffect(() => {
-    dispatch(getJobs({ page, limit: JOBS_PER_PAGE }));
-  }, [dispatch, page]);
+    dispatch(getJobs({ page, limit: JOBS_PER_PAGE, sortBy, industry, search }));
+  }, [dispatch, page, sortBy, industry, search]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-  const defaultValues = {
-    industry: "All",
-    sortBy: "newest",
-    searchQuery: "",
-  };
-  const methods = useForm({
-    defaultValues,
-  });
-  const { watch, reset } = methods;
-  const filters = watch();
-
-  const filterJobs = applyFilter(jobs, filters);
 
   return (
     <>
@@ -73,78 +86,98 @@ function JobListPage() {
           <style>{"body { background-color: #F0F3F5; }"}</style>
         </Helmet>
         <Stack sx={{ mr: 2 }}>
-          <FormProvider methods={methods}>
-            <JobFilter resetFilter={reset} />
-          </FormProvider>
+          <Stack
+            justifyContent="center"
+            alignItems={{ xs: "center", md: "stretch" }}
+            spacing={{ xs: 3, sm: 7, md: 3 }}
+            sx={{
+              backgroundColor: "#FFF",
+              borderRadius: "1px solid black",
+              boxShadow: 1,
+              mb: { xs: 5 },
+              p: 3,
+              width: { sm: "80%", md: 250 },
+            }}
+          >
+            <Stack direction="column" spacing={1}>
+              <FormControl>
+                <Typography sx={{ fontWeight: 600, fontSize: 20, mb: 2 }}>
+                  Filter By Industry
+                </Typography>
+                <RadioGroup
+                  onChange={(e) => setIndustry(e.target.value)}
+                  name="industry-radio-group"
+                  row
+                  defaultValue="All"
+                >
+                  {FILTER_INDUSTRY_OPTIONS.map((option) => (
+                    <FormControlLabel
+                      key={option}
+                      value={option}
+                      control={<Radio />}
+                      label={option.charAt(0).toUpperCase() + option.slice(1)}
+                      sx={{ mb: 1 }}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </Stack>
+          </Stack>
         </Stack>
         <Stack sx={{ flexGrow: 1 }}>
-          <FormProvider methods={methods}>
-            <Stack
-              spacing={2}
-              direction={{ xs: "column", sm: "row" }}
-              alignItems={{ sm: "center" }}
-              justifyContent="space-between"
-              mb={2}
+          <Stack
+            spacing={2}
+            direction={{ xs: "column", sm: "row" }}
+            alignItems={{ sm: "center" }}
+            justifyContent="space-between"
+            mb={2}
+          >
+            <TextField
+              name="searchQuery"
+              label="Search"
+              sx={{ width: 300 }}
+              onChange={(e) => setSearch(e.target.value)}
+              size="small"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              id="sortBy"
+              label="Sort By"
+              select
+              fullWidth
+              SelectProps={{ native: true }}
+              onChange={(e) => setSortBy(e.target.value)}
+              defaultValue="Newest"
+              size="small"
+              sx={{ width: 300 }}
             >
-              <JobSearch />
-              <JobSort />
-              <Pagination
-                count={totalPages}
-                page={page}
-                onChange={handleChangePage}
-                variant="outlined"
-                showFirstButton
-                showLastButton
-              />
-            </Stack>
-          </FormProvider>
-          <JobList jobs={filterJobs} loading={isLoading} />
+              {console.log(sortBy)}
+              {SORTBY_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={handleChangePage}
+              variant="outlined"
+              showFirstButton
+              showLastButton
+            />
+          </Stack>
+          <JobList jobs={jobs} loading={isLoading} />
         </Stack>
       </Container>
     </>
   );
-}
-
-function applyFilter(jobs, filters) {
-  const { sortBy } = filters;
-  let filteredJobs = jobs;
-
-  // SORT BY
-  if (sortBy === "newest") {
-    filteredJobs = orderBy(jobs, ["createdAt"], ["desc"]);
-  }
-
-  if (sortBy === "highestBidAsc") {
-    filteredJobs = orderBy(jobs, ["highestBid"], ["asc"]);
-  }
-
-  if (sortBy === "highestBidDesc") {
-    filteredJobs = orderBy(jobs, ["highestBid"], ["desc"]);
-  }
-
-  if (sortBy === "averageBidAsc") {
-    filteredJobs = orderBy(jobs, ["averageBid"], ["asc"]);
-  }
-
-  if (sortBy === "averageBidDesc") {
-    filteredJobs = orderBy(jobs, ["averageBid"], ["desc"]);
-  }
-
-  // FILTER JOBS
-  if (filters.industry !== "All") {
-    filteredJobs = jobs.filter((job) => filters.industry === job.industry);
-  }
-
-  if (filters.searchQuery) {
-    filteredJobs = jobs.filter(
-      (job) =>
-        job.title.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-        job.description
-          .toLowerCase()
-          .includes(filters.searchQuery.toLowerCase())
-    );
-  }
-  return filteredJobs;
 }
 
 export default JobListPage;

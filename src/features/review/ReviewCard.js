@@ -1,31 +1,46 @@
-import { Box, Card, CardContent, Stack } from "@mui/material";
+import { Box, Rating, Stack, Typography } from "@mui/material";
 import React from "react";
 
 function ReviewCard({ review, loading }) {
-  console.log("REVIEW", review);
   return (
-    <Card variant="outlined" sx={{ width: "80%", p: 2 }}>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={{ xs: 1, md: 4 }}
-        justifyContent={{ xs: "center", md: "stretch" }}
-        alignItems={{ xs: "center", md: "stretch" }}
-      >
-        <Box
-          component="img"
-          src=""
-          height={{ xs: "60%", md: "20%" }}
-          width={{ xs: "60%", md: "20%" }}
-          alt="avatar"
-          sx={{
-            minWidth: { xs: "60%", md: 220 },
-            minHeight: { xs: "60%", md: 220 },
-            borderRadius: "50%",
-          }}
-        />
-        <CardContent></CardContent>
+    <Stack
+      direction={{ xs: "column", md: "row" }}
+      spacing={{ xs: 1, md: 3 }}
+      justifyContent={{ xs: "center", md: "stretch" }}
+      alignItems={{ xs: "center", md: "stretch" }}
+      sx={{
+        borderRadius: 1,
+        boxShadow: 3,
+        p: 2,
+      }}
+    >
+      <Box
+        component="img"
+        src={review.author.avatarUrl}
+        height={{ xs: "40%", md: "10%" }}
+        width={{ xs: "40%", md: "10%" }}
+        alt="avatar"
+        sx={{
+          minWidth: { xs: "40%", md: 50 },
+          minHeight: { xs: "40%", md: 50 },
+          borderRadius: "50%",
+        }}
+      />
+      <Stack spacing={1}>
+        <Typography fontWeight={600}>Author: {review.author.name}</Typography>
+        <Stack direction="row" spacing={1}>
+          <Typography>Rating: {review.rating.toFixed(1)}</Typography>
+          <Rating
+            name="freelancer-rating"
+            value={review.rating}
+            precision={0.5}
+            size="small"
+            readOnly
+          />
+        </Stack>
+        <Typography>Comment: {review.comment}</Typography>
       </Stack>
-    </Card>
+    </Stack>
   );
 }
 

@@ -47,6 +47,7 @@ const reducer = (state, action) => {
       const {
         name,
         avatarUrl,
+        isFreelancer,
         aboutMe,
         company,
         jobTitle,
@@ -62,6 +63,7 @@ const reducer = (state, action) => {
           ...state.user,
           name,
           avatarUrl,
+          isFreelancer,
           aboutMe,
           company,
           jobTitle,
@@ -91,7 +93,7 @@ const AuthContext = createContext({ ...initialState });
 
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  // const updatedProfile = useSelector((state) => state.user.updatedProfile);
+  const updatedProfile = useSelector((state) => state.user.updatedProfile);
 
   useEffect(() => {
     const initialize = async () => {
@@ -133,10 +135,10 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  // useEffect(() => {
-  //   if (updatedProfile)
-  //     dispatch({ type: UPDATE_PROFILE, payload: updatedProfile });
-  // }, [updatedProfile]);
+  useEffect(() => {
+    if (updatedProfile)
+      dispatch({ type: UPDATE_PROFILE, payload: updatedProfile });
+  }, [updatedProfile]);
 
   const login = async ({ email, password }, callback) => {
     const response = await apiService.post("/auth/login", { email, password });

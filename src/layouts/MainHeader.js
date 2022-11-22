@@ -8,11 +8,11 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { Stack, Link, Divider, Avatar, Button } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/misc/Logo";
+import { useDispatch } from "react-redux";
+import { updateUserProfile } from "../features/user/userSlice";
 
 function MainHeader() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -20,6 +20,7 @@ function MainHeader() {
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,6 +70,13 @@ function MainHeader() {
     }
   };
 
+  const handleBecomeFreelancer = () => {
+    handleMenuClose();
+    dispatch(updateUserProfile({ userId: user._id, isFreelancer: true })).then(
+      window.location.reload()
+    );
+  };
+
   const renderMenu = (
     <Menu
       id="menu-appbar"
@@ -115,7 +123,7 @@ function MainHeader() {
       </MenuItem>
       {!user?.isFreelancer ? (
         <MenuItem
-          onClick={handleMenuClose}
+          onClick={handleBecomeFreelancer}
           component={RouterLink}
           sx={{
             color: "#FFF",

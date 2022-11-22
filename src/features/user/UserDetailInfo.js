@@ -114,7 +114,7 @@ function UserDetailInfo({ user }) {
                 minHeight: { xs: "70%", md: 220 },
               }}
             ></Box>
-            <Stack direction="row" sx={{ p: 1, mb: 1 }}>
+            <Stack direction="row" spacing={3} sx={{ p: 1, mb: 1 }}>
               <Link
                 href={`https://${user?.linkedinLink}`}
                 target="_blank"

@@ -13,15 +13,6 @@ import { useNavigate } from "react-router-dom";
 function FreelancerListCard({ freelancer }) {
   const navigate = useNavigate();
 
-  const calculateRating = () => {
-    const reviews = freelancer.reviews.map((review) => review.rating);
-    const averageRating =
-      reviews.reduce((r1, r2) => r1 + r2, 0) / reviews.length;
-    return averageRating;
-  };
-
-  const userRating = calculateRating();
-
   return (
     <Card
       variant="outlined"
@@ -101,14 +92,14 @@ function FreelancerListCard({ freelancer }) {
                   spacing={1}
                   sx={{ mt: { xs: 2, md: 0 } }}
                 >
-                  {freelancer && userRating ? (
-                    <Typography>{userRating.toFixed(1)}</Typography>
+                  {freelancer && freelancer.rating ? (
+                    <Typography>{freelancer.rating.toFixed(1)}</Typography>
                   ) : (
                     <Typography>No rating</Typography>
                   )}
                   <Rating
                     name="freelancer-rating"
-                    value={freelancer ? userRating : 0}
+                    value={freelancer ? freelancer.rating : 0}
                     precision={0.5}
                     size="small"
                     readOnly

@@ -17,7 +17,7 @@ const initialState = {
 };
 
 const slice = createSlice({
-  name: "post",
+  name: "job",
   initialState,
   reducers: {
     startLoading(state) {
@@ -82,11 +82,11 @@ export const createJob =
   };
 
 export const getJobs =
-  ({ page, limit = JOBS_PER_PAGE }) =>
+  ({ page, limit = JOBS_PER_PAGE, industry, search, sortBy }) =>
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const query = { page, limit };
+      const query = { page, limit, industry, search, sortBy };
       const response = await apiService.get(`/jobs?${stringify(query)}`);
       dispatch(slice.actions.getJobsSuccess(response.data.data));
     } catch (error) {

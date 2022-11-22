@@ -118,6 +118,7 @@ export const updateUserProfile =
   ({
     userId,
     name,
+    isFreelancer,
     avatarUrl,
     aboutMe,
     company,
@@ -134,6 +135,7 @@ export const updateUserProfile =
       const data = {
         userId,
         name,
+        isFreelancer,
         aboutMe,
         company,
         jobTitle,
@@ -148,7 +150,7 @@ export const updateUserProfile =
         data.avatarUrl = imageUrl;
       }
       const response = await apiService.put(`/users/${userId}`, data);
-      dispatch(slice.actions.updateUserProfileSuccess(response.data));
+      dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
       toast.success("Update Profile successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));

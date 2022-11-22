@@ -1,13 +1,12 @@
-import { Stack, Typography } from "@mui/material";
-import { FRadioGroup } from "../../components/form";
-
-export const SORT_BY_OPTIONS = [
-  { value: "newest", label: "Newest" },
-  { value: "highestBidAsc", label: "Highest Bid: Low to High" },
-  { value: "highestBidDesc", label: "Highest Bid: High to Low" },
-  { value: "averageBidAsc", label: "Average Bid: High to Low" },
-  { value: "averageBidDesc", label: "Average Bid: High to Low" },
-];
+import {
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
 export const FILTER_INDUSTRY_OPTIONS = [
   "All",
@@ -24,9 +23,9 @@ export const FILTER_INDUSTRY_OPTIONS = [
 ];
 
 function JobFilter({ resetFilter }) {
+  let [searchParams, setSearchParams] = useSearchParams();
   return (
     <Stack
-      direction={{ xs: "column", sm: "row", md: "column" }}
       justifyContent="center"
       alignItems={{ xs: "center", md: "stretch" }}
       spacing={{ xs: 3, sm: 7, md: 3 }}
@@ -36,20 +35,39 @@ function JobFilter({ resetFilter }) {
         boxShadow: 1,
         mb: { xs: 5 },
         p: 3,
-        width: { sm: "80%", lg: 250 },
+        width: { sm: "80%", md: 250 },
       }}
     >
       <Stack direction="column" spacing={1}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          Filter By Industry
-        </Typography>
-        <FRadioGroup
-          name="industry"
-          defaultValue="All"
-          direction="column"
-          options={FILTER_INDUSTRY_OPTIONS}
-          sx={{ width: 2, display: "flex", flexDirection: "column" }}
-        />
+        <FormControl>
+          <Typography sx={{ fontWeight: 600, fontSize: 20, mb: 2 }}>
+            Filter By Industry
+          </Typography>
+          <RadioGroup
+            name="industry-radio-group"
+            row
+            defaultValue="All"
+            value={searchParams.get("industry") || ""}
+            onChange={(event) => {
+              let industry = event.target.value;
+              if (industry) {
+                setSearchParams({ industry });
+              } else {
+                setSearchParams({});
+              }
+            }}
+          >
+            {FILTER_INDUSTRY_OPTIONS.map((option, index) => (
+              <FormControlLabel
+                key={option}
+                value={option}
+                control={<Radio />}
+                label={option.charAt(0).toUpperCase() + option.slice(1)}
+                sx={{ mb: 1 }}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
       </Stack>
     </Stack>
   );

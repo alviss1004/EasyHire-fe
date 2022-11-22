@@ -16,7 +16,6 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { fCurrency } from "../utils/numberFormat";
-import { createTheme } from "@mui/material/styles";
 import { FormProvider, FTextField } from "../components/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, number } from "yup";
@@ -109,171 +108,178 @@ function JobDetailPage() {
           <LoadingScreen />
         ) : (
           <>
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              justifyContent="space-between"
-              alignItems="center"
-              spacing={{ xs: 5, md: 0 }}
-              d
-            >
-              <Stack spacing={2} sx={{ width: { xs: "100%", md: "75%" } }}>
-                <Typography
-                  variant="h6"
-                  sx={{ color: "#21BBB5", fontWeight: 600 }}
-                  gutterBottom
+            {selectedJob && (
+              <>
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={{ xs: 5, md: 0 }}
+                  d
                 >
-                  {selectedJob?.title}
-                </Typography>
-                <Typography variant="body1" sx={{ overflow: "hidden" }}>
-                  {selectedJob?.description}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ fontWeight: 600 }}
-                  gutterBottom
-                >
-                  Industry: {selectedJob?.industry}
-                </Typography>
+                  <Stack spacing={2} sx={{ width: { xs: "100%", md: "75%" } }}>
+                    <Typography
+                      variant="h6"
+                      sx={{ color: "#21BBB5", fontWeight: 600 }}
+                      gutterBottom
+                    >
+                      {selectedJob?.title}
+                    </Typography>
+                    <Typography variant="body1" sx={{ overflow: "hidden" }}>
+                      {selectedJob?.description}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ fontWeight: 600 }}
+                      gutterBottom
+                    >
+                      Industry: {selectedJob?.industry}
+                    </Typography>
 
-                <Typography
-                  variant="body1"
-                  fontWeight={"bold"}
-                  sx={{ overflow: "hidden" }}
-                >
-                  Client:
-                  <Link
-                    underline="hover"
-                    color="#007fed"
-                    fontWeight={500}
-                    component={RouterLink}
-                    to="/users/:id"
-                    sx={{ ml: 1 }}
+                    <Typography
+                      variant="body1"
+                      fontWeight={"bold"}
+                      sx={{ overflow: "hidden" }}
+                    >
+                      Client:
+                      <Link
+                        underline="hover"
+                        color="#007fed"
+                        fontWeight={500}
+                        component={RouterLink}
+                        to={`/users/${selectedJob.lister._id}`}
+                        sx={{ ml: 1 }}
+                      >
+                        {selectedJob.lister.name}
+                      </Link>
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    spacing={1}
+                    sx={{ width: { xs: "100%", md: "20%" } }}
                   >
-                    {selectedJob?.lister.name}
-                  </Link>
-                </Typography>
-              </Stack>
-              <Stack
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                spacing={1}
-                sx={{ width: { xs: "100%", md: "20%" } }}
-              >
-                {selectedJob && (
-                  <Typography
-                    sx={{ position: "relative", top: -15, fontSize: 15 }}
-                  >
-                    Posted {fToNow(selectedJob.createdAt)}
-                  </Typography>
-                )}
+                    {selectedJob && (
+                      <Typography
+                        sx={{ position: "relative", top: -15, fontSize: 15 }}
+                      >
+                        Posted {fToNow(selectedJob.createdAt)}
+                      </Typography>
+                    )}
 
-                {selectedJob?.bidCount === 0 ? (
-                  <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
-                    No Bids Yet
+                    {selectedJob?.bidCount === 0 ? (
+                      <Typography
+                        variant="body1"
+                        sx={{ fontWeight: 600, mr: 1 }}
+                      >
+                        No Bids Yet
+                      </Typography>
+                    ) : (
+                      <>
+                        {selectedJob && (
+                          <>
+                            <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
+                              Highest Bid: {fCurrency(selectedJob.highestBid)}
+                            </Typography>
+                            <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
+                              Average Bid:{" "}
+                              {fCurrency(selectedJob.averageBid.toFixed(1))}
+                            </Typography>
+                          </>
+                        )}
+                        <Typography> {selectedJob.bidCount} Bids </Typography>
+                      </>
+                    )}
+                  </Stack>
+                </Stack>
+                <Divider sx={{ my: 2 }} />
+                {selectedJob && user._id === selectedJob.lister._id ? (
+                  ""
+                ) : !user.isFreelancer ? (
+                  <Typography variant="h6" fontWeight={"bold"}>
+                    You need to be a freelancer to bid on this job
                   </Typography>
                 ) : (
                   <>
-                    {selectedJob && (
-                      <>
-                        <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
-                          Highest Bid: {fCurrency(selectedJob?.highestBid)}
-                        </Typography>
-                        <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
-                          Average Bid:{" "}
-                          {fCurrency(selectedJob?.averageBid.toFixed(1))}
-                        </Typography>
-                      </>
-                    )}
-                    <Typography> {selectedJob?.bidCount} Bids </Typography>
+                    <Typography variant="h6" fontWeight={"bold"}>
+                      Interested in this job? Place your bid now and wait for
+                      response.
+                    </Typography>
+                    <FormProvider
+                      methods={methods}
+                      onSubmit={handleSubmit(onSubmit)}
+                    >
+                      <Stack
+                        direction={{ xs: "column", md: "row" }}
+                        spacing={2}
+                        my={3}
+                        sx={{ width: { xs: "100%", md: "75%" } }}
+                      >
+                        <FTextField name="bid" label="Your bid" />
+                        <Button
+                          fullWidth
+                          variant="contained"
+                          onClick={handleClickOpen}
+                          sx={{
+                            maxHeight: "55px",
+                            backgroundColor: "#E53838",
+                            ":hover": {
+                              filter: "brightness(120%)",
+                              backgroundColor: "#E53838",
+                            },
+                          }}
+                        >
+                          Place Your Bid
+                        </Button>
+                        <Dialog
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby="responsive-dialog-title"
+                        >
+                          <DialogTitle id="responsive-dialog-title">
+                            {"Bid confirmation"}
+                          </DialogTitle>
+                          <DialogContent>
+                            <DialogContentText>
+                              Are you sure you want to bid? You cannot edit your
+                              bid after.
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              autoFocus
+                              onClick={handleClose}
+                              sx={{ color: "#F22C35", fontWeight: 600 }}
+                            >
+                              Cancel
+                            </Button>
+                            <LoadingButton
+                              type="submit"
+                              loading={isSubmitting}
+                              sx={{ fontWeight: 600 }}
+                            >
+                              Confirm
+                            </LoadingButton>
+                          </DialogActions>
+                        </Dialog>
+                      </Stack>
+                    </FormProvider>
                   </>
                 )}
-              </Stack>
-            </Stack>
-            <Divider sx={{ my: 2 }} />
-            {user._id === selectedJob.lister._id ? (
-              ""
-            ) : !user.isFreelancer ? (
-              <Typography variant="h6" fontWeight={"bold"}>
-                You need to be a freelancer to bid on this job
-              </Typography>
-            ) : (
-              <>
-                <Typography variant="h6" fontWeight={"bold"}>
-                  Interested in this job? Place your bid now and wait for
-                  response.
-                </Typography>
-                <FormProvider
-                  methods={methods}
-                  onSubmit={handleSubmit(onSubmit)}
+                <Stack
+                  direction="column"
+                  mt={7}
+                  sx={{ width: { xs: "100%", md: "75%" } }}
                 >
-                  <Stack
-                    direction={{ xs: "column", md: "row" }}
-                    spacing={2}
-                    my={3}
-                    sx={{ width: { xs: "100%", md: "75%" } }}
-                  >
-                    <FTextField name="bid" label="Your bid" />
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      onClick={handleClickOpen}
-                      sx={{
-                        maxHeight: "55px",
-                        backgroundColor: "#E53838",
-                        ":hover": {
-                          filter: "brightness(120%)",
-                          backgroundColor: "#E53838",
-                        },
-                      }}
-                    >
-                      Place Your Bid
-                    </Button>
-                    <Dialog
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="responsive-dialog-title"
-                    >
-                      <DialogTitle id="responsive-dialog-title">
-                        {"Bid confirmation"}
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          Are you sure you want to bid? You cannot edit your bid
-                          after.
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          autoFocus
-                          onClick={handleClose}
-                          sx={{ color: "#F22C35", fontWeight: 600 }}
-                        >
-                          Cancel
-                        </Button>
-                        <LoadingButton
-                          type="submit"
-                          loading={isSubmitting}
-                          sx={{ fontWeight: 600 }}
-                        >
-                          Confirm
-                        </LoadingButton>
-                      </DialogActions>
-                    </Dialog>
-                  </Stack>
-                </FormProvider>
+                  <Typography variant="h6" fontWeight={"bold"}>
+                    Questions
+                  </Typography>
+                  <CommentSection />
+                </Stack>{" "}
               </>
             )}
-            <Stack
-              direction="column"
-              mt={7}
-              sx={{ width: { xs: "100%", md: "75%" } }}
-            >
-              <Typography variant="h6" fontWeight={"bold"}>
-                Questions
-              </Typography>
-              <CommentSection />
-            </Stack>{" "}
           </>
         )}
       </Container>

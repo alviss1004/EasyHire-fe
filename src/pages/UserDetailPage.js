@@ -55,6 +55,9 @@ function UserDetailPage() {
                 mt: 3,
               }}
             >
+              <Typography variant="h5" fontWeight={600}>
+                Reviews
+              </Typography>
               {selectedUser && (
                 <ReviewList
                   reviews={selectedUser.reviews}
