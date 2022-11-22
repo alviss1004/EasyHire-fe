@@ -78,7 +78,7 @@ function JobCard({ job }) {
             >
               <Typography
                 textAlign={"center"}
-                sx={{ position: "relative", top: -15, fontSize: 15 }}
+                sx={{ position: "relative", top: -10, fontSize: 15 }}
               >
                 Posted {fToNow(job.createdAt)}
               </Typography>
@@ -89,10 +89,16 @@ function JobCard({ job }) {
                 </Typography>
               ) : (
                 <>
-                  <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
+                  <Typography
+                    textAlign={"center"}
+                    sx={{ fontSize: 16, fontWeight: 600 }}
+                  >
                     Highest Bid: {fCurrency(job.highestBid)}
                   </Typography>
-                  <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
+                  <Typography
+                    textAlign={"center"}
+                    sx={{ fontSize: 16, fontWeight: 600 }}
+                  >
                     Average Bid: {fCurrency(job.averageBid.toFixed(1))}
                   </Typography>
                   <Typography> {job.bidCount} Bids </Typography>

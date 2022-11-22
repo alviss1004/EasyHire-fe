@@ -13,27 +13,16 @@ import PaidIcon from "@mui/icons-material/Paid";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link as RouterLink, useParams } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { object, number } from "yup";
-import { useForm } from "react-hook-form";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getJobById } from "../features/job/jobSlice";
-import useAuth from "../hooks/useAuth";
 import { capitalCase } from "change-case";
-import { createBid } from "../features/bid/bidSlice";
 import JobDetailInfo from "../features/job/JobDetailInfo";
 import JobDetailBids from "../features/job/JobDetailBids";
-
-let bidSchema = object({
-  price: number().required("Bid is required"),
-});
-
-const defaultValues = {
-  price: "",
-};
+import useAuth from "../hooks/useAuth";
 
 function JobDetailPage() {
   const [currentTab, setCurrentTab] = useState("info");
+  const { user } = useAuth();
   const dispatch = useDispatch();
   const params = useParams();
   const jobId = params.id;
@@ -55,7 +44,7 @@ function JobDetailPage() {
     {
       value: "bids",
       icon: <PaidIcon sx={{ fontSize: 30 }} />,
-      component: <JobDetailBids bids={selectedJob.bids} loading={isLoading} />,
+      component: <JobDetailBids bids={selectedJob?.bids} loading={isLoading} />,
     },
   ];
 
@@ -91,35 +80,42 @@ function JobDetailPage() {
         <Helmet>
           <style>{"body { background-color: #F0F3F5; }"}</style>
         </Helmet>
-        <Tabs
-          value={currentTab}
-          scrollButtons="auto"
-          variant="scrollable"
-          allowScrollButtonsMobile
-          onChange={(e, value) => setCurrentTab(value)}
-          sx={{ mb: 2 }}
-        >
-          {JOBDETAIL_TABS.map((tab) => (
-            <Tab
-              disableRipple
-              key={tab.value}
-              label={capitalCase(tab.value)}
-              icon={tab.icon}
-              value={tab.value}
-            />
-          ))}
-        </Tabs>
-        <Divider />
-        {JOBDETAIL_TABS.map((tab) => {
-          const isMatched = tab.value === currentTab;
-          return (
-            isMatched && (
-              <Box key={tab.value} sx={{ mt: 2 }}>
-                {tab.component}
-              </Box>
-            )
-          );
-        })}
+        {user._id === selectedJob?.lister._id ? (
+          <>
+            {" "}
+            <Tabs
+              value={currentTab}
+              scrollButtons="auto"
+              variant="scrollable"
+              allowScrollButtonsMobile
+              onChange={(e, value) => setCurrentTab(value)}
+              sx={{ mb: 2 }}
+            >
+              {JOBDETAIL_TABS.map((tab) => (
+                <Tab
+                  disableRipple
+                  key={tab.value}
+                  label={capitalCase(tab.value)}
+                  icon={tab.icon}
+                  value={tab.value}
+                />
+              ))}
+            </Tabs>
+            <Divider />
+            {JOBDETAIL_TABS.map((tab) => {
+              const isMatched = tab.value === currentTab;
+              return (
+                isMatched && (
+                  <Box key={tab.value} sx={{ mt: 2 }}>
+                    {tab.component}
+                  </Box>
+                )
+              );
+            })}
+          </>
+        ) : (
+          <JobDetailInfo job={selectedJob} loading={isLoading} />
+        )}
       </Container>
     </>
   );

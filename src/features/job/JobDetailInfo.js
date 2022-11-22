@@ -64,7 +64,7 @@ function JobDetailPage({ job, loading }) {
   const getCurrentUserBid = () => {
     if (job) {
       const jobBids = job.bids;
-      const userBid = jobBids.filter((bid) => bid.bidder === user._id);
+      const userBid = jobBids.filter((bid) => bid.bidder._id === user._id);
       return userBid[0];
     }
   };
@@ -115,7 +115,7 @@ function JobDetailPage({ job, loading }) {
                     <Link
                       underline="hover"
                       color="#007fed"
-                      fontWeight={500}
+                      fontSize={17}
                       component={RouterLink}
                       to={`/users/${job.lister._id}`}
                       sx={{ ml: 1 }}
@@ -148,10 +148,16 @@ function JobDetailPage({ job, loading }) {
                     <>
                       {job && (
                         <>
-                          <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
+                          <Typography
+                            textAlign={"center"}
+                            sx={{ fontSize: 18, fontWeight: 600 }}
+                          >
                             Highest Bid: {fCurrency(job.highestBid)}
                           </Typography>
-                          <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
+                          <Typography
+                            textAlign={"center"}
+                            sx={{ fontSize: 18, fontWeight: 600 }}
+                          >
                             Average Bid: {fCurrency(job.averageBid.toFixed(1))}
                           </Typography>
                         </>

@@ -75,12 +75,19 @@ function JobCard({ job }) {
                 </Typography>
               </Box>
               {job.bidCount === 0 ? (
-                <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                <Typography
+                  textAlign={"center"}
+                  variant="body1"
+                  sx={{ fontWeight: 600 }}
+                >
                   No Bids Yet
                 </Typography>
               ) : (
                 <>
-                  <Typography sx={{ fontSize: 18, fontWeight: 600 }}>
+                  <Typography
+                    textAlign={"center"}
+                    sx={{ fontSize: 18, fontWeight: 600 }}
+                  >
                     Highest Bid: {fCurrency(job.highestBid)}
                   </Typography>
                   <Typography> {job.bidCount} Bids </Typography>
