@@ -13,11 +13,8 @@ function AccountListings() {
   useEffect(() => {
     dispatch(getUserListings());
   }, [dispatch]);
-  console.log("LISTINGS", userListings);
-  console.log("LOADING", isLoading);
 
   let renderListings;
-
   if (userListings) {
     renderListings = (
       <Stack

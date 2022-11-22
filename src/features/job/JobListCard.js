@@ -76,7 +76,10 @@ function JobCard({ job }) {
               spacing={1}
               sx={{ mr: 3 }}
             >
-              <Typography sx={{ position: "relative", top: -15, fontSize: 15 }}>
+              <Typography
+                textAlign={"center"}
+                sx={{ position: "relative", top: -15, fontSize: 15 }}
+              >
                 Posted {fToNow(job.createdAt)}
               </Typography>
 

@@ -1,4 +1,4 @@
-import { Pagination, Stack } from "@mui/material";
+import { Pagination, Stack, Typography } from "@mui/material";
 import FreelancerCard from "./FreelancerListCard";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,13 @@ import LoadingScreen from "../../components/misc/LoadingScreen";
 function FreelancerList() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const { freelancersById, currentPageFreelancers, totalPages, isLoading } =
-    useSelector((state) => state.user);
+  const {
+    freelancersById,
+    currentPageFreelancers,
+    totalFreelancers,
+    totalPages,
+    isLoading,
+  } = useSelector((state) => state.user);
 
   const freelancers = currentPageFreelancers.map(
     (freelancerId) => freelancersById[freelancerId]
@@ -33,8 +38,7 @@ function FreelancerList() {
           <Stack
             spacing={2}
             direction={{ xs: "column", sm: "row" }}
-            alignItems={{ sm: "center" }}
-            justifyContent="flex-end"
+            justifyContent={{ sm: "center", md: "flex-end" }}
             mb={2}
             sx={{ width: { md: "90%" } }}
           >
@@ -47,6 +51,9 @@ function FreelancerList() {
               showLastButton
             />
           </Stack>
+          <Typography fontSize={17} sx={{ alignSelf: "center", mb: 1 }}>
+            {totalFreelancers} freelancers found
+          </Typography>
           <Stack spacing={2} justifyContent="center" alignItems="center">
             {freelancers?.map((freelancer) => (
               <FreelancerCard key={freelancer._id} freelancer={freelancer} />

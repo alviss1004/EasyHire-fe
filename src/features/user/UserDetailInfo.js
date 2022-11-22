@@ -18,7 +18,6 @@ function UserDetailInfo({ user }) {
 
   return (
     <Container
-      justifyContent="center"
       sx={{
         backgroundColor: "#FFF",
         boxShadow: 1,
@@ -105,15 +104,15 @@ function UserDetailInfo({ user }) {
             }}
           >
             <Box
-              component="img"
-              src=""
               height={{ xs: "70%", md: "20%" }}
               width={{ xs: "70%", md: "20%" }}
               sx={{
                 minWidth: { xs: "70%", md: 220 },
                 minHeight: { xs: "70%", md: 220 },
               }}
-            ></Box>
+            >
+              <Typography sx={{ margin: "30%" }}>No image</Typography>
+            </Box>
             <Stack direction="row" spacing={3} sx={{ p: 1, mb: 1 }}>
               <Link
                 href={`https://${user?.linkedinLink}`}

@@ -13,6 +13,14 @@ import { useNavigate } from "react-router-dom";
 function FreelancerListCard({ freelancer }) {
   const navigate = useNavigate();
 
+  const truncateString = (str, num = 200) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
   return (
     <Card
       variant="outlined"
@@ -127,7 +135,7 @@ function FreelancerListCard({ freelancer }) {
               </Stack>
 
               <Typography variant="body1" sx={{ overflow: "hidden" }}>
-                {freelancer?.aboutMe}
+                {truncateString(freelancer?.aboutMe)}
               </Typography>
             </Stack>
           </CardContent>

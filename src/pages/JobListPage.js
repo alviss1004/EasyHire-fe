@@ -48,9 +48,8 @@ function JobListPage() {
   const [sortBy, setSortBy] = useState("Newest");
   const [industry, setIndustry] = useState("All");
   const [search, setSearch] = useState("");
-  const { jobsById, currentPageJobs, totalPages, isLoading } = useSelector(
-    (state) => state.job
-  );
+  const { jobsById, currentPageJobs, totalPages, totalJobs, isLoading } =
+    useSelector((state) => state.job);
 
   const jobs = currentPageJobs.map((jobId) => jobsById[jobId]);
 
@@ -173,6 +172,9 @@ function JobListPage() {
               showLastButton
             />
           </Stack>
+          <Typography fontSize={17} sx={{ alignSelf: "center", mb: 1 }}>
+            {totalJobs} jobs found
+          </Typography>
           <JobList jobs={jobs} loading={isLoading} />
         </Stack>
       </Container>

@@ -14,6 +14,7 @@ const initialState = {
   currentPageFreelancers: [],
   featuredFreelancers: [],
   userListings: [],
+  userBids: [],
   totalFreelancers: 0,
   totalPages: 1,
 };
@@ -54,6 +55,12 @@ const slice = createSlice({
       state.error = null;
       const { myJobs } = action.payload;
       state.userListings = myJobs;
+    },
+    getUserBidsSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { myBids } = action.payload;
+      state.userBids = myBids;
     },
     getUserByIdSuccess(state, action) {
       state.isLoading = false;
@@ -109,6 +116,16 @@ export const getUserListings = () => async (dispatch) => {
   try {
     const response = await apiService.get(`/users/me/jobs`);
     dispatch(slice.actions.getUserListingsSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+
+export const getUserBids = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get(`/users/me/bids`);
+    dispatch(slice.actions.getUserBidsSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
   }

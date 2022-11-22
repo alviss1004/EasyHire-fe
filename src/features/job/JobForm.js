@@ -18,7 +18,7 @@ const JobPostSchema = Yup.object().shape({
 
 const defaultValues = {
   title: "",
-  industry: "",
+  industry: "Arts & Entertainment",
   description: "",
 };
 
@@ -52,8 +52,9 @@ function JobForm() {
 
   const onSubmit = async (data) => {
     try {
-      dispatch(createJob(data));
-      navigate(`/jobs`);
+      const jobData = await dispatch(createJob(data));
+      console.log("JobData", jobData);
+      navigate(`/jobs/${jobData.job._id}`);
     } catch (error) {
       reset();
       setError("responseError", error);
@@ -74,7 +75,7 @@ function JobForm() {
           <FTextField name="title" label="Title" />
           <FSelect name="industry" helperText="Please select industry">
             {industries.map((industry) => (
-              <option key={industry} value={industry} defaultValue={""}>
+              <option key={industry} value={industry}>
                 {industry}
               </option>
             ))}

@@ -75,6 +75,7 @@ export const createJob =
       });
       dispatch(slice.actions.createJobSuccess(response.data.data));
       toast.success("Create job successfully");
+      return response.data.data;
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);

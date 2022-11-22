@@ -66,15 +66,16 @@ function JobCard({ job }) {
               spacing={1}
               sx={{ mr: 3 }}
             >
-              <Box sx={{ position: "relative", top: { xs: 5, md: -20 } }}>
+              <Box sx={{ position: "relative", top: { xs: 5, md: 0 } }}>
                 <Typography
+                  textAlign={"center"}
                   sx={{ position: "relative", top: -15, fontSize: 15 }}
                 >
                   Posted {fToNow(job.createdAt)}
                 </Typography>
               </Box>
               {job.bidCount === 0 ? (
-                <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
+                <Typography variant="body1" sx={{ fontWeight: 600 }}>
                   No Bids Yet
                 </Typography>
               ) : (
