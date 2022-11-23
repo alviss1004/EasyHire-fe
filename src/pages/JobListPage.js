@@ -20,6 +20,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getJobs } from "../features/job/jobSlice";
 import { JOBS_PER_PAGE } from "../app/config";
+import LoadingScreen from "../components/misc/LoadingScreen";
 
 const FILTER_INDUSTRY_OPTIONS = [
   "All",
@@ -174,7 +175,7 @@ function JobListPage() {
           <Typography fontSize={17} sx={{ alignSelf: "center", mb: 1 }}>
             {totalJobs} jobs found
           </Typography>
-          <JobList jobs={jobs} loading={isLoading} />
+          {isLoading ? <LoadingScreen /> : <JobList jobs={jobs} />}
         </Stack>
       </Container>
     </>
