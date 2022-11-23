@@ -103,6 +103,9 @@ function JobDetailPage({ job, loading }) {
                 spacing={{ xs: 5, md: 0 }}
               >
                 <Stack spacing={2} sx={{ width: { xs: "100%", md: "75%" } }}>
+                  <Typography fontSize={15} textAlign={"center"}>
+                    Posted {fToNow(job.createdAt)}
+                  </Typography>
                   <Typography
                     variant="h6"
                     sx={{ color: "#21BBB5", fontWeight: 600 }}
@@ -146,15 +149,6 @@ function JobDetailPage({ job, loading }) {
                   spacing={1}
                   sx={{ width: { xs: "100%", md: "20%" } }}
                 >
-                  {job && (
-                    <Typography
-                      textAlign={"center"}
-                      sx={{ position: "relative", top: -15, fontSize: 15 }}
-                    >
-                      Posted {fToNow(job.createdAt)}
-                    </Typography>
-                  )}
-
                   {job?.bidCount === 0 ? (
                     <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
                       No Bids Yet
