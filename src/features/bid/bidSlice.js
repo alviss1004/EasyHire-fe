@@ -24,6 +24,10 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    declineBidSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+    },
     deleteBidSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -47,6 +51,32 @@ export const createBid =
       toast.error(error.message);
     }
   };
+
+export const declineBid = (bidId, jobId) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.delete(`/bids/decline/${bidId}`);
+    dispatch(slice.actions.declineBidSuccess(response.data.data));
+    dispatch(getJobById(jobId));
+    toast.success("Decline bid successfully");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+
+export const acceptBid = (bidId, jobId) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.put(`/bids/accept/${bidId}`);
+    dispatch(slice.actions.acceptBidSuccess(response.data.data));
+    dispatch(getJobById(jobId));
+    toast.success("Accept bid successfully");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
 
 export const deleteBid =
   (bidId, jobId = null) =>

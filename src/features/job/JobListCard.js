@@ -53,6 +53,7 @@ function JobCard({ job, loading }) {
                   <Typography variant="body1" sx={{ overflow: "hidden" }}>
                     {truncateString(job.description)}
                   </Typography>
+
                   <Stack
                     my={{ xs: 2, md: 1 }}
                     flexDirection="row"

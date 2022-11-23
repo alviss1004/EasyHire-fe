@@ -1,4 +1,16 @@
-import { Alert, Box, Button, Divider, Link, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  Link,
+  Typography,
+} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Stack } from "@mui/system";
 import React from "react";
@@ -30,6 +42,15 @@ function JobDetailPage({ job, loading }) {
   const { user } = useAuth();
   const params = useParams();
   const jobId = params.id;
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const methods = useForm({
     resolver: yupResolver(bidSchema),
@@ -202,10 +223,43 @@ function JobDetailPage({ job, loading }) {
                           backgroundColor: "#E53838",
                         },
                       }}
-                      onClick={() => handleDeleteBid(currentUserBid._id, jobId)}
+                      onClick={handleClickOpen}
                     >
                       Cancel Bid
                     </Button>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="responsive-dialog-title"
+                    >
+                      <DialogTitle id="responsive-dialog-title">
+                        {"Cancel confirmation"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Are you sure you want to cancel this bid?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          autoFocus
+                          onClick={handleClose}
+                          sx={{ color: "#F22C35", fontWeight: 600 }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleDeleteBid(currentUserBid._id, jobId);
+                            handleClose();
+                          }}
+                          autoFocus
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Confirm
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </Box>
                 </Stack>
               ) : (

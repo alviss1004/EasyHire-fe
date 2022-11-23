@@ -111,7 +111,7 @@ function CoverCarousel() {
           infiniteLoop={true}
           showStatus={false}
           showArrows={false}
-          interval={7000}
+          interval={5000}
           sx={{ zIndex: 1 }}
         >
           <Box

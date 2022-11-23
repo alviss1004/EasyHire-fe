@@ -8,7 +8,7 @@ import {
   Grid,
   IconButton,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingScreen from "../../components/misc/LoadingScreen";
@@ -23,7 +23,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 function AccountBids() {
   const dispatch = useDispatch();
   const { userBids, isLoading } = useSelector((state) => state.user);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -63,16 +63,11 @@ function AccountBids() {
                   <CardContent>
                     <Stack direction="row" justifyContent="space-between">
                       <Stack>
-                        <Typography fontFamily={"tahoma"}>
+                        <Typography fontWeight={600}>
                           Bid Amount: {fCurrency(bid.price)}
                         </Typography>
-                        <Typography fontFamily={"tahoma"}>
-                          Job Title : {bid.targetJob.title}
-                        </Typography>
-                        <Typography fontFamily={"tahoma"}>
-                          {" "}
-                          Bid Status : {bid.status}
-                        </Typography>
+                        <Typography>For: {bid.targetJob.title}</Typography>
+                        <Typography> Status: {bid.status}</Typography>
                         <Link
                           component={RouterLink}
                           to={`/jobs/${bid.targetJob._id}`}
@@ -87,10 +82,10 @@ function AccountBids() {
                       <Dialog
                         open={open}
                         onClose={handleClose}
-                        aria-labelledby="responsive-dialog-title"
+                        aria-labelledby="cancelBid-dialog"
                       >
-                        <DialogTitle id="responsive-dialog-title">
-                          {"Delete confirmation"}
+                        <DialogTitle id="cancelBid-dialog">
+                          {"Cancel confirmation"}
                         </DialogTitle>
                         <DialogContent>
                           <DialogContentText>
@@ -106,7 +101,10 @@ function AccountBids() {
                             Cancel
                           </Button>
                           <Button
-                            onClick={() => handleDeleteBid(bid._id)}
+                            onClick={() => {
+                              handleDeleteBid(bid._id);
+                              handleClose();
+                            }}
                             autoFocus
                             sx={{ fontWeight: 600 }}
                           >

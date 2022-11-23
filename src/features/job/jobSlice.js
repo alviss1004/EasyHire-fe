@@ -31,6 +31,12 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    editJobSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      console.log("haha", { ...action.payload.job });
+      state.selectedJob = action.payload.job;
+    },
     getJobsSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -56,6 +62,10 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.selectedJob = action.payload.job;
+    },
+    deleteJobSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
     },
   },
 });
@@ -115,19 +125,38 @@ export const getJobById = (id) => async (dispatch) => {
   }
 };
 
-// export const deletePost =
-//   ({ postId, userId }) =>
-//   async (dispatch) => {
-//     dispatch(slice.actions.startLoading());
-//     try {
-//       await apiService.delete(`/posts/${postId}`);
-//       dispatch(slice.actions.deletePostSuccess(postId));
-//       dispatch(getPosts({ userId }));
-//       toast.success("Post Deleted");
-//     } catch (error) {
-//       dispatch(slice.actions.hasError(error.message));
-//       toast.error(error.message);
-//     }
-//   };
+export const editJob =
+  ({ jobId, title, industry, description, image }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      // upload image to cloudinary
+      const imageUrl = await cloudinaryUpload(image);
+      const response = await apiService.put(`/jobs/${jobId}`, {
+        title,
+        industry,
+        description,
+        image: imageUrl,
+      });
+      dispatch(slice.actions.editJobSuccess(response.data.data));
+      toast.success("Edit job successfully");
+      return response.data.data;
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+
+export const deleteJob = (id) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    await apiService.delete(`/jobs/${id}`);
+    dispatch(slice.actions.deleteJobSuccess());
+    toast.success("Job Deleted");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
 
 export default slice.reducer;
