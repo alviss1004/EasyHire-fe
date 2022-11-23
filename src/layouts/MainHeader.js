@@ -70,11 +70,10 @@ function MainHeader() {
     }
   };
 
-  const handleBecomeFreelancer = () => {
+  const handleBecomeFreelancer = async () => {
     handleMenuClose();
-    dispatch(updateUserProfile({ userId: user._id, isFreelancer: true })).then(
-      window.location.reload()
-    );
+    await dispatch(updateUserProfile({ userId: user._id, isFreelancer: true }));
+    window.location.reload();
   };
 
   const renderMenu = (

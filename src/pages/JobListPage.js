@@ -156,7 +156,6 @@ function JobListPage() {
               size="small"
               sx={{ width: 300 }}
             >
-              {console.log(sortBy)}
               {SORTBY_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}

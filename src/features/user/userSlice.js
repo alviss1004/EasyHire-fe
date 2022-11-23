@@ -31,6 +31,10 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    getMyProfile(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     getFreelancersSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -131,6 +135,16 @@ export const getUserBids = () => async (dispatch) => {
   }
 };
 
+export const getMyProfile = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get(`/users/me`);
+    dispatch(slice.actions.getMyProfileSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+
 export const updateUserProfile =
   ({
     userId,
@@ -168,6 +182,7 @@ export const updateUserProfile =
       }
       const response = await apiService.put(`/users/${userId}`, data);
       dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
+      dispatch(getMyProfile());
       toast.success("Update Profile successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));

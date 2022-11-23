@@ -1,16 +1,7 @@
-import {
-  Alert,
-  Box,
-  Breadcrumbs,
-  Button,
-  Container,
-  Divider,
-  Link,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Button, Divider, Link, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Stack } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { fCurrency } from "../../utils/numberFormat";
@@ -20,15 +11,14 @@ import { object, number } from "yup";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import CommentSection from "../comment/CommentSection";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getJobById } from "../job/jobSlice";
+import { useDispatch } from "react-redux";
 import { fToNow } from "../../utils/formatTime";
 import useAuth from "../../hooks/useAuth";
 import LoadingScreen from "../../components/misc/LoadingScreen";
-import { createBid } from "../bid/bidSlice";
+import { createBid, deleteBid } from "../bid/bidSlice";
 
 let bidSchema = object({
-  price: number().required("Bid is required"),
+  price: number().required("Bid is required").positive(),
 });
 
 const defaultValues = {
@@ -54,11 +44,15 @@ function JobDetailPage({ job, loading }) {
 
   const onSubmit = async (data) => {
     try {
-      dispatch(createBid({ ...data, jobId })).then(window.location.reload());
+      dispatch(createBid({ ...data, jobId }));
     } catch (error) {
       reset();
       setError("responseError", error);
     }
+  };
+
+  const handleDeleteBid = async (bidId, jobId) => {
+    dispatch(deleteBid(bidId, jobId));
   };
 
   const getCurrentUserBid = () => {
@@ -208,6 +202,7 @@ function JobDetailPage({ job, loading }) {
                           backgroundColor: "#E53838",
                         },
                       }}
+                      onClick={() => handleDeleteBid(currentUserBid._id, jobId)}
                     >
                       Cancel Bid
                     </Button>

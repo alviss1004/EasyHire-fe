@@ -53,7 +53,6 @@ function JobForm() {
   const onSubmit = async (data) => {
     try {
       const jobData = await dispatch(createJob(data));
-      console.log("JobData", jobData);
       navigate(`/jobs/${jobData.job._id}`);
     } catch (error) {
       reset();
