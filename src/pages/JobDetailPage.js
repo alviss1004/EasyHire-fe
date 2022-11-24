@@ -30,6 +30,7 @@ import { Stack } from "@mui/system";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
 import EditPostForm from "../features/job/EditPostForm";
+import LoadingScreen from "../components/misc/LoadingScreen";
 
 function JobDetailPage() {
   const [currentTab, setCurrentTab] = useState("info");
@@ -100,109 +101,113 @@ function JobDetailPage() {
         </Link>
         <Typography>{selectedJob?.title}</Typography>
       </Breadcrumbs>
-      <Container
-        sx={{
-          backgroundColor: "#FFF",
-          minWidth: "75vw",
-          maxWidth: "75vw",
-          boxShadow: 1,
-          p: 1.5,
-        }}
-      >
-        <Helmet>
-          <style>{"body { background-color: #F0F3F5; }"}</style>
-        </Helmet>
-        {isEditing ? (
-          selectedJob && (
-            <EditPostForm job={selectedJob} toggleEdit={toggleEdit} />
-          )
-        ) : user._id === selectedJob?.lister._id ? (
-          <>
-            <Stack direction="row" justifyContent="space-between">
-              <Tabs
-                value={currentTab}
-                scrollButtons="auto"
-                variant="scrollable"
-                allowScrollButtonsMobile
-                onChange={(e, value) => setCurrentTab(value)}
-                sx={{ mb: 2 }}
-              >
-                {JOBDETAIL_TABS.map((tab) => (
-                  <Tab
-                    disableRipple
-                    key={tab.value}
-                    label={capitalCase(tab.value)}
-                    icon={tab.icon}
-                    value={tab.value}
-                  />
-                ))}
-              </Tabs>
-              <Stack direction="row">
-                <IconButton
-                  aria-label="delete"
-                  color="inherit"
-                  onClick={toggleEdit}
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <Container
+          sx={{
+            backgroundColor: "#FFF",
+            minWidth: "75vw",
+            maxWidth: "75vw",
+            boxShadow: 1,
+            p: 1.5,
+          }}
+        >
+          <Helmet>
+            <style>{"body { background-color: #F0F3F5; }"}</style>
+          </Helmet>
+          {isEditing ? (
+            selectedJob && (
+              <EditPostForm job={selectedJob} toggleEdit={toggleEdit} />
+            )
+          ) : user._id === selectedJob?.lister._id ? (
+            <>
+              <Stack direction="row" justifyContent="space-between">
+                <Tabs
+                  value={currentTab}
+                  scrollButtons="auto"
+                  variant="scrollable"
+                  allowScrollButtonsMobile
+                  onChange={(e, value) => setCurrentTab(value)}
+                  sx={{ mb: 2 }}
                 >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  aria-label="delete"
-                  color="inherit"
-                  onClick={handleClickOpen}
-                >
-                  <HighlightOffIcon />
-                </IconButton>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="deleteJob-dialog"
-                >
-                  <DialogTitle id="deleteJob-dialog">
-                    {"Delete confirmation"}
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      Are you sure you want to delete this job?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      autoFocus
-                      onClick={handleClose}
-                      sx={{ color: "#F22C35", fontWeight: 600 }}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        handleDeleteJob(selectedJob._id);
-                        handleClose();
-                      }}
-                      autoFocus
-                      sx={{ fontWeight: 600 }}
-                    >
-                      Confirm
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                  {JOBDETAIL_TABS.map((tab) => (
+                    <Tab
+                      disableRipple
+                      key={tab.value}
+                      label={capitalCase(tab.value)}
+                      icon={tab.icon}
+                      value={tab.value}
+                    />
+                  ))}
+                </Tabs>
+                <Stack direction="row">
+                  <IconButton
+                    aria-label="delete"
+                    color="inherit"
+                    onClick={toggleEdit}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    color="inherit"
+                    onClick={handleClickOpen}
+                  >
+                    <HighlightOffIcon />
+                  </IconButton>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="deleteJob-dialog"
+                  >
+                    <DialogTitle id="deleteJob-dialog">
+                      {"Delete confirmation"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        Are you sure you want to delete this job?
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        autoFocus
+                        onClick={handleClose}
+                        sx={{ color: "#F22C35", fontWeight: 600 }}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleDeleteJob(selectedJob._id);
+                          handleClose();
+                        }}
+                        autoFocus
+                        sx={{ fontWeight: 600 }}
+                      >
+                        Confirm
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Stack>
               </Stack>
-            </Stack>
-            <Divider />
-            {JOBDETAIL_TABS.map((tab) => {
-              const isMatched = tab.value === currentTab;
-              return (
-                isMatched && (
-                  <Box key={tab.value} sx={{ mt: 2 }}>
-                    {tab.component}
-                  </Box>
-                )
-              );
-            })}
-          </>
-        ) : (
-          <JobDetailInfo job={selectedJob} loading={isLoading} />
-        )}
-      </Container>
+              <Divider />
+              {JOBDETAIL_TABS.map((tab) => {
+                const isMatched = tab.value === currentTab;
+                return (
+                  isMatched && (
+                    <Box key={tab.value} sx={{ mt: 2 }}>
+                      {tab.component}
+                    </Box>
+                  )
+                );
+              })}
+            </>
+          ) : (
+            <JobDetailInfo job={selectedJob} />
+          )}
+        </Container>
+      )}
     </>
   );
 }

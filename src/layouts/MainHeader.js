@@ -13,6 +13,7 @@ import useAuth from "../hooks/useAuth";
 import Logo from "../components/misc/Logo";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../features/user/userSlice";
+import StarIcon from "@mui/icons-material/Star";
 
 function MainHeader() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -216,7 +217,7 @@ function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
           {isAuthenticated ? (
             <Stack
-              spacing={{ xs: 3, sm: 1, md: 3, lg: 5 }}
+              spacing={{ xs: 3, sm: 1, md: 3, lg: 2 }}
               direction="row"
               my={1}
               sx={{
@@ -238,6 +239,9 @@ function MainHeader() {
               >
                 Post a Job
               </Button>
+              {user.isFreelancer && (
+                <StarIcon fontSize={"large"} sx={{ color: "#26DFD8" }} />
+              )}
               <Box>
                 <Avatar
                   src={user.avatarUrl}

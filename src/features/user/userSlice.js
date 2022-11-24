@@ -74,7 +74,7 @@ const slice = createSlice({
     updateUserProfileSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      state.updatedProfile = action.payload;
+      state.updatedProfile = action.payload.user;
     },
   },
 });
@@ -182,7 +182,6 @@ export const updateUserProfile =
       }
       const response = await apiService.put(`/users/${userId}`, data);
       dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
-      dispatch(getMyProfile());
       toast.success("Update Profile successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
