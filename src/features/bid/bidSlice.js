@@ -28,6 +28,10 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    acceptBidSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+    },
     deleteBidSuccess(state, action) {
       state.isLoading = false;
       state.error = null;

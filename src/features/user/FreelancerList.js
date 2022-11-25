@@ -43,6 +43,7 @@ function FreelancerList() {
             sx={{ width: { md: "90%" } }}
           >
             <Pagination
+              color="primary"
               count={totalPages}
               page={page}
               onChange={handleChangePage}

@@ -115,10 +115,11 @@ export const getFeaturedFreelancers = () => async (dispatch) => {
   }
 };
 
-export const getUserListings = () => async (dispatch) => {
+export const getUserListings = (status) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
-    const response = await apiService.get(`/users/me/jobs`);
+    console.log(status);
+    const response = await apiService.get(`/users/me/jobs?status=${status}`);
     dispatch(slice.actions.getUserListingsSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));

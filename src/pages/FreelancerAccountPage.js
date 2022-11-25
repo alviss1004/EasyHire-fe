@@ -1,26 +1,25 @@
 import React, { useState } from "react";
 import { Container, Tab, Box, Tabs, Typography } from "@mui/material";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import PaidIcon from "@mui/icons-material/Paid";
 import { capitalCase } from "change-case";
-import AccountListings from "../features/user/AccountListings";
+import WorkIcon from "@mui/icons-material/Work";
+import AccountBids from "../features/user/AccountBids";
 import UserDetailInfo from "../features/user/UserDetailInfo";
 import useAuth from "../hooks/useAuth";
 
 function MyProfilePage() {
-  const [currentTab, setCurrentTab] = useState("general");
+  const [currentTab, setCurrentTab] = useState("my bids");
   const { user } = useAuth();
 
   const MYPROFILE_TABS = [
     {
-      value: "general",
-      icon: <AccountBoxIcon sx={{ fontSize: 30 }} />,
-      component: <UserDetailInfo user={user} />,
+      value: "my bids",
+      icon: <PaidIcon sx={{ fontSize: 30 }} />,
+      component: <AccountBids profile={{}} />,
     },
     {
-      value: "my listings",
-      icon: <FormatListBulletedIcon sx={{ fontSize: 30 }} />,
-      component: <AccountListings profile={{}} />,
+      value: "active jobs",
+      icon: <WorkIcon sx={{ fontSize: 30 }} />,
     },
   ];
 

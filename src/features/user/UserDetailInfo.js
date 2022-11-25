@@ -55,25 +55,18 @@ function UserDetailInfo({ user }) {
                 }}
               />
             ) : (
-              <>
-                <Box
-                  height={{ xs: "70%", md: "20%" }}
-                  width={{ xs: "70%", md: "20%" }}
-                  sx={{
-                    minWidth: { xs: "70%", md: 220 },
-                    minHeight: { xs: "70%", md: 220 },
-                  }}
-                >
-                  <Typography sx={{ margin: "30%" }}>No image</Typography>
-                </Box>{" "}
-              </>
+              <Box
+                height={{ xs: "70%", md: "20%" }}
+                width={{ xs: "70%", md: "20%" }}
+                sx={{
+                  minWidth: { xs: "70%", md: 220 },
+                  minHeight: { xs: "70%", md: 220 },
+                }}
+              >
+                <Typography sx={{ margin: "30%" }}>No image</Typography>
+              </Box>
             )}
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              spacing={3}
-              sx={{ p: 1, mb: 1 }}
-            >
+            <Stack direction="row" spacing={3} sx={{ p: 1, mb: 1 }}>
               {user.linkedinLink ? (
                 <Link
                   href={`https://${user.linkedinLink}`}

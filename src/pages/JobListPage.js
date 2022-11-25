@@ -11,6 +11,7 @@ import {
   Typography,
   TextField,
   InputAdornment,
+  Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
@@ -92,8 +93,8 @@ function JobListPage() {
             spacing={{ xs: 3, sm: 7, md: 3 }}
             sx={{
               backgroundColor: "#FFF",
-              borderRadius: "1px solid black",
-              boxShadow: 1,
+              borderRadius: 1,
+              boxShadow: 2,
               mb: { xs: 5 },
               p: 3,
               width: { sm: "80%", md: 250 },
@@ -104,6 +105,7 @@ function JobListPage() {
                 <Typography sx={{ fontWeight: 600, fontSize: 20, mb: 2 }}>
                   Filter By Industry
                 </Typography>
+                <Divider />
                 <RadioGroup
                   onChange={(e) => setIndustry(e.target.value)}
                   name="industry-radio-group"
@@ -164,6 +166,7 @@ function JobListPage() {
               ))}
             </TextField>
             <Pagination
+              color="primary"
               count={totalPages}
               page={page}
               onChange={handleChangePage}

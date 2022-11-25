@@ -38,17 +38,21 @@ function JobCard({ job }) {
             spacing={{ xs: 2, md: 0 }}
           >
             <Box sx={{ width: { xs: "100%", md: "80%" } }}>
-              <Typography
-                variant="h6"
-                sx={{ color: "#2E82D2", fontWeight: 600 }}
-                gutterBottom
-              >
-                {job.title}
-              </Typography>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Typography
+                  variant="h6"
+                  sx={{ color: "#2E82D2", fontWeight: 600 }}
+                  gutterBottom
+                >
+                  {job.title}
+                </Typography>
+                <Typography fontSize={"0.85rem"}>
+                  Posted {fToNow(job.createdAt)}
+                </Typography>
+              </Stack>
               <Typography variant="body1" sx={{ overflow: "hidden" }}>
                 {truncateString(job.description)}
               </Typography>
-
               <Stack
                 my={{ xs: 2, md: 1 }}
                 flexDirection="row"
@@ -77,21 +81,18 @@ function JobCard({ job }) {
               spacing={1}
               sx={{ mr: 3 }}
             >
-              <Typography
-                textAlign={"center"}
-                sx={{ position: "relative", top: -10, fontSize: 15 }}
-              >
-                Posted {fToNow(job.createdAt)}
-              </Typography>
-
               {job.bidCount === 0 ? (
-                <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: 600, mr: { md: 3 } }}
+                >
                   No Bids Yet
                 </Typography>
               ) : (
                 <>
                   <Typography
                     textAlign={"center"}
+                    color="#EE1B1B"
                     sx={{ fontSize: 16, fontWeight: 600 }}
                   >
                     Highest Bid: {fCurrency(job.highestBid)}

@@ -15,6 +15,7 @@ import UserDetailPage from "../pages/UserDetailPage";
 import PostJobPage from "../pages/PostJobPage";
 import AccountSettingPage from "../pages/AccountSettingPage";
 import MyProfilePage from "../pages/MyProfilePage";
+import FreelancerAccountPage from "../pages/FreelancerAccountPage";
 
 function Router() {
   return (
@@ -37,6 +38,10 @@ function Router() {
         <Route path="/jobs/post" element={<PostJobPage />} />
         <Route path="/account" element={<AccountSettingPage />} />
         <Route path="/me/profile" element={<MyProfilePage />} />
+        <Route
+          path="/me/freelancerProfile"
+          element={<FreelancerAccountPage />}
+        />
       </Route>
 
       <Route element={<BlankLayout />}>

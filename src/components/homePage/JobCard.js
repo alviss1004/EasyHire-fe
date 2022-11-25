@@ -28,13 +28,18 @@ function JobCard({ job }) {
             alignItems="center"
           >
             <Box sx={{ width: { xs: "100%", md: "80%" } }}>
-              <Typography
-                variant="h6"
-                sx={{ color: "#2E82D2", fontWeight: 600 }}
-                gutterBottom
-              >
-                {job.title}
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Typography
+                  variant="h6"
+                  sx={{ color: "#2E82D2", fontWeight: 600 }}
+                  gutterBottom
+                >
+                  {job.title}
+                </Typography>
+                <Typography fontSize={"0.85rem"}>
+                  Posted {fToNow(job.createdAt)}
+                </Typography>
+              </Stack>
               <Typography sx={{ fontSize: 18, overflow: "hidden" }}>
                 {job.description}
               </Typography>
@@ -66,19 +71,11 @@ function JobCard({ job }) {
               spacing={1}
               sx={{ mr: 3 }}
             >
-              <Box sx={{ position: "relative", top: { xs: 5, md: 0 } }}>
-                <Typography
-                  textAlign={"center"}
-                  sx={{ position: "relative", top: -15, fontSize: 15 }}
-                >
-                  Posted {fToNow(job.createdAt)}
-                </Typography>
-              </Box>
               {job.bidCount === 0 ? (
                 <Typography
                   textAlign={"center"}
                   variant="body1"
-                  sx={{ fontWeight: 600 }}
+                  sx={{ fontWeight: 600, mr: { md: 4 } }}
                 >
                   No Bids Yet
                 </Typography>
@@ -86,7 +83,7 @@ function JobCard({ job }) {
                 <>
                   <Typography
                     textAlign={"center"}
-                    sx={{ fontSize: 18, fontWeight: 600 }}
+                    sx={{ fontSize: 18, fontWeight: 600, color: "#EE1B1B" }}
                   >
                     Highest Bid: {fCurrency(job.highestBid)}
                   </Typography>

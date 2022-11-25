@@ -141,55 +141,57 @@ function JobDetailPage() {
                     />
                   ))}
                 </Tabs>
-                <Stack direction="row">
-                  <IconButton
-                    aria-label="delete"
-                    color="inherit"
-                    onClick={toggleEdit}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="delete"
-                    color="inherit"
-                    onClick={handleClickOpen}
-                  >
-                    <HighlightOffIcon />
-                  </IconButton>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="deleteJob-dialog"
-                  >
-                    <DialogTitle id="deleteJob-dialog">
-                      {"Delete confirmation"}
-                    </DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        Are you sure you want to delete this job?
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button
-                        autoFocus
-                        onClick={handleClose}
-                        sx={{ color: "#F22C35", fontWeight: 600 }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          handleDeleteJob(selectedJob._id);
-                          handleClose();
-                        }}
-                        autoFocus
-                        sx={{ fontWeight: 600 }}
-                      >
-                        Confirm
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </Stack>
+                {selectedJob?.status === "bidding" ? (
+                  <Stack direction="row">
+                    <IconButton
+                      aria-label="delete"
+                      color="inherit"
+                      onClick={toggleEdit}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      color="inherit"
+                      onClick={handleClickOpen}
+                    >
+                      <HighlightOffIcon />
+                    </IconButton>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="deleteJob-dialog"
+                    >
+                      <DialogTitle id="deleteJob-dialog">
+                        {"Delete confirmation"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Are you sure you want to delete this job?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          autoFocus
+                          onClick={handleClose}
+                          sx={{ color: "#F22C35", fontWeight: 600 }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleDeleteJob(selectedJob._id);
+                            handleClose();
+                          }}
+                          autoFocus
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Confirm
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </Stack>
+                ) : null}
               </Stack>
               <Divider />
               {JOBDETAIL_TABS.map((tab) => {

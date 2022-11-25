@@ -9,9 +9,11 @@ import {
   DialogTitle,
   Divider,
   Link,
+  Rating,
   Typography,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ConstructionIcon from "@mui/icons-material/Construction";
 import { Stack } from "@mui/system";
 import React from "react";
 import { Helmet } from "react-helmet";
@@ -26,7 +28,6 @@ import CommentSection from "../comment/CommentSection";
 import { useDispatch } from "react-redux";
 import { fToNow } from "../../utils/formatTime";
 import useAuth from "../../hooks/useAuth";
-import LoadingScreen from "../../components/misc/LoadingScreen";
 import { createBid, deleteBid } from "../bid/bidSlice";
 
 let bidSchema = object({
@@ -98,18 +99,27 @@ function JobDetailPage({ job, loading }) {
             justifyContent="space-between"
             alignItems="center"
             spacing={{ xs: 5, md: 0 }}
+            divider={
+              <Divider
+                orientation="vertical"
+                sx={{ display: { xs: "none", md: "flex" } }}
+                flexItem
+              />
+            }
           >
             <Stack spacing={2} sx={{ width: { xs: "100%", md: "75%" } }}>
-              <Typography fontSize={15} textAlign={"center"}>
-                Posted {fToNow(job.createdAt)}
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{ color: "#21BBB5", fontWeight: 600 }}
-                gutterBottom
-              >
-                {job?.title}
-              </Typography>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Typography
+                  variant="h6"
+                  sx={{ color: "#21BBB5", fontWeight: 600 }}
+                  gutterBottom
+                >
+                  {job?.title}
+                </Typography>
+                <Typography fontSize={"0.85rem"}>
+                  Posted {fToNow(job.createdAt)}
+                </Typography>
+              </Stack>
               <Typography variant="body1" sx={{ overflow: "hidden" }}>
                 {job?.description}
               </Typography>
@@ -135,39 +145,57 @@ function JobDetailPage({ job, loading }) {
                 </Link>
               </Typography>
             </Stack>
-            <Stack
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-              spacing={1}
-              sx={{ width: { xs: "100%", md: "20%" } }}
-            >
-              {job?.bidCount === 0 ? (
-                <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
-                  No Bids Yet
+            {job.status === "ongoing" ? (
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={1}
+                sx={{ pr: { md: 1 } }}
+              >
+                <ConstructionIcon fontSize="large" />
+                <Typography fontWeight={600} fontSize={18}>
+                  Job in progress
                 </Typography>
-              ) : (
-                <>
-                  {job && (
-                    <>
-                      <Typography
-                        textAlign={"center"}
-                        sx={{ fontSize: 18, fontWeight: 600 }}
-                      >
-                        Highest Bid: {fCurrency(job.highestBid)}
-                      </Typography>
-                      <Typography
-                        textAlign={"center"}
-                        sx={{ fontSize: 18, fontWeight: 600 }}
-                      >
-                        Average Bid: {fCurrency(job.averageBid.toFixed(1))}
-                      </Typography>
-                    </>
-                  )}
-                  <Typography> {job.bidCount} Bids </Typography>
-                </>
-              )}
-            </Stack>
+              </Stack>
+            ) : (
+              <Stack
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
+                sx={{ width: { xs: "100%", md: "20%" } }}
+              >
+                {job?.bidCount === 0 ? (
+                  <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
+                    No Bids Yet
+                  </Typography>
+                ) : (
+                  <>
+                    {job && (
+                      <>
+                        <Typography
+                          textAlign={"center"}
+                          sx={{
+                            fontSize: 18,
+                            fontWeight: 600,
+                            color: "#EE1B1B",
+                          }}
+                        >
+                          Highest Bid: {fCurrency(job.highestBid)}
+                        </Typography>
+                        <Typography
+                          textAlign={"center"}
+                          sx={{ fontSize: 18, fontWeight: 600 }}
+                        >
+                          Average Bid: {fCurrency(job.averageBid.toFixed(1))}
+                        </Typography>
+                      </>
+                    )}
+                    <Typography> {job.bidCount} Bids </Typography>
+                  </>
+                )}
+              </Stack>
+            )}
           </Stack>
           <Divider sx={{ my: 2 }} />
           {job && user._id === job.lister._id ? (
@@ -177,7 +205,7 @@ function JobDetailPage({ job, loading }) {
               You need to be a freelancer to bid on this job
             </Typography>
           ) : job.bidders.includes(user._id) ? (
-            <Stack alignItems={{ xs: "center", md: "end" }}>
+            <Stack alignItems="center">
               <Box
                 sx={{
                   display: "flex",
@@ -191,7 +219,7 @@ function JobDetailPage({ job, loading }) {
               >
                 <CheckCircleIcon fontSize={"large"} sx={{ color: "#25C335" }} />
                 <Typography textAlign={"center"} fontSize={18} fontWeight={600}>
-                  You bidded {fCurrency(currentUserBid.price)} on this job
+                  You are bidding {fCurrency(currentUserBid.price)} on this job
                 </Typography>
                 <Button
                   variant="contained"
@@ -268,6 +296,7 @@ function JobDetailPage({ job, loading }) {
                     variant="contained"
                     loading={isSubmitting}
                     sx={{
+                      maxHeight: 60,
                       fontWeight: 600,
                       backgroundColor: "#E53838",
                       ":hover": {
@@ -282,16 +311,24 @@ function JobDetailPage({ job, loading }) {
               </FormProvider>
             </>
           )}
-          <Stack
-            direction="column"
-            mt={7}
-            sx={{ width: { xs: "100%", md: "75%" } }}
-          >
-            <Typography variant="h6" fontWeight={"bold"}>
-              Questions
-            </Typography>
-            <CommentSection />
-          </Stack>{" "}
+          {job?.status === "bidding" ? (
+            <Stack
+              direction="column"
+              mt={7}
+              sx={{ width: { xs: "100%", md: "75%" } }}
+            >
+              <Typography variant="h6" fontWeight={"bold"}>
+                Questions
+              </Typography>
+              <CommentSection />
+            </Stack>
+          ) : (
+            <Stack spacing={2}>
+              <Typography fontFamily={"Roboto"} fontWeight={600}>
+                {job.assignee.name} is currently working on this job
+              </Typography>
+            </Stack>
+          )}
         </>
       )}
     </>

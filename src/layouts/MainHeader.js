@@ -135,7 +135,22 @@ function MainHeader() {
         >
           Become a Freelancer
         </MenuItem>
-      ) : null}
+      ) : (
+        <MenuItem
+          onClick={handleMenuClose}
+          to="/me/freelancerProfile"
+          component={RouterLink}
+          sx={{
+            color: "#FFF",
+            backgroundColor: "#31B9B3",
+            ":hover": {
+              backgroundColor: "#36B49F",
+            },
+          }}
+        >
+          Freelancer Section
+        </MenuItem>
+      )}
       <Divider sx={{ borderStyle: "dashed" }} />
 
       <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
