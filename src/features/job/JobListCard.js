@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import ConstructionIcon from "@mui/icons-material/Construction";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { fCurrency } from "../../utils/numberFormat";
@@ -74,39 +75,53 @@ function JobCard({ job }) {
                 />
               </Stack>
             </Box>
-            <Stack
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-              spacing={1}
-              sx={{ mr: 3 }}
-            >
-              {job.bidCount === 0 ? (
-                <Typography
-                  variant="body1"
-                  sx={{ fontWeight: 600, mr: { md: 3 } }}
-                >
-                  No Bids Yet
+            {job.status === "bidding" ? (
+              <Stack
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
+                sx={{ mr: 3 }}
+              >
+                {job.bidCount === 0 ? (
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: 600, mr: { md: 3 } }}
+                  >
+                    No Bids Yet
+                  </Typography>
+                ) : (
+                  <>
+                    <Typography
+                      textAlign={"center"}
+                      color="#EE1B1B"
+                      sx={{ fontSize: 16, fontWeight: 600 }}
+                    >
+                      Highest Bid: {fCurrency(job.highestBid)}
+                    </Typography>
+                    <Typography
+                      textAlign={"center"}
+                      sx={{ fontSize: 16, fontWeight: 600 }}
+                    >
+                      Average Bid: {fCurrency(job.averageBid.toFixed(1))}
+                    </Typography>
+                    <Typography> {job.bidCount} Bids </Typography>
+                  </>
+                )}
+              </Stack>
+            ) : job.status === "ongoing" ? (
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={1}
+                sx={{ pr: { md: 1 } }}
+              >
+                <ConstructionIcon />
+                <Typography fontWeight={600} fontSize={17}>
+                  Job in progress
                 </Typography>
-              ) : (
-                <>
-                  <Typography
-                    textAlign={"center"}
-                    color="#EE1B1B"
-                    sx={{ fontSize: 16, fontWeight: 600 }}
-                  >
-                    Highest Bid: {fCurrency(job.highestBid)}
-                  </Typography>
-                  <Typography
-                    textAlign={"center"}
-                    sx={{ fontSize: 16, fontWeight: 600 }}
-                  >
-                    Average Bid: {fCurrency(job.averageBid.toFixed(1))}
-                  </Typography>
-                  <Typography> {job.bidCount} Bids </Typography>
-                </>
-              )}
-            </Stack>
+              </Stack>
+            ) : null}
           </Stack>
         </CardContent>
       </CardActionArea>

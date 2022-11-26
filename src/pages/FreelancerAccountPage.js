@@ -4,22 +4,21 @@ import PaidIcon from "@mui/icons-material/Paid";
 import { capitalCase } from "change-case";
 import WorkIcon from "@mui/icons-material/Work";
 import AccountBids from "../features/user/AccountBids";
-import UserDetailInfo from "../features/user/UserDetailInfo";
-import useAuth from "../hooks/useAuth";
+import AccountAssignedJobs from "../features/user/AccountAssignedJobs";
 
 function MyProfilePage() {
   const [currentTab, setCurrentTab] = useState("my bids");
-  const { user } = useAuth();
 
   const MYPROFILE_TABS = [
     {
       value: "my bids",
       icon: <PaidIcon sx={{ fontSize: 30 }} />,
-      component: <AccountBids profile={{}} />,
+      component: <AccountBids />,
     },
     {
-      value: "active jobs",
+      value: "assigned jobs",
       icon: <WorkIcon sx={{ fontSize: 30 }} />,
+      component: <AccountAssignedJobs />,
     },
   ];
 

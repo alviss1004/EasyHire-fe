@@ -66,7 +66,7 @@ function UserDetailInfo({ user }) {
                 <Typography sx={{ margin: "30%" }}>No image</Typography>
               </Box>
             )}
-            <Stack direction="row" spacing={3} sx={{ p: 1, mb: 1 }}>
+            <Stack direction="row" spacing={3.5} sx={{ p: 1, mb: 1 }}>
               {user.linkedinLink ? (
                 <Link
                   href={`https://${user.linkedinLink}`}

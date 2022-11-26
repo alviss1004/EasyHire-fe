@@ -31,7 +31,7 @@ function AccountBids() {
         userBids && (
           <Grid container spacing={3}>
             {userBids.map((bid) => (
-              <Grid key={bid._id} item xs={12} md={6} lg={4}>
+              <Grid key={bid._id} item xs={12} md={6}>
                 <AccountBidCard bid={bid} />
               </Grid>
             ))}

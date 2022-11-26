@@ -20,7 +20,7 @@ function AccountListings() {
   useEffect(() => {
     dispatch(getUserListings(jobStatus));
   }, [dispatch, jobStatus]);
-  console.log(jobStatus);
+
   let renderListings;
   if (userListings) {
     renderListings = (
@@ -53,7 +53,7 @@ function AccountListings() {
       </Helmet>
       <TextField
         id="jobStatus"
-        label="Job Status"
+        label="Status"
         select
         fullWidth
         SelectProps={{ native: true }}

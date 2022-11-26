@@ -34,7 +34,6 @@ const slice = createSlice({
     editJobSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      console.log("haha", { ...action.payload.job });
       state.selectedJob = action.payload.job;
     },
     getJobsSuccess(state, action) {

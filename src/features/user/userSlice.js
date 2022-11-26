@@ -15,6 +15,7 @@ const initialState = {
   featuredFreelancers: [],
   userListings: [],
   userBids: [],
+  userAssignedJobs: [],
   totalFreelancers: 0,
   totalPages: 1,
 };
@@ -65,6 +66,12 @@ const slice = createSlice({
       state.error = null;
       const { myBids } = action.payload;
       state.userBids = myBids;
+    },
+    getAssignedJobsSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { assignedJobs } = action.payload;
+      state.userAssignedJobs = assignedJobs;
     },
     getUserByIdSuccess(state, action) {
       state.isLoading = false;
@@ -118,7 +125,6 @@ export const getFeaturedFreelancers = () => async (dispatch) => {
 export const getUserListings = (status) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
-    console.log(status);
     const response = await apiService.get(`/users/me/jobs?status=${status}`);
     dispatch(slice.actions.getUserListingsSuccess(response.data.data));
   } catch (error) {
@@ -131,6 +137,16 @@ export const getUserBids = () => async (dispatch) => {
   try {
     const response = await apiService.get(`/users/me/bids`);
     dispatch(slice.actions.getUserBidsSuccess(response.data.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+  }
+};
+
+export const getUserAssignedJobs = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.get(`/users/me/assignedJobs`);
+    dispatch(slice.actions.getAssignedJobsSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
   }

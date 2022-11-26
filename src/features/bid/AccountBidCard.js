@@ -13,7 +13,7 @@ import { Stack } from "@mui/system";
 import { Link as RouterLink } from "react-router-dom";
 import { fCurrency } from "../../utils/numberFormat";
 import { deleteBid } from "../bid/bidSlice";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import Clear from "@mui/icons-material/Clear";
 
 function AccountBidCard({ bid }) {
   const dispatch = useDispatch();
@@ -34,57 +34,82 @@ function AccountBidCard({ bid }) {
   return (
     <Card>
       <CardContent>
-        <Stack direction="row" justifyContent="space-between">
-          <Stack>
-            <Typography color="#DF1919" fontWeight={600}>
+        <Stack
+          direction="row"
+          alignItems="start"
+          justifyContent="space-between"
+        >
+          <Stack spacing={1}>
+            <Typography letterSpacing={0.35} color="#DF1919" fontWeight={600}>
               Bid Amount: {fCurrency(bid.price)}
             </Typography>
-            <Typography>For: {bid.targetJob.title}</Typography>
-            <Typography> Status: {bid.status}</Typography>
-            <Link
-              component={RouterLink}
-              to={`/jobs/${bid.targetJob._id}`}
-              sx={{ color: "#4492CE", fontWeight: 600 }}
-            >
-              Link to job
-            </Link>
-          </Stack>
-          <IconButton aria-label="delete" onClick={handleClickOpen}>
-            <HighlightOffIcon />
-          </IconButton>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="cancelBid-dialog"
-          >
-            <DialogTitle id="cancelBid-dialog">
-              {"Cancel confirmation"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Are you sure you want to cancel this bid?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                autoFocus
-                onClick={handleClose}
-                sx={{ color: "#F22C35", fontWeight: 600 }}
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  handleDeleteBid(bid._id);
-                  handleClose();
+            <Typography>
+              For:{" "}
+              <Link
+                component={RouterLink}
+                to={`/jobs/${bid.targetJob._id}`}
+                sx={{
+                  textDecoration: "none",
+                  fontSize: 18,
+                  letterSpacing: 0.35,
+                  color: "#4492CE",
+                  fontWeight: 600,
                 }}
-                autoFocus
-                sx={{ fontWeight: 600 }}
               >
-                Confirm
-              </Button>
-            </DialogActions>
-          </Dialog>
+                {bid.targetJob.title}
+              </Link>
+            </Typography>
+            <Typography
+              letterSpacing={0.35}
+              sx={{ display: "flex", flexDirection: "row", gap: 0.5 }}
+            >
+              Status:{" "}
+              <Typography letterSpacing={0.35} fontWeight={600}>
+                {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
+              </Typography>
+            </Typography>
+          </Stack>
+          {bid.status === "active" ? (
+            <>
+              {" "}
+              <IconButton aria-label="delete" onClick={handleClickOpen}>
+                <Clear />
+              </IconButton>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="cancelBid-dialog"
+              >
+                <DialogTitle id="cancelBid-dialog">
+                  {"Cancel confirmation"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Are you sure you want to cancel this bid?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    autoFocus
+                    onClick={handleClose}
+                    sx={{ color: "#F22C35", fontWeight: 600 }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      handleDeleteBid(bid._id);
+                      handleClose();
+                    }}
+                    autoFocus
+                    sx={{ fontWeight: 600 }}
+                  >
+                    Confirm
+                  </Button>
+                </DialogActions>
+              </Dialog>{" "}
+            </>
+          ) : null}
         </Stack>
       </CardContent>
     </Card>

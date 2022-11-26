@@ -29,6 +29,24 @@ import { useDispatch } from "react-redux";
 import { fToNow } from "../../utils/formatTime";
 import useAuth from "../../hooks/useAuth";
 import { createBid, deleteBid } from "../bid/bidSlice";
+import { styled } from "@mui/system";
+
+const StyledLink = styled(RouterLink)({
+  textDecoration: "none",
+  color: "#007fed",
+  "&:hover": {
+    textDecoration: "none",
+  },
+  "&:active": {
+    textDecoration: "none",
+  },
+  "&:link": {
+    textDecoration: "none",
+  },
+  "&:visited": {
+    textDecoration: "none",
+  },
+});
 
 let bidSchema = object({
   price: number().required("Bid is required").positive(),
@@ -99,13 +117,6 @@ function JobDetailPage({ job, loading }) {
             justifyContent="space-between"
             alignItems="center"
             spacing={{ xs: 5, md: 0 }}
-            divider={
-              <Divider
-                orientation="vertical"
-                sx={{ display: { xs: "none", md: "flex" } }}
-                flexItem
-              />
-            }
           >
             <Stack spacing={2} sx={{ width: { xs: "100%", md: "75%" } }}>
               <Stack direction="row" spacing={2} alignItems="center">
@@ -204,7 +215,7 @@ function JobDetailPage({ job, loading }) {
             <Typography variant="h6" fontWeight={"bold"}>
               You need to be a freelancer to bid on this job
             </Typography>
-          ) : job.bidders.includes(user._id) ? (
+          ) : job.bidders.includes(user._id) && !job.assignee ? (
             <Stack alignItems="center">
               <Box
                 sx={{
@@ -270,7 +281,7 @@ function JobDetailPage({ job, loading }) {
                 </Dialog>
               </Box>
             </Stack>
-          ) : (
+          ) : !job.assignee ? (
             <>
               <Typography variant="h6" fontWeight={"bold"}>
                 Interested in this job? Place your bid now and wait for
@@ -310,7 +321,7 @@ function JobDetailPage({ job, loading }) {
                 </Stack>
               </FormProvider>
             </>
-          )}
+          ) : null}
           {job?.status === "bidding" ? (
             <Stack
               direction="column"
@@ -323,10 +334,73 @@ function JobDetailPage({ job, loading }) {
               <CommentSection />
             </Stack>
           ) : (
-            <Stack spacing={2}>
-              <Typography fontFamily={"Roboto"} fontWeight={600}>
-                {job.assignee.name} is currently working on this job
+            <Stack spacing={2} sx={{ mt: 3 }}>
+              <Typography
+                fontSize={{ xs: "1rem", sm: "1.25rem" }}
+                fontFamily={"Roboto"}
+                fontWeight={600}
+              >
+                Freelancer{" "}
+                <StyledLink to={`/users/${job.assignee._id}`}>
+                  {job.assignee.name}{" "}
+                </StyledLink>{" "}
+                is currently working on this job
               </Typography>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Box
+                  component="img"
+                  src={job.assignee.avatarUrl}
+                  height="10%"
+                  width="10%"
+                  alt="avatar"
+                  sx={{
+                    minWidth: { xs: "40%", sm: 150 },
+                    minHeight: { xs: "40%", sm: 150 },
+                  }}
+                />
+                <Stack
+                  spacing={{ xs: 1, md: 2 }}
+                  alignItems={{ xs: "center", md: "start" }}
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ mt: { xs: 2, md: 0 } }}
+                  >
+                    {user?.rating ? (
+                      <Typography>{user.rating.toFixed(1)}</Typography>
+                    ) : (
+                      <Typography>No rating</Typography>
+                    )}
+                    <Rating
+                      name="user-rating"
+                      value={user ? user.rating : 0}
+                      precision={0.5}
+                      size="small"
+                      readOnly
+                    />
+                  </Stack>
+                  {user?.reviews?.length !== 0 ? (
+                    <Typography
+                      variant="body1"
+                      fontWeight={600}
+                      color={"#2B9EBD"}
+                      gutterBottom
+                    >
+                      ({user.reviews.length} reviews)
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      fontWeight={600}
+                      color={"#2B9EBD"}
+                      gutterBottom
+                    >
+                      (No reviews)
+                    </Typography>
+                  )}
+                </Stack>
+              </Stack>
             </Stack>
           )}
         </>

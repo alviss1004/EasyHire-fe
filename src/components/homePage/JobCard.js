@@ -14,6 +14,15 @@ import { fCurrency } from "../../utils/numberFormat";
 
 function JobCard({ job }) {
   const navigate = useNavigate();
+
+  const truncateString = (str, num = 200) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
   return (
     <Card
       variant="outlined"
@@ -41,7 +50,7 @@ function JobCard({ job }) {
                 </Typography>
               </Stack>
               <Typography sx={{ fontSize: 18, overflow: "hidden" }}>
-                {job.description}
+                {truncateString(job.description)}
               </Typography>
               <Stack
                 my={{ xs: 2, md: 1 }}
@@ -75,7 +84,7 @@ function JobCard({ job }) {
                 <Typography
                   textAlign={"center"}
                   variant="body1"
-                  sx={{ fontWeight: 600, mr: { md: 4 } }}
+                  sx={{ fontWeight: 600, mr: { md: 3.5 } }}
                 >
                   No Bids Yet
                 </Typography>
