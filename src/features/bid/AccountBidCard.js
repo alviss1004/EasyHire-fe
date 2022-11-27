@@ -1,4 +1,5 @@
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
@@ -40,8 +41,11 @@ function AccountBidCard({ bid }) {
           justifyContent="space-between"
         >
           <Stack spacing={1}>
-            <Typography letterSpacing={0.35} color="#DF1919" fontWeight={600}>
-              Bid Amount: {fCurrency(bid.price)}
+            <Typography letterSpacing={0.35}>
+              Bid Amount:{" "}
+              <Box component="span" fontWeight={600} display="inline">
+                {fCurrency(bid.price)}
+              </Box>
             </Typography>
             <Typography>
               For:{" "}
@@ -64,9 +68,9 @@ function AccountBidCard({ bid }) {
               sx={{ display: "flex", flexDirection: "row", gap: 0.5 }}
             >
               Status:{" "}
-              <Typography letterSpacing={0.35} fontWeight={600}>
+              <Box component="span" fontWeight={600} display="inline">
                 {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
-              </Typography>
+              </Box>
             </Typography>
           </Stack>
           {bid.status === "active" ? (

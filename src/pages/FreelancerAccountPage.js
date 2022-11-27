@@ -1,13 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Tab, Box, Tabs, Typography } from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
 import { capitalCase } from "change-case";
 import WorkIcon from "@mui/icons-material/Work";
 import AccountBids from "../features/user/AccountBids";
 import AccountAssignedJobs from "../features/user/AccountAssignedJobs";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserAssignedJobs } from "../features/user/userSlice";
 
 function MyProfilePage() {
   const [currentTab, setCurrentTab] = useState("my bids");
+  const dispatch = useDispatch();
+  const { userAssignedJobs, isLoading } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getUserAssignedJobs());
+  }, [dispatch]);
+
+  const ongoingJobs = userAssignedJobs?.filter(
+    (job) => job.status === "ongoing"
+  );
+
+  const finishedJobs = userAssignedJobs?.filter(
+    (job) => job.status === "finished"
+  );
 
   const MYPROFILE_TABS = [
     {
@@ -18,14 +35,21 @@ function MyProfilePage() {
     {
       value: "assigned jobs",
       icon: <WorkIcon sx={{ fontSize: 30 }} />,
-      component: <AccountAssignedJobs />,
+      component: <AccountAssignedJobs jobs={ongoingJobs} loading={isLoading} />,
+    },
+    {
+      value: "finished jobs",
+      icon: <AssignmentTurnedInIcon sx={{ fontSize: 30 }} />,
+      component: (
+        <AccountAssignedJobs jobs={finishedJobs} loading={isLoading} />
+      ),
     },
   ];
 
   return (
     <Container sx={{ mt: 10 }}>
       <Typography variant="h5" fontWeight={600} gutterBottom>
-        My Profile
+        Freelancer Section
       </Typography>
       <Tabs
         value={currentTab}

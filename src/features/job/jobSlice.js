@@ -125,7 +125,7 @@ export const getJobById = (id) => async (dispatch) => {
 };
 
 export const editJob =
-  ({ jobId, title, industry, description, image }) =>
+  ({ jobId, title, industry, description, image, status }) =>
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
@@ -136,9 +136,9 @@ export const editJob =
         industry,
         description,
         image: imageUrl,
+        status,
       });
       dispatch(slice.actions.editJobSuccess(response.data.data));
-      toast.success("Edit job successfully");
       return response.data.data;
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
@@ -151,7 +151,7 @@ export const deleteJob = (id) => async (dispatch) => {
   try {
     await apiService.delete(`/jobs/${id}`);
     dispatch(slice.actions.deleteJobSuccess());
-    toast.success("Job Deleted");
+    toast.success("Delete Job Successfully");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);

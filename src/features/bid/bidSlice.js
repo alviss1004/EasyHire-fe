@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const slice = createSlice({
-  name: "job",
+  name: "bid",
   initialState,
   reducers: {
     startLoading(state) {

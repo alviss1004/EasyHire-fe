@@ -6,6 +6,7 @@ import { capitalCase } from "change-case";
 import AccountListings from "../features/user/AccountListings";
 import UserDetailInfo from "../features/user/UserDetailInfo";
 import useAuth from "../hooks/useAuth";
+import ReviewList from "../features/review/ReviewList";
 
 function MyProfilePage() {
   const [currentTab, setCurrentTab] = useState("general");

@@ -1,18 +1,13 @@
-import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
+import { Card, CardContent, Chip, Link, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import LoadingScreen from "../../components/misc/LoadingScreen";
 import { fToNow } from "../../utils/formatTime";
 import { fCurrency } from "../../utils/numberFormat";
-import { getUserAssignedJobs } from "./userSlice";
 
-function AccountAssignedJobs() {
-  const dispatch = useDispatch();
-  const { userAssignedJobs, isLoading } = useSelector((state) => state.user);
-
+function AccountAssignedJobs({ jobs, loading }) {
   const truncateString = (str, num = 200) => {
     if (str.length > num) {
       return str.slice(0, num) + "...";
@@ -21,27 +16,21 @@ function AccountAssignedJobs() {
     }
   };
 
-  useEffect(() => {
-    dispatch(getUserAssignedJobs());
-  }, [dispatch]);
-
   return (
     <Container
       sx={{
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
         width: "100%",
       }}
     >
       <Helmet>
         <style>{"body { background-color: #F0F3F5; }"}</style>
       </Helmet>
-      {isLoading ? (
+      {loading ? (
         <LoadingScreen />
       ) : (
-        userAssignedJobs && (
+        jobs && (
           <Stack spacing={2} justifyContent="center">
-            {userAssignedJobs.map((job) => (
+            {jobs.map((job) => (
               <Card variant="outlined">
                 <CardContent>
                   <Stack
@@ -80,7 +69,13 @@ function AccountAssignedJobs() {
                         sx={{ fontWeight: 600 }}
                         gutterBottom
                       >
-                        Industry: {job?.industry}
+                        Industry:{" "}
+                        <Chip
+                          label={`${job.industry}`}
+                          size="small"
+                          variant="filled"
+                          sx={{ mr: 1 }}
+                        />
                       </Typography>
 
                       <Typography
@@ -101,13 +96,22 @@ function AccountAssignedJobs() {
                         </Link>
                       </Typography>
                     </Stack>
-                    <Typography
-                      fontFamily={"Roboto"}
-                      fontSize={"1.15rem"}
-                      fontWeight={600}
-                    >
-                      Assigned for {fCurrency(job.bids[0].price)}
-                    </Typography>
+                    <Stack alignItems="center">
+                      <Typography
+                        fontFamily={"Roboto"}
+                        fontSize={"1.15rem"}
+                        fontWeight={600}
+                      >
+                        Winning bid
+                      </Typography>
+                      <Typography
+                        fontFamily={"Roboto"}
+                        fontSize={"1.15rem"}
+                        fontWeight={600}
+                      >
+                        {fCurrency(job.bids[0].price)}
+                      </Typography>
+                    </Stack>
                   </Stack>
                 </CardContent>
               </Card>

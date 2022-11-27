@@ -44,28 +44,9 @@ function UserDetailPage() {
         <LoadingScreen />
       ) : (
         <>
-          {selectedUser && <UserDetailInfo user={selectedUser} />}
-          {selectedUser?.reviews.length !== 0 ? (
-            <Container
-              justifyContent="center"
-              sx={{
-                backgroundColor: "#FFF",
-                boxShadow: 1,
-                p: 2,
-                mt: 3,
-              }}
-            >
-              <Typography variant="h5" fontWeight={600}>
-                Reviews
-              </Typography>
-              {selectedUser && (
-                <ReviewList
-                  reviews={selectedUser.reviews}
-                  loading={isLoading}
-                />
-              )}
-            </Container>
-          ) : null}
+          {selectedUser && (
+            <UserDetailInfo user={selectedUser} loading={isLoading} />
+          )}
         </>
       )}
     </>

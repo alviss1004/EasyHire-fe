@@ -17,7 +17,12 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import { Stack } from "@mui/system";
 import React from "react";
 import { Helmet } from "react-helmet";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import {
+  Link as RouterLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { fCurrency } from "../../utils/numberFormat";
 import { FormProvider, FTextField } from "../../components/form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,7 +34,9 @@ import { useDispatch } from "react-redux";
 import { fToNow } from "../../utils/formatTime";
 import useAuth from "../../hooks/useAuth";
 import { createBid, deleteBid } from "../bid/bidSlice";
+import { editJob } from "./jobSlice";
 import { styled } from "@mui/system";
+import ReviewForm from "../review/ReviewForm";
 
 const StyledLink = styled(RouterLink)({
   textDecoration: "none",
@@ -57,7 +64,9 @@ const defaultValues = {
 };
 
 function JobDetailPage({ job, loading }) {
+  let location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const params = useParams();
   const jobId = params.id;
@@ -95,6 +104,10 @@ function JobDetailPage({ job, loading }) {
     dispatch(deleteBid(bidId, jobId));
   };
 
+  const handleCompleteJob = async (jobId) => {
+    await dispatch(editJob({ jobId, status: "finished" }));
+  };
+
   const getCurrentUserBid = () => {
     if (job) {
       const jobBids = job.bids;
@@ -102,7 +115,6 @@ function JobDetailPage({ job, loading }) {
       return userBid[0];
     }
   };
-  let currentUserBid = getCurrentUserBid();
 
   return (
     <>
@@ -156,19 +168,7 @@ function JobDetailPage({ job, loading }) {
                 </Link>
               </Typography>
             </Stack>
-            {job.status === "ongoing" ? (
-              <Stack
-                direction="row"
-                alignItems="center"
-                spacing={1}
-                sx={{ pr: { md: 1 } }}
-              >
-                <ConstructionIcon fontSize="large" />
-                <Typography fontWeight={600} fontSize={18}>
-                  Job in progress
-                </Typography>
-              </Stack>
-            ) : (
+            {job.status === "bidding" ? (
               <Stack
                 direction="column"
                 alignItems="center"
@@ -206,6 +206,25 @@ function JobDetailPage({ job, loading }) {
                   </>
                 )}
               </Stack>
+            ) : job.status === "ongoing" ? (
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={1}
+                sx={{ pr: { md: 1 } }}
+              >
+                <ConstructionIcon fontSize="large" />
+                <Typography fontWeight={600} fontSize={18}>
+                  Job in progress
+                </Typography>
+              </Stack>
+            ) : (
+              <Stack alignItems="center" spacing={1} sx={{ pr: { md: 1 } }}>
+                <CheckCircleIcon fontSize={"large"} sx={{ color: "#25C335" }} />
+                <Typography fontWeight={600} fontSize={18}>
+                  Job finished
+                </Typography>
+              </Stack>
             )}
           </Stack>
           <Divider sx={{ my: 2 }} />
@@ -230,7 +249,8 @@ function JobDetailPage({ job, loading }) {
               >
                 <CheckCircleIcon fontSize={"large"} sx={{ color: "#25C335" }} />
                 <Typography textAlign={"center"} fontSize={18} fontWeight={600}>
-                  You are bidding {fCurrency(currentUserBid.price)} on this job
+                  You are bidding {fCurrency(getCurrentUserBid().price)} on this
+                  job
                 </Typography>
                 <Button
                   variant="contained"
@@ -269,7 +289,7 @@ function JobDetailPage({ job, loading }) {
                     </Button>
                     <Button
                       onClick={() => {
-                        handleDeleteBid(currentUserBid._id, jobId);
+                        handleDeleteBid(getCurrentUserBid()._id, jobId);
                         handleClose();
                       }}
                       autoFocus
@@ -281,7 +301,7 @@ function JobDetailPage({ job, loading }) {
                 </Dialog>
               </Box>
             </Stack>
-          ) : !job.assignee ? (
+          ) : user.isFreelancer && !job.assignee ? (
             <>
               <Typography variant="h6" fontWeight={"bold"}>
                 Interested in this job? Place your bid now and wait for
@@ -333,8 +353,8 @@ function JobDetailPage({ job, loading }) {
               </Typography>
               <CommentSection />
             </Stack>
-          ) : (
-            <Stack spacing={2} sx={{ mt: 3 }}>
+          ) : job?.status === "ongoing" ? (
+            <Stack spacing={2} sx={{ mt: 3, mb: 1 }}>
               <Typography
                 fontSize={{ xs: "1rem", sm: "1.25rem" }}
                 fontFamily={"Roboto"}
@@ -356,6 +376,7 @@ function JobDetailPage({ job, loading }) {
                   sx={{
                     minWidth: { xs: "40%", sm: 150 },
                     minHeight: { xs: "40%", sm: 150 },
+                    borderRadius: "50%",
                   }}
                 />
                 <Stack
@@ -367,27 +388,27 @@ function JobDetailPage({ job, loading }) {
                     spacing={1}
                     sx={{ mt: { xs: 2, md: 0 } }}
                   >
-                    {user?.rating ? (
-                      <Typography>{user.rating.toFixed(1)}</Typography>
+                    {job.assignee?.rating ? (
+                      <Typography>{job.assignee.rating.toFixed(1)}</Typography>
                     ) : (
                       <Typography>No rating</Typography>
                     )}
                     <Rating
                       name="user-rating"
-                      value={user ? user.rating : 0}
+                      value={job.assignee ? job.assignee.rating : 0}
                       precision={0.5}
                       size="small"
                       readOnly
                     />
                   </Stack>
-                  {user?.reviews?.length !== 0 ? (
+                  {job.assignee?.reviews?.length !== 0 ? (
                     <Typography
                       variant="body1"
                       fontWeight={600}
                       color={"#2B9EBD"}
                       gutterBottom
                     >
-                      ({user.reviews.length} reviews)
+                      ({job.assignee.reviews.length} reviews)
                     </Typography>
                   ) : (
                     <Typography
@@ -401,7 +422,138 @@ function JobDetailPage({ job, loading }) {
                   )}
                 </Stack>
               </Stack>
+              {user._id === job.lister._id ? (
+                <>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      height: 40,
+                      alignSelf: "center",
+                      backgroundColor: "#EF4444",
+                      ":hover": {
+                        backgroundColor: "#EF4444",
+                        filter: "brightness(90%)",
+                      },
+                      fontWeight: 600,
+                    }}
+                    onClick={handleClickOpen}
+                  >
+                    Mark Job As Complete
+                  </Button>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="markComplete-dialog"
+                  >
+                    <DialogTitle id="markComplete-dialog">
+                      {"Mark as Complete Confirmation"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText sx={{ color: "#555555" }}>
+                        Are you sure you want to mark this job as complete? Only
+                        confirms if the freelancer has completed this job. You
+                        cannot redo once confirmed.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        autoFocus
+                        onClick={handleClose}
+                        sx={{ color: "#F22C35", fontWeight: 600 }}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        state={{ backgroundLocation: location }}
+                        onClick={() => {
+                          handleCompleteJob(job._id);
+                          handleClose();
+                        }}
+                        autoFocus
+                        sx={{ fontWeight: 600 }}
+                      >
+                        Confirm
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </>
+              ) : null}
             </Stack>
+          ) : (
+            <>
+              <Stack spacing={2} sx={{ mt: 3, mb: 1 }}>
+                <Typography
+                  fontSize={{ xs: "1rem", sm: "1.25rem" }}
+                  fontFamily={"Roboto"}
+                  fontWeight={600}
+                >
+                  Freelancer{" "}
+                  <StyledLink to={`/users/${job.assignee._id}`}>
+                    {job.assignee.name}{" "}
+                  </StyledLink>{" "}
+                  was assigned for this job
+                </Typography>
+                <Stack direction="row" spacing={2}>
+                  <Box
+                    component="img"
+                    src={job.assignee.avatarUrl}
+                    height="10%"
+                    width="10%"
+                    alt="avatar"
+                    sx={{
+                      minWidth: { xs: "40%", sm: 150 },
+                      minHeight: { xs: "40%", sm: 150 },
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <Stack spacing={1} alignItems={{ xs: "center", md: "start" }}>
+                    <Typography fontWeight={600}>
+                      Winning bid: {fCurrency(job.bids[0].price)}
+                    </Typography>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      sx={{ mt: { xs: 2, md: 0 } }}
+                    >
+                      {job.assignee?.rating ? (
+                        <Typography>
+                          {job.assignee.rating.toFixed(1)}
+                        </Typography>
+                      ) : (
+                        <Typography>No rating</Typography>
+                      )}
+                      <Rating
+                        name="user-rating"
+                        value={job.assignee ? job.assignee.rating : 0}
+                        precision={0.5}
+                        size="small"
+                        readOnly
+                      />
+                    </Stack>
+                    {job.assignee?.reviews?.length !== 0 ? (
+                      <Typography
+                        variant="body1"
+                        fontWeight={600}
+                        color={"#2B9EBD"}
+                        gutterBottom
+                      >
+                        ({job?.assignee?.reviews?.length} reviews)
+                      </Typography>
+                    ) : (
+                      <Typography
+                        variant="body1"
+                        fontWeight={600}
+                        color={"#2B9EBD"}
+                        gutterBottom
+                      >
+                        (No reviews)
+                      </Typography>
+                    )}
+                  </Stack>{" "}
+                </Stack>
+              </Stack>
+              {!job.review && <ReviewForm jobId={job._id} />}
+            </>
           )}
         </>
       )}
