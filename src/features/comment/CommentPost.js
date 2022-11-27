@@ -3,12 +3,14 @@ import { FormProvider, FTextField } from "../../components/form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { Card, Container } from "@mui/material";
+import { Alert, Card, Container } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import SendIcon from "@mui/icons-material/Send";
+import { useDispatch } from "react-redux";
+import { createComment } from "./commentSlice";
 
-const NewCommentSchema = Yup.object().shape({
+const CommentSchema = Yup.object().shape({
   content: Yup.string().required("Content is required"),
 });
 
@@ -16,21 +18,23 @@ const defaultValues = {
   content: "",
 };
 
-const CommentPost = ({ setPage }) => {
+const CommentPost = ({ jobId }) => {
+  const dispatch = useDispatch();
+
   const methods = useForm({
-    resolver: yupResolver(NewCommentSchema),
+    resolver: yupResolver(CommentSchema),
     defaultValues,
   });
 
   const {
     handleSubmit,
     reset,
-    setError,
     formState: { errors, isSubmitting },
   } = methods;
 
   const onSubmit = async (data) => {
-    console.log("comment created");
+    await dispatch(createComment({ ...data, jobId }));
+    reset();
   };
   return (
     <Container>
@@ -43,13 +47,16 @@ const CommentPost = ({ setPage }) => {
             p: "1rem",
           }}
         >
+          {!!errors.responseError && (
+            <Alert severity="error">{errors.responseError.message}</Alert>
+          )}
           <FTextField
             name="content"
             label="Question"
             placeholder="Enter your question"
           />
 
-          <LoadingButton size="small" type="submit">
+          <LoadingButton size="small" type="submit" loading={isSubmitting}>
             <SendIcon />
           </LoadingButton>
         </Card>

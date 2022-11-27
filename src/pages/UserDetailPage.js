@@ -1,11 +1,10 @@
-import { Breadcrumbs, Container, Link, Typography } from "@mui/material";
+import { Breadcrumbs, Link, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import UserDetailInfo from "../features/user/UserDetailInfo";
 import { getUserById } from "../features/user/userSlice";
 import LoadingScreen from "../components/misc/LoadingScreen";
-import ReviewList from "../features/review/ReviewList";
 
 function UserDetailPage() {
   const dispatch = useDispatch();

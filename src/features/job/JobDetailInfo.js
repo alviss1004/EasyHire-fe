@@ -17,19 +17,13 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import { Stack } from "@mui/system";
 import React from "react";
 import { Helmet } from "react-helmet";
-import {
-  Link as RouterLink,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Link as RouterLink, useLocation, useParams } from "react-router-dom";
 import { fCurrency } from "../../utils/numberFormat";
 import { FormProvider, FTextField } from "../../components/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, number } from "yup";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import CommentSection from "../comment/CommentSection";
 import { useDispatch } from "react-redux";
 import { fToNow } from "../../utils/formatTime";
 import useAuth from "../../hooks/useAuth";
@@ -37,6 +31,8 @@ import { createBid, deleteBid } from "../bid/bidSlice";
 import { editJob } from "./jobSlice";
 import { styled } from "@mui/system";
 import ReviewForm from "../review/ReviewForm";
+import CommentPost from "../comment/CommentPost";
+import CommentList from "../comment/CommentList";
 
 const StyledLink = styled(RouterLink)({
   textDecoration: "none",
@@ -66,7 +62,6 @@ const defaultValues = {
 function JobDetailPage({ job, loading }) {
   let location = useLocation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { user } = useAuth();
   const params = useParams();
   const jobId = params.id;
@@ -351,7 +346,8 @@ function JobDetailPage({ job, loading }) {
               <Typography variant="h6" fontWeight={"bold"}>
                 Questions
               </Typography>
-              <CommentSection />
+              <CommentPost jobId={job._id} />
+              <CommentList jobId={job._id} />
             </Stack>
           ) : job?.status === "ongoing" ? (
             <Stack spacing={2} sx={{ mt: 3, mb: 1 }}>

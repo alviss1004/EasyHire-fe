@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import BlankLayout from "../layouts/BlankLayout";
 import MainLayout from "../layouts/MainLayout";
 import ProtectedLayout from "../layouts/ProtectedLayout";

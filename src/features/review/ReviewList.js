@@ -11,15 +11,18 @@ function ReviewList({ reviews, loading }) {
 
   return (
     <Stack spacing={4} sx={{ mt: 3 }}>
-      <Pagination
-        color="primary"
-        count={Math.ceil(reviews.length / 10)}
-        page={page}
-        onChange={handleChangePage}
-        variant="outlined"
-        shape="rounded"
-        sx={{ alignSelf: "center" }}
-      />
+      {Math.ceil(reviews.length / 10) > 1 && (
+        <Pagination
+          color="primary"
+          count={Math.ceil(reviews.length / 10)}
+          page={page}
+          onChange={handleChangePage}
+          variant="outlined"
+          shape="rounded"
+          sx={{ alignSelf: "center" }}
+        />
+      )}
+
       {reviews.slice((page - 1) * 10, page * 10).map((review) => (
         <ReviewCard key={review._id} review={review} />
       ))}

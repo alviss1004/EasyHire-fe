@@ -50,6 +50,7 @@ const slice = createSlice({
       state.totalJobs = count;
       state.totalPages = totalPages;
     },
+
     getLatestJobsSuccess(state, action) {
       state.isLoading = false;
       state.error = null;

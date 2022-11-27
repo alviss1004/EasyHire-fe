@@ -1,12 +1,13 @@
 import { Box, Rating, Stack, Typography } from "@mui/material";
 import React from "react";
+import { fDate } from "../../utils/formatTime";
 
 function ReviewCard({ review, loading }) {
   return (
     <Stack
-      direction={{ xs: "column", md: "row" }}
+      direction="row"
       spacing={{ xs: 1, md: 3 }}
-      justifyContent={{ xs: "center", md: "stretch" }}
+      justifyContent="stretch"
       alignItems={{ xs: "center", md: "center" }}
       sx={{
         borderRadius: 1,
@@ -18,17 +19,22 @@ function ReviewCard({ review, loading }) {
       <Box
         component="img"
         src={review.author.avatarUrl}
-        height={{ xs: "40%", md: "14%" }}
-        width={{ xs: "40%", md: "14%" }}
+        height={{ xs: "25%", md: "14%" }}
+        width={{ xs: "25%", md: "14%" }}
         alt="avatar"
         sx={{
-          minWidth: { xs: "40%", md: 70 },
-          minHeight: { xs: "40%", md: 70 },
+          minWidth: 70,
+          minHeight: 70,
           borderRadius: "50%",
         }}
       />
       <Stack spacing={1}>
-        <Typography fontWeight={600}>Author: {review.author.name}</Typography>
+        <Stack>
+          <Typography fontWeight={600}>Author: {review.author.name}</Typography>
+          <Typography variant="caption" sx={{ opacity: 0.8 }}>
+            {fDate(review.createdAt)}
+          </Typography>
+        </Stack>
         <Stack direction="row" spacing={1}>
           <Typography>Rating: {review.rating.toFixed(1)}</Typography>
           <Rating
