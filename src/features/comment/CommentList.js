@@ -23,31 +23,28 @@ function CommentList({ jobId }) {
   };
 
   return (
-    <Stack spacing={1.5}>
-      <Stack spacing={1}>
-        {totalComments > COMMENTS_PER_PAGE && (
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handleChangePage}
-            color="primary"
-            variant="outlined"
-            shape="rounded"
-            sx={{ alignSelf: "center" }}
-          />
-        )}
-        {isLoading ? (
-          <LoadingScreen />
-        ) : (
-          commentsByJob && (
-            <Stack spacing={1.5}>
-              {commentsByJob.map((comment) => (
-                <CommentCard key={comment._id} comment={comment} />
-              ))}
-            </Stack>
-          )
-        )}
-      </Stack>
+    <Stack spacing={1.5} sx={{ maxWidth: "80%" }}>
+      {totalComments > COMMENTS_PER_PAGE && (
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={handleChangePage}
+          color="primary"
+          variant="outlined"
+          sx={{ alignSelf: "start" }}
+        />
+      )}
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        commentsByJob && (
+          <Stack spacing={1.5}>
+            {commentsByJob.map((comment) => (
+              <CommentCard key={comment._id} comment={comment} />
+            ))}
+          </Stack>
+        )
+      )}
     </Stack>
   );
 }

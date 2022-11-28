@@ -36,7 +36,7 @@ function JobCard({ job }) {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Box sx={{ width: { xs: "100%", md: "80%" } }}>
+            <Box sx={{ width: { xs: "100%", md: "75%" } }}>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Typography
                   variant="h6"
@@ -92,7 +92,7 @@ function JobCard({ job }) {
                 <>
                   <Typography
                     textAlign={"center"}
-                    sx={{ fontSize: 18, fontWeight: 600, color: "#EE1B1B" }}
+                    sx={{ fontSize: 18, fontWeight: 600 }}
                   >
                     Highest Bid: {fCurrency(job.highestBid)}
                   </Typography>

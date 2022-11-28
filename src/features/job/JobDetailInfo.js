@@ -346,6 +346,7 @@ function JobDetailPage({ job, loading }) {
               <Typography variant="h6" fontWeight={"bold"}>
                 Questions
               </Typography>
+
               <CommentPost jobId={job._id} />
               <CommentList jobId={job._id} />
             </Stack>
@@ -548,7 +549,9 @@ function JobDetailPage({ job, loading }) {
                   </Stack>{" "}
                 </Stack>
               </Stack>
-              {!job.review && <ReviewForm jobId={job._id} />}
+              {!job.review && job.lister._id === user._id && (
+                <ReviewForm jobId={job._id} />
+              )}
             </>
           )}
         </>

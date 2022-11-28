@@ -36,6 +36,14 @@ const slice = createSlice({
       state.totalComments = count;
       state.totalPages = totalPages;
     },
+    editCommentSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+    },
+    deleteCommentSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+    },
   },
 });
 
@@ -71,33 +79,33 @@ export const getJobComments =
     }
   };
 
-// export const acceptBid = (bidId, jobId) => async (dispatch) => {
-//   dispatch(slice.actions.startLoading());
-//   try {
-//     const response = await apiService.put(`/bids/accept/${bidId}`);
-//     dispatch(slice.actions.acceptBidSuccess(response.data.data));
-//     dispatch(getJobById(jobId));
-//     toast.success("Accept bid successfully");
-//   } catch (error) {
-//     dispatch(slice.actions.hasError(error.message));
-//     toast.error(error.message);
-//   }
-// };
+export const editComment =
+  ({ content, commentId, jobId }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await apiService.put(`/comments/${commentId}`, {
+        content,
+      });
+      dispatch(slice.actions.editCommentSuccess(response.data.data));
+      dispatch(getJobComments({ page: 1, limit: 5, jobId }));
+      return response.data.data;
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
 
-// export const deleteBid =
-//   (bidId, jobId = null) =>
-//   async (dispatch) => {
-//     dispatch(slice.actions.startLoading());
-//     try {
-//       const response = await apiService.delete(`/bids/${bidId}`);
-//       dispatch(slice.actions.deleteBidSuccess(response.data.data));
-//       if (jobId) dispatch(getJobById(jobId));
-//       dispatch(getUserBids());
-//       toast.success("Delete bid successfully");
-//     } catch (error) {
-//       dispatch(slice.actions.hasError(error.message));
-//       toast.error(error.message);
-//     }
-// };
+export const deleteComment = (commentId, jobId) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.delete(`/comments/${commentId}`);
+    dispatch(slice.actions.deleteCommentSuccess(response.data.data));
+    dispatch(getJobComments({ page: 1, limit: 5, jobId }));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
 
 export default slice.reducer;

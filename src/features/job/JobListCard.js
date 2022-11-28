@@ -38,7 +38,7 @@ function JobCard({ job }) {
             alignItems="center"
             spacing={{ xs: 2, md: 0 }}
           >
-            <Box sx={{ width: { xs: "100%", md: "80%" } }}>
+            <Box sx={{ width: { xs: "100%", md: "75%" } }}>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Typography
                   variant="h6"

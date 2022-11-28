@@ -15,6 +15,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { fCurrency } from "../../utils/numberFormat";
 import { deleteBid } from "../bid/bidSlice";
 import Clear from "@mui/icons-material/Clear";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 function AccountBidCard({ bid }) {
   const dispatch = useDispatch();
@@ -113,7 +114,12 @@ function AccountBidCard({ bid }) {
                 </DialogActions>
               </Dialog>{" "}
             </>
-          ) : null}
+          ) : (
+            <CheckCircleIcon
+              fontSize={"large"}
+              sx={{ color: "#25C335", alignSelf: "center" }}
+            />
+          )}
         </Stack>
       </CardContent>
     </Card>

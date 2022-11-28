@@ -52,8 +52,10 @@ const CommentPost = ({ jobId }) => {
           )}
           <FTextField
             name="content"
-            label="Question"
-            placeholder="Enter your question"
+            placeholder="Enter your question (maximum 400 words)"
+            multiline
+            rows={2}
+            inputProps={{ maxLength: 400 }}
           />
 
           <LoadingButton size="small" type="submit" loading={isSubmitting}>
