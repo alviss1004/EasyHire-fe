@@ -96,22 +96,24 @@ function AccountAssignedJobs({ jobs, loading }) {
                         </Link>
                       </Typography>
                     </Stack>
-                    <Stack alignItems="center">
-                      <Typography
-                        fontFamily={"Roboto"}
-                        fontSize={"1.15rem"}
-                        fontWeight={600}
-                      >
-                        Winning bid
-                      </Typography>
-                      <Typography
-                        fontFamily={"Roboto"}
-                        fontSize={"1.15rem"}
-                        fontWeight={600}
-                      >
-                        {fCurrency(job.bids[0].price)}
-                      </Typography>
-                    </Stack>
+                    {job.status === "ongoing" ? (
+                      <Stack alignItems="center">
+                        <Typography
+                          fontFamily={"Roboto"}
+                          fontSize={"1.15rem"}
+                          fontWeight={600}
+                        >
+                          Winning bid
+                        </Typography>
+                        <Typography
+                          fontFamily={"Roboto"}
+                          fontSize={"1.15rem"}
+                          fontWeight={600}
+                        >
+                          {fCurrency(job.bids[0].price)}
+                        </Typography>
+                      </Stack>
+                    ) : null}
                   </Stack>
                 </CardContent>
               </Card>

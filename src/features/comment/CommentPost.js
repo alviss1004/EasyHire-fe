@@ -53,8 +53,6 @@ const CommentPost = ({ jobId }) => {
           <FTextField
             name="content"
             placeholder="Enter your question (maximum 400 words)"
-            multiline
-            rows={2}
             inputProps={{ maxLength: 400 }}
           />
 

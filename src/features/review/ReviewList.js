@@ -23,7 +23,7 @@ function ReviewList({ reviews, loading }) {
         />
       )}
 
-      {reviews.slice((page - 1) * 10, page * 10).map((review) => (
+      {reviews?.slice((page - 1) * 10, page * 10).map((review) => (
         <ReviewCard key={review._id} review={review} />
       ))}
     </Stack>

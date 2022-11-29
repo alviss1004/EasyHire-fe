@@ -53,6 +53,8 @@ function UserDetailInfo({ user, loading }) {
                   sx={{
                     minWidth: { xs: "60%", md: 220 },
                     minHeight: { xs: "20%", md: 220 },
+                    maxWidth: 220,
+                    maxHeight: 220,
                     borderRadius: "50%",
                   }}
                 />

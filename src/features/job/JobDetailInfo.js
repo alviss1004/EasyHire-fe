@@ -59,7 +59,7 @@ const defaultValues = {
   price: "",
 };
 
-function JobDetailPage({ job, loading }) {
+function JobDetailInfo({ job, loading }) {
   let location = useLocation();
   const dispatch = useDispatch();
   const { user } = useAuth();
@@ -101,6 +101,7 @@ function JobDetailPage({ job, loading }) {
 
   const handleCompleteJob = async (jobId) => {
     await dispatch(editJob({ jobId, status: "finished" }));
+    window.location.reload();
   };
 
   const getCurrentUserBid = () => {
@@ -376,10 +377,10 @@ function JobDetailPage({ job, loading }) {
                     borderRadius: "50%",
                   }}
                 />
-                <Stack
-                  spacing={{ xs: 1, md: 2 }}
-                  alignItems={{ xs: "center", md: "start" }}
-                >
+                <Stack spacing={{ xs: 1, md: 2 }}>
+                  <Typography fontWeight={600}>
+                    Winning bid: {fCurrency(job.bids[0].price)}
+                  </Typography>
                   <Stack
                     direction="row"
                     spacing={1}
@@ -560,4 +561,4 @@ function JobDetailPage({ job, loading }) {
   );
 }
 
-export default JobDetailPage;
+export default JobDetailInfo;

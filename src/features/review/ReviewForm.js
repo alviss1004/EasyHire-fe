@@ -40,7 +40,7 @@ function ReviewForm({ callback, jobId }) {
   const onSubmit = async (data) => {
     try {
       await dispatch(createReview({ ...data, jobId }));
-      navigate(`/jobs/${jobId}`);
+      window.location.reload();
     } catch (error) {
       reset();
       setError("responseError", error);
@@ -88,6 +88,7 @@ function ReviewForm({ callback, jobId }) {
               multiline
               fullWidth
               rows={5}
+              inputProps={{ maxLength: 500 }}
             />
             <LoadingButton
               type="submit"

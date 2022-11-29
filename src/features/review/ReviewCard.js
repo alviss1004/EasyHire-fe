@@ -7,7 +7,6 @@ function ReviewCard({ review, loading }) {
     <Stack
       direction="row"
       spacing={{ xs: 1, md: 3 }}
-      justifyContent="stretch"
       alignItems={{ xs: "center", md: "center" }}
       sx={{
         borderRadius: 1,
@@ -18,7 +17,7 @@ function ReviewCard({ review, loading }) {
     >
       <Box
         component="img"
-        src={review.author.avatarUrl}
+        src={review?.author.avatarUrl}
         height={{ xs: "25%", md: "14%" }}
         width={{ xs: "25%", md: "14%" }}
         alt="avatar"

@@ -1,19 +1,10 @@
 import { Container, Grid } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-import { useDispatch, useSelector } from "react-redux";
 import LoadingScreen from "../../components/misc/LoadingScreen";
-import { getUserBids } from "./userSlice";
 import AccountBidCard from "../bid/AccountBidCard";
 
-function AccountBids() {
-  const dispatch = useDispatch();
-  const { userBids, isLoading } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    dispatch(getUserBids());
-  }, [dispatch]);
-
+function AccountBids({ bids, loading }) {
   return (
     <Container
       sx={{
@@ -25,12 +16,12 @@ function AccountBids() {
       <Helmet>
         <style>{"body { background-color: #F0F3F5; }"}</style>
       </Helmet>
-      {isLoading ? (
+      {loading ? (
         <LoadingScreen />
       ) : (
-        userBids && (
+        bids && (
           <Grid container spacing={3}>
-            {userBids.map((bid) => (
+            {bids.map((bid) => (
               <Grid key={bid._id} item xs={12} md={6}>
                 <AccountBidCard bid={bid} />
               </Grid>

@@ -6,16 +6,23 @@ import WorkIcon from "@mui/icons-material/Work";
 import AccountBids from "../features/user/AccountBids";
 import AccountAssignedJobs from "../features/user/AccountAssignedJobs";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import BeenhereIcon from "@mui/icons-material/Beenhere";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserAssignedJobs } from "../features/user/userSlice";
+import { getUserAssignedJobs, getUserBids } from "../features/user/userSlice";
 
 function MyProfilePage() {
-  const [currentTab, setCurrentTab] = useState("my bids");
+  const [currentTab, setCurrentTab] = useState("active bids");
   const dispatch = useDispatch();
-  const { userAssignedJobs, isLoading } = useSelector((state) => state.user);
+  const { userAssignedJobs, userBids, isLoading } = useSelector(
+    (state) => state.user
+  );
 
   useEffect(() => {
     dispatch(getUserAssignedJobs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserBids());
   }, [dispatch]);
 
   const ongoingJobs = userAssignedJobs?.filter(
@@ -26,11 +33,20 @@ function MyProfilePage() {
     (job) => job.status === "finished"
   );
 
+  const activeBids = userBids?.filter((job) => job.status === "active");
+
+  const acceptedBids = userBids?.filter((job) => job.status === "accepted");
+
   const MYPROFILE_TABS = [
     {
-      value: "my bids",
+      value: "active bids",
       icon: <PaidIcon sx={{ fontSize: 30 }} />,
-      component: <AccountBids />,
+      component: <AccountBids bids={activeBids} loading={isLoading} />,
+    },
+    {
+      value: "accepted bids",
+      icon: <BeenhereIcon sx={{ fontSize: 30 }} />,
+      component: <AccountBids bids={acceptedBids} loading={isLoading} />,
     },
     {
       value: "assigned jobs",
