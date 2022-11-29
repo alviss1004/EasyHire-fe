@@ -1,4 +1,11 @@
-import { Card, CardContent, Chip, Link, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Chip,
+  Link,
+  Typography,
+  Rating,
+} from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React from "react";
 import { Helmet } from "react-helmet";
@@ -29,9 +36,9 @@ function AccountAssignedJobs({ jobs, loading }) {
         <LoadingScreen />
       ) : (
         jobs && (
-          <Stack spacing={2} justifyContent="center">
+          <Stack spacing={{ xs: 4, md: 2 }} justifyContent="center">
             {jobs.map((job) => (
-              <Card variant="outlined">
+              <Card key={job._id} variant="outlined">
                 <CardContent>
                   <Stack
                     direction={{ xs: "column", sm: "row" }}
@@ -113,7 +120,30 @@ function AccountAssignedJobs({ jobs, loading }) {
                           {fCurrency(job.bids[0].price)}
                         </Typography>
                       </Stack>
-                    ) : null}
+                    ) : (
+                      <Stack alignItems="center" spacing={1}>
+                        {job?.review ? (
+                          <>
+                            <Typography variant="h5">
+                              {job.review.rating}/5
+                            </Typography>{" "}
+                            <Rating
+                              name="job-rating"
+                              value={job.review.rating}
+                              precision={0.5}
+                              readOnly
+                            />{" "}
+                          </>
+                        ) : (
+                          <Typography
+                            textAlign="center"
+                            sx={{ fontSize: 16, mr: { xs: 0, md: 3 } }}
+                          >
+                            No review
+                          </Typography>
+                        )}
+                      </Stack>
+                    )}
                   </Stack>
                 </CardContent>
               </Card>

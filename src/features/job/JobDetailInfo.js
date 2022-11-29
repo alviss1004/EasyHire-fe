@@ -1,5 +1,6 @@
 import {
   Alert,
+  Avatar,
   Box,
   Button,
   Dialog,
@@ -163,6 +164,18 @@ function JobDetailInfo({ job, loading }) {
                   {job.lister.name}
                 </Link>
               </Typography>
+              {job.imageUrl && (
+                <Box
+                  sx={{
+                    borderRadius: 2,
+                    overflow: "hidden",
+                    height: 300,
+                    "& img": { objectFit: "cover", width: 1, height: 1 },
+                  }}
+                >
+                  <img src={job.imageUrl} alt="post" />
+                </Box>
+              )}
             </Stack>
             {job.status === "bidding" ? (
               <Stack
@@ -374,6 +387,8 @@ function JobDetailInfo({ job, loading }) {
                   sx={{
                     minWidth: { xs: "40%", sm: 150 },
                     minHeight: { xs: "40%", sm: 150 },
+                    maxWidth: 150,
+                    maxHeight: 150,
                     borderRadius: "50%",
                   }}
                 />
@@ -492,16 +507,15 @@ function JobDetailInfo({ job, loading }) {
                   was assigned for this job
                 </Typography>
                 <Stack direction="row" spacing={2}>
-                  <Box
-                    component="img"
+                  <Avatar
                     src={job.assignee.avatarUrl}
-                    height="10%"
-                    width="10%"
-                    alt="avatar"
+                    alt={job.assignee.name}
                     sx={{
-                      minWidth: { xs: "40%", sm: 150 },
-                      minHeight: { xs: "40%", sm: 150 },
-                      borderRadius: "50%",
+                      borderWidth: 2,
+                      borderStyle: "solid",
+                      borderColor: "common.white",
+                      width: { xs: 80, md: 150 },
+                      height: { xs: 80, md: 150 },
                     }}
                   />
                   <Stack spacing={1} alignItems={{ xs: "center", md: "start" }}>

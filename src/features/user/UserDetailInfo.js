@@ -1,4 +1,12 @@
-import { Box, Container, Link, Rating, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Container,
+  Link,
+  Rating,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { Helmet } from "react-helmet";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -44,18 +52,16 @@ function UserDetailInfo({ user, loading }) {
               }}
             >
               {user?.avatarUrl ? (
-                <Box
-                  component="img"
+                <Avatar
                   src={user.avatarUrl}
-                  height={{ xs: "20%", md: "20%" }}
-                  width={{ xs: "100%", md: "20%" }}
-                  alt="avatar"
+                  alt={user.name}
                   sx={{
-                    minWidth: { xs: "60%", md: 220 },
-                    minHeight: { xs: "20%", md: 220 },
-                    maxWidth: 220,
-                    maxHeight: 220,
-                    borderRadius: "50%",
+                    mx: "auto",
+                    borderWidth: 2,
+                    borderStyle: "solid",
+                    borderColor: "common.white",
+                    width: { xs: 125, sm: 170, md: 220 },
+                    height: { xs: 125, sm: 170, md: 220 },
                   }}
                 />
               ) : (

@@ -30,7 +30,7 @@ import useAuth from "../hooks/useAuth";
 import { Stack } from "@mui/system";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
-import EditPostForm from "../features/job/EditPostForm";
+import EditJobForm from "../features/job/EditJobForm";
 import LoadingScreen from "../components/misc/LoadingScreen";
 
 function JobDetailPage() {
@@ -120,7 +120,7 @@ function JobDetailPage() {
             </Helmet>
             {isEditing ? (
               selectedJob && (
-                <EditPostForm job={selectedJob} toggleEdit={toggleEdit} />
+                <EditJobForm job={selectedJob} toggleEdit={toggleEdit} />
               )
             ) : user._id === selectedJob?.lister._id ? (
               <>
@@ -217,19 +217,19 @@ function JobDetailPage() {
                 backgroundColor: "#FFF",
                 width: { xs: "75%", md: 680 },
                 maxWidth: "75vw",
-                boxShadow: 1,
+                boxShadow: 2,
                 p: 2,
-                borderRadius: 5,
+                borderRadius: 4,
                 mt: 1,
                 display: "Flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 1,
+                gap: 1.5,
               }}
             >
               <Typography
                 fontFamily={"tahoma"}
-                fontSize={"1.4rem"}
+                fontSize={{ xs: "1.2rem", md: "1.4rem" }}
                 textAlign="center"
               >
                 Client{" "}

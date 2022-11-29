@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { FormProvider, FSelect, FTextField } from "../../components/form";
+import {
+  FormProvider,
+  FSelect,
+  FTextField,
+  FUploadImage,
+} from "../../components/form";
 import { Alert, alpha, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
@@ -28,7 +33,7 @@ const industries = [
   "Programming & Technology",
 ];
 
-function JobForm({ job, toggleEdit }) {
+function EditJobForm({ job, toggleEdit }) {
   const dispatch = useDispatch();
 
   const defaultValues = {
@@ -45,6 +50,7 @@ function JobForm({ job, toggleEdit }) {
     handleSubmit,
     reset,
     setError,
+    setValue,
     formState: { errors, isSubmitting },
   } = methods;
 
@@ -65,6 +71,22 @@ function JobForm({ job, toggleEdit }) {
       setError("responseError", error);
     }
   };
+
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
+
+      if (file) {
+        setValue(
+          "image",
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+      }
+    },
+    [setValue]
+  );
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -100,6 +122,13 @@ function JobForm({ job, toggleEdit }) {
             },
           }}
         />
+        <FUploadImage
+          name="image"
+          accept="image/*"
+          maxSize={3145728}
+          onDrop={handleDrop}
+          sx={{ width: "50%", alignSelf: "center" }}
+        />
         <Stack direction="row" justifyContent="flex-end" spacing={1}>
           <Button
             variant="contained"
@@ -133,4 +162,4 @@ function JobForm({ job, toggleEdit }) {
   );
 }
 
-export default JobForm;
+export default EditJobForm;

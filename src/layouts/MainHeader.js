@@ -168,19 +168,22 @@ function MainHeader() {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{
+              mr: { xs: 1, sm: 2 },
+              display: { xs: "none", sm: "initial" },
+            }}
           >
             <Logo />
           </IconButton>
           <Stack
-            spacing={{ xs: 1, sm: 3, md: 4, lg: 5 }}
-            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 2, sm: 2, md: 4, lg: 5 }}
+            direction="row"
             my={1}
             sx={{
-              display: { xs: "none", sm: "flex" },
-              alignItems: "center",
+              fontSize: { xs: 12, sm: 14 },
               justifyContent: "center",
-              ml: 2,
+              alignItems: "center",
+              ml: { xs: 0, sm: 2 },
             }}
           >
             <Link
@@ -191,6 +194,8 @@ function MainHeader() {
                 ":active": {
                   filter: "brightness(150%)",
                 },
+                fontSize: { xs: 12, sm: 16 },
+                textAlign: "center",
               }}
               color="inherit"
               component={RouterLink}
@@ -206,6 +211,8 @@ function MainHeader() {
                 ":active": {
                   filter: "brightness(150%)",
                 },
+                fontSize: { xs: 12, sm: 16 },
+                textAlign: "center",
               }}
               color="inherit"
               component={RouterLink}
@@ -221,6 +228,8 @@ function MainHeader() {
                 ":active": {
                   filter: "brightness(150%)",
                 },
+                fontSize: { xs: 12, sm: 16 },
+                textAlign: "center",
               }}
               color="inherit"
               component={RouterLink}
@@ -232,7 +241,7 @@ function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
           {isAuthenticated ? (
             <Stack
-              spacing={{ xs: 3, sm: 1, md: 3, lg: 2 }}
+              spacing={{ xs: 1.5, sm: 1, md: 3, lg: 2 }}
               direction="row"
               my={1}
               sx={{
@@ -250,12 +259,20 @@ function MainHeader() {
                     filter: "brightness(120%)",
                     backgroundColor: "#E53838",
                   },
+                  width: { xs: "40%", sm: "100%" },
+                  fontSize: { xs: 11, md: 14 },
                 }}
               >
                 Post a Job
               </Button>
               {user.isFreelancer && (
-                <StarIcon fontSize={"large"} sx={{ color: "#26DFD8" }} />
+                <StarIcon
+                  fontSize={"large"}
+                  sx={{
+                    color: "#26DFD8",
+                    display: { xs: "none", md: "initial" },
+                  }}
+                />
               )}
               <Box>
                 <Avatar

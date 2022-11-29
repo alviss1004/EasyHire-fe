@@ -54,6 +54,7 @@ function FreelancerListCard({ freelancer }) {
             >
               <Typography
                 sx={{
+                  textAlign: { xs: "center", md: "left" },
                   color: "#21BBB5",
                   fontWeight: 600,
                   letterSpacing: 1,
