@@ -31,30 +31,31 @@ function FreelancerList() {
 
   return (
     <>
+      <Stack
+        spacing={2}
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent={{ sm: "center", md: "flex-end" }}
+        mb={2}
+        sx={{ width: { md: "90%" } }}
+      >
+        <Pagination
+          color="primary"
+          count={totalPages}
+          page={page}
+          onChange={handleChangePage}
+          variant="outlined"
+          showFirstButton
+          showLastButton
+        />
+      </Stack>
+
+      <Typography fontSize={17} sx={{ alignSelf: "center", mb: 1 }}>
+        {totalFreelancers} freelancers found
+      </Typography>
       {isLoading ? (
         <LoadingScreen />
       ) : (
         <>
-          <Stack
-            spacing={2}
-            direction={{ xs: "column", sm: "row" }}
-            justifyContent={{ sm: "center", md: "flex-end" }}
-            mb={2}
-            sx={{ width: { md: "90%" } }}
-          >
-            <Pagination
-              color="primary"
-              count={totalPages}
-              page={page}
-              onChange={handleChangePage}
-              variant="outlined"
-              showFirstButton
-              showLastButton
-            />
-          </Stack>
-          <Typography fontSize={17} sx={{ alignSelf: "center", mb: 1 }}>
-            {totalFreelancers} freelancers found
-          </Typography>
           <Stack spacing={2} justifyContent="center" alignItems="center">
             {freelancers?.map((freelancer) => (
               <FreelancerCard key={freelancer._id} freelancer={freelancer} />

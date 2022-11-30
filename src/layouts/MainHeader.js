@@ -74,7 +74,6 @@ function MainHeader() {
   const handleBecomeFreelancer = async () => {
     handleMenuClose();
     await dispatch(updateUserProfile({ userId: user._id, isFreelancer: true }));
-    window.location.reload();
   };
 
   const renderMenu = (
