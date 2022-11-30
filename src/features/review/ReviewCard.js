@@ -1,4 +1,4 @@
-import { Avatar, Box, Rating, Stack, Typography } from "@mui/material";
+import { Avatar, Rating, Stack, Typography } from "@mui/material";
 import React from "react";
 import { fDate } from "../../utils/formatTime";
 
@@ -22,8 +22,8 @@ function ReviewCard({ review, loading }) {
           borderWidth: 2,
           borderStyle: "solid",
           borderColor: "common.white",
-          width: { xs: 100, sm: 140, md: 170 },
-          height: { xs: 100, sm: 140, md: 170 },
+          width: { xs: 100, sm: 125, md: 150 },
+          height: { xs: 100, sm: 125, md: 150 },
         }}
       />
       <Stack spacing={1}>

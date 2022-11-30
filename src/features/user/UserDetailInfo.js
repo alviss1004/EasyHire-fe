@@ -109,7 +109,7 @@ function UserDetailInfo({ user, loading }) {
                 )}
                 {user.facebookLink ? (
                   <Link
-                    href={`https://${user.facebookLink}`}
+                    href={user.facebookLink}
                     target="_blank"
                     sx={{ textDecoration: "none" }}
                   >
@@ -145,19 +145,19 @@ function UserDetailInfo({ user, loading }) {
               alignItems={{ xs: "center", md: "stretch" }}
               spacing={{ xs: 1, md: 1.5 }}
             >
-              <Stack direction="row" spacing={1}>
-                <Typography
-                  variant="h5"
-                  sx={{ color: "#21BBB5", fontWeight: 600, letterSpacing: 1 }}
-                  gutterBottom
-                  fontFamily={"Roboto"}
-                >
-                  {user?.name}
-                </Typography>
-              </Stack>
+              <Typography
+                variant="h5"
+                sx={{ color: "#21BBB5", fontWeight: 600, letterSpacing: 1 }}
+                gutterBottom
+                fontFamily={"Roboto"}
+              >
+                {user?.name}
+              </Typography>
+
               <Stack
                 direction={{ xs: "column", md: "row" }}
                 spacing={{ xs: 1, md: 10 }}
+                alignItems="center"
               >
                 <Typography
                   variant="body1"
