@@ -1,6 +1,5 @@
 # Redirects from what the browser requests to what we serve
 
-/\* /NotFoundPage.js 200
 / /HomePage.js 200
 /jobs /JobListPage.js 200
 /freelancers /FreelancerListPage.js 200
@@ -10,5 +9,3 @@
 /account /AccountSettingPage.js 200
 /jobs/post /PostJobPage.js 200
 /me/freelancerProfile /FreelancerAccountPage.js 200
-/jobs/\* /JobDetailPage.js 200
-/users/\* /UserDetailPage.js 200
