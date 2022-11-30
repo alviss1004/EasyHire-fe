@@ -91,7 +91,7 @@ export const deleteBid =
       dispatch(slice.actions.deleteBidSuccess(response.data.data));
       if (jobId) dispatch(getJobById(jobId));
       dispatch(getUserBids());
-      toast.success("Delete bid successfully");
+      toast.success("Cancel bid successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);

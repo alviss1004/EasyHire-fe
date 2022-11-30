@@ -22,8 +22,8 @@ function ReviewCard({ review, loading }) {
           borderWidth: 2,
           borderStyle: "solid",
           borderColor: "common.white",
-          width: { xs: 100, sm: 150, md: 200 },
-          height: { xs: 100, sm: 150, md: 200 },
+          width: { xs: 100, sm: 140, md: 170 },
+          height: { xs: 100, sm: 140, md: 170 },
         }}
       />
       <Stack spacing={1}>
