@@ -34,6 +34,8 @@ import { styled } from "@mui/system";
 import ReviewForm from "../review/ReviewForm";
 import CommentPost from "../comment/CommentPost";
 import CommentList from "../comment/CommentList";
+import SellIcon from "@mui/icons-material/Sell";
+import DiscountIcon from "@mui/icons-material/Discount";
 
 const StyledLink = styled(RouterLink)({
   textDecoration: "none",
@@ -122,10 +124,10 @@ function JobDetailInfo({ job, loading }) {
       {job && (
         <>
           <Stack
-            direction={{ xs: "column", md: "row" }}
-            justifyContent="space-between"
-            alignItems="center"
-            spacing={{ xs: 5, md: 0 }}
+            // direction={{ xs: "column", md: "row" }}
+            // justifyContent="space-between"
+            // alignItems="center"
+            spacing={{ xs: 5, md: 4 }}
           >
             <Stack spacing={2} sx={{ width: { xs: "100%", md: "75%" } }}>
               <Stack direction="row" spacing={2} alignItems="center">
@@ -164,54 +166,125 @@ function JobDetailInfo({ job, loading }) {
                   {job.lister.name}
                 </Link>
               </Typography>
-              {job.imageUrl && (
-                <Box
-                  sx={{
-                    borderRadius: 2,
-                    overflow: "hidden",
-                    height: 300,
-                    "& img": { objectFit: "cover", width: 1, height: 1 },
-                  }}
-                >
-                  <img src={job.imageUrl} alt="post" />
-                </Box>
-              )}
             </Stack>
+            <Divider />
             {job.status === "bidding" ? (
               <Stack
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                spacing={1}
-                sx={{ width: { xs: "100%", md: "20%" } }}
+                direction={{ xs: "column", sm: "row" }}
+                spacing={{ xs: 4, sm: 7, md: 12, lg: 15 }}
+                alignItems={{ xs: "center", sm: "stretch" }}
               >
                 {job?.bidCount === 0 ? (
-                  <Typography variant="body1" sx={{ fontWeight: 600, mr: 1 }}>
-                    No Bids Yet
-                  </Typography>
+                  <>
+                    <Stack direction="row" spacing={1}>
+                      <SellIcon />
+                      <Stack>
+                        <Typography
+                          sx={{
+                            fontSize: 18,
+                            fontWeight: 600,
+                            letterSpacing: 0.4,
+                          }}
+                        >
+                          N/A
+                        </Typography>
+                        <Typography sx={{ letterSpacing: 0.5 }}>
+                          Highest Bid
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                    <Stack direction="row" spacing={1}>
+                      <SellIcon />
+                      <Stack>
+                        <Typography
+                          sx={{
+                            fontSize: 18,
+                            fontWeight: 600,
+                            letterSpacing: 0.4,
+                          }}
+                        >
+                          N/A
+                        </Typography>
+                        <Typography sx={{ letterSpacing: 0.5 }}>
+                          Average Bid
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                    <Stack direction="row" spacing={1}>
+                      <DiscountIcon />
+                      <Stack>
+                        <Typography
+                          sx={{
+                            fontSize: 18,
+                            fontWeight: 600,
+                            letterSpacing: 0.4,
+                          }}
+                        >
+                          {job.bidCount}{" "}
+                        </Typography>
+                        <Typography sx={{ letterSpacing: 0.5 }}>
+                          Bids in total
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  </>
                 ) : (
                   <>
                     {job && (
                       <>
-                        <Typography
-                          textAlign={"center"}
-                          sx={{
-                            fontSize: 18,
-                            fontWeight: 600,
-                            color: "#EE1B1B",
-                          }}
-                        >
-                          Highest Bid: {fCurrency(job.highestBid)}
-                        </Typography>
-                        <Typography
-                          textAlign={"center"}
-                          sx={{ fontSize: 18, fontWeight: 600 }}
-                        >
-                          Average Bid: {fCurrency(job.averageBid.toFixed(1))}
-                        </Typography>
+                        <Stack direction="row" spacing={1}>
+                          <SellIcon />
+                          <Stack>
+                            <Typography
+                              sx={{
+                                fontSize: 18,
+                                fontWeight: 600,
+                                letterSpacing: 0.4,
+                              }}
+                            >
+                              {fCurrency(job.highestBid)}{" "}
+                            </Typography>
+                            <Typography sx={{ letterSpacing: 0.5 }}>
+                              Highest Bid
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                        <Stack direction="row" spacing={1}>
+                          <SellIcon />
+                          <Stack>
+                            <Typography
+                              sx={{
+                                fontSize: 18,
+                                fontWeight: 600,
+                                letterSpacing: 0.4,
+                              }}
+                            >
+                              {fCurrency(job.averageBid)}{" "}
+                            </Typography>
+                            <Typography sx={{ letterSpacing: 0.5 }}>
+                              Average Bid
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                        <Stack direction="row" spacing={1}>
+                          <DiscountIcon />
+                          <Stack>
+                            <Typography
+                              sx={{
+                                fontSize: 18,
+                                fontWeight: 600,
+                                letterSpacing: 0.4,
+                              }}
+                            >
+                              {job.bidCount}{" "}
+                            </Typography>
+                            <Typography sx={{ letterSpacing: 0.5 }}>
+                              Bids in total
+                            </Typography>
+                          </Stack>
+                        </Stack>
                       </>
                     )}
-                    <Typography> {job.bidCount} Bids </Typography>
                   </>
                 )}
               </Stack>

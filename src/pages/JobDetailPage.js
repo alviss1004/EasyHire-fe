@@ -219,7 +219,7 @@ function JobDetailPage() {
                 maxWidth: "75vw",
                 boxShadow: 2,
                 p: 2,
-                borderRadius: 4,
+                borderRadius: 5,
                 mt: 1,
                 display: "Flex",
                 flexDirection: "column",

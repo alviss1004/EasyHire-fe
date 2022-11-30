@@ -71,17 +71,15 @@ const slice = createSlice({
 });
 
 export const createJob =
-  ({ title, industry, description, image }) =>
+  ({ title, industry, description }) =>
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
       // upload image to cloudinary
-      const imageUrl = await cloudinaryUpload(image);
       const response = await apiService.post("/jobs", {
         title,
         industry,
         description,
-        image: imageUrl,
       });
       dispatch(slice.actions.createJobSuccess(response.data.data));
       toast.success("Create job successfully");
@@ -136,7 +134,7 @@ export const editJob =
         title,
         industry,
         description,
-        image: imageUrl,
+        imageUrl,
         status,
       });
       dispatch(slice.actions.editJobSuccess(response.data.data));

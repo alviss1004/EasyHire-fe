@@ -1,6 +1,5 @@
 import { Alert, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -19,7 +18,6 @@ const ReviewSchema = Yup.object().shape({
 
 function ReviewForm({ callback, jobId }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const defaultValues = {
     rating: null,

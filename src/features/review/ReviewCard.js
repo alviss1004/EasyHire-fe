@@ -1,4 +1,4 @@
-import { Box, Rating, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Rating, Stack, Typography } from "@mui/material";
 import React from "react";
 import { fDate } from "../../utils/formatTime";
 
@@ -7,7 +7,7 @@ function ReviewCard({ review, loading }) {
     <Stack
       direction="row"
       spacing={{ xs: 1, md: 3 }}
-      alignItems={{ xs: "center", md: "center" }}
+      alignItems={{ xs: "center", md: "start" }}
       sx={{
         borderRadius: 1,
         boxShadow: 2,
@@ -15,16 +15,15 @@ function ReviewCard({ review, loading }) {
         backgroundColor: "rgba(235, 235, 235,0.5)",
       }}
     >
-      <Box
-        component="img"
-        src={review?.author.avatarUrl}
-        height={{ xs: "25%", md: "14%" }}
-        width={{ xs: "25%", md: "14%" }}
-        alt="avatar"
+      <Avatar
+        src={review.author.avatarUrl}
+        alt={review.author.name}
         sx={{
-          minWidth: 70,
-          minHeight: 70,
-          borderRadius: "50%",
+          borderWidth: 2,
+          borderStyle: "solid",
+          borderColor: "common.white",
+          width: { xs: 100, sm: 150, md: 200 },
+          height: { xs: 100, sm: 150, md: 200 },
         }}
       />
       <Stack spacing={1}>

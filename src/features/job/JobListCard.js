@@ -103,7 +103,7 @@ function JobCard({ job }) {
                       textAlign={"center"}
                       sx={{ fontSize: 16, fontWeight: 600 }}
                     >
-                      Average Bid: {fCurrency(job.averageBid.toFixed(1))}
+                      Average Bid: {fCurrency(job.averageBid)}
                     </Typography>
                     <Typography> {job.bidCount} Bids </Typography>
                   </>

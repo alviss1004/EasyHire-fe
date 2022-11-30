@@ -1,13 +1,8 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import {
-  FormProvider,
-  FSelect,
-  FTextField,
-  FUploadImage,
-} from "../../components/form";
+import { FormProvider, FSelect, FTextField } from "../../components/form";
 import { Alert, alpha, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
@@ -50,7 +45,6 @@ function EditJobForm({ job, toggleEdit }) {
     handleSubmit,
     reset,
     setError,
-    setValue,
     formState: { errors, isSubmitting },
   } = methods;
 
@@ -62,7 +56,6 @@ function EditJobForm({ job, toggleEdit }) {
           title: data.title,
           industry: data.industry,
           description: data.description,
-          image: data.image,
         })
       );
       window.location.reload();
@@ -71,22 +64,6 @@ function EditJobForm({ job, toggleEdit }) {
       setError("responseError", error);
     }
   };
-
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-
-      if (file) {
-        setValue(
-          "image",
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
-      }
-    },
-    [setValue]
-  );
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -121,13 +98,6 @@ function EditJobForm({ job, toggleEdit }) {
               borderColor: alpha("#919EAB", 0.32),
             },
           }}
-        />
-        <FUploadImage
-          name="image"
-          accept="image/*"
-          maxSize={3145728}
-          onDrop={handleDrop}
-          sx={{ width: "50%", alignSelf: "center" }}
         />
         <Stack direction="row" justifyContent="flex-end" spacing={1}>
           <Button
