@@ -1,6 +1,7 @@
 # Redirects from what the browser requests to what we serve
 
-/\* ./pages/HomePage.js 200
+/\* /index.html 200
+/ ./pages/HomePage.js 200
 /login ./pages/LoginPage.js 200
 /register ./pages/RegisterPage.js 200
 /jobs ./pages/JobListPage.js 200
