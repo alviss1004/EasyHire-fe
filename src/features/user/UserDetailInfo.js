@@ -25,6 +25,15 @@ function UserDetailInfo({ user, loading }) {
     marginRight: theme.spacing(2),
   }));
 
+  const convertUrl = (url) => {
+    if (url.includes("http")) {
+      return url;
+    } else {
+      const newUrl = `https://${url}`;
+      return newUrl;
+    }
+  };
+
   return (
     <>
       <Container
@@ -79,7 +88,7 @@ function UserDetailInfo({ user, loading }) {
               <Stack direction="row" spacing={3.5} sx={{ p: 1, mb: 1 }}>
                 {user.linkedinLink ? (
                   <Link
-                    href={`https://${user.linkedinLink}`}
+                    href={convertUrl(user.linkedinLink)}
                     target="_blank"
                     sx={{ textDecoration: "none" }}
                   >
@@ -94,7 +103,7 @@ function UserDetailInfo({ user, loading }) {
                 )}
                 {user.twitterLink ? (
                   <Link
-                    href={`https://${user.twitterLink}`}
+                    href={convertUrl(user.twitterLink)}
                     target="_blank"
                     sx={{ textDecoration: "none" }}
                   >
@@ -109,7 +118,7 @@ function UserDetailInfo({ user, loading }) {
                 )}
                 {user.facebookLink ? (
                   <Link
-                    href={user.facebookLink}
+                    href={convertUrl(user.facebookLink)}
                     target="_blank"
                     sx={{ textDecoration: "none" }}
                   >
@@ -124,7 +133,7 @@ function UserDetailInfo({ user, loading }) {
                 )}
                 {user.instagramLink ? (
                   <Link
-                    href={`https://${user.instagramLink}`}
+                    href={convertUrl(user.instagramLink)}
                     target="_blank"
                     sx={{ textDecoration: "none" }}
                   >
