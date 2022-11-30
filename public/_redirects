@@ -1,5 +1,5 @@
 # Redirects from what the browser requests to what we serve
 
-/jobs /jobs
-/freelancers /freelancers
+/jobs /JobListPage.js 200
+/freelancers /FreelancerListPage.js 200
 /me/profile /me/profile
