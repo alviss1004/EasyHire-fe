@@ -26,8 +26,9 @@ import CommentEditForm from "./CommentEditForm";
 import { useDispatch } from "react-redux";
 import { deleteComment } from "./commentSlice";
 import { useParams } from "react-router-dom";
+import ManIcon from "@mui/icons-material/Man";
 
-function CommentCard({ comment }) {
+function CommentCard({ comment, lister }) {
   const { user } = useAuth();
   const dispatch = useDispatch();
   const params = useParams();
@@ -102,91 +103,182 @@ function CommentCard({ comment }) {
   return (
     <Stack direction="row" spacing={2}>
       <Avatar alt={comment.author?.name} src={comment.author?.avatarUrl} />
-
-      <Paper
-        sx={{
-          p: 1.5,
-          flexGrow: 1,
-          bgcolor: "background.neutral",
-          maxWidth: "100%",
-        }}
-      >
-        <Stack
-          direction="row"
-          alignItems={{ sm: "center" }}
-          justifyContent="space-between"
-          sx={{ mb: 0.5 }}
+      {comment.author._id === lister._id ? (
+        <Paper
+          sx={{
+            p: 1.5,
+            flexGrow: 1,
+            backgroundColor: "rgba(105, 189, 191 ,0.4)",
+            maxWidth: "100%",
+          }}
         >
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {comment.author?.name}
-          </Typography>
-          <Typography variant="caption" sx={{ color: "text.disabled" }}>
-            {fToNow(comment.createdAt)}
-          </Typography>
-        </Stack>
-        {isEditing ? (
-          <CommentEditForm
-            comment={comment}
-            handleMenuClose={handleMenuClose}
-            toggleEdit={toggleEditComment}
-          />
-        ) : (
-          <>
-            <Typography
-              variant="body1"
-              sx={{
-                color: "text.secondary",
-                wordWrap: "break-word",
-              }}
-            >
-              {comment.content}
+          <Stack
+            direction="row"
+            alignItems={{ sm: "center" }}
+            justifyContent="space-between"
+            sx={{ mb: 0.5 }}
+          >
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                {comment.author?.name}
+              </Typography>
+              <Typography fontSize={12} sx={{ fontWeight: 600 }}>
+                (Client)
+              </Typography>
+            </Stack>
+            <Typography variant="caption" sx={{ color: "text.disabled" }}>
+              {fToNow(comment.createdAt)}
             </Typography>
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              {comment.author._id === user._id ? (
-                <>
-                  <IconButton>
-                    <MoreHorizIcon
-                      onClick={handleProfileMenuOpen}
-                      sx={{ fontSize: 30 }}
-                    />
-                  </IconButton>
-                  {renderMenu}
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="responsive-dialog-title"
-                  >
-                    <DialogTitle id="responsive-dialog-title">
-                      {"Delete confirmation"}
-                    </DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        Are you sure you want to delete this comment?
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button
-                        autoFocus
-                        onClick={handleClose}
-                        sx={{ color: "#F22C35", fontWeight: 600 }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={handleDeleteComment}
-                        autoFocus
-                        sx={{ fontWeight: 600 }}
-                      >
-                        Confirm
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </>
-              ) : null}
-            </Box>{" "}
-          </>
-        )}
-      </Paper>
+          </Stack>
+          {isEditing ? (
+            <CommentEditForm
+              comment={comment}
+              handleMenuClose={handleMenuClose}
+              toggleEdit={toggleEditComment}
+            />
+          ) : (
+            <>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "text.secondary",
+                  wordWrap: "break-word",
+                }}
+              >
+                {comment.content}
+              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                {comment.author._id === user._id ? (
+                  <>
+                    <IconButton>
+                      <MoreHorizIcon
+                        onClick={handleProfileMenuOpen}
+                        sx={{ fontSize: 30 }}
+                      />
+                    </IconButton>
+                    {renderMenu}
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="responsive-dialog-title"
+                    >
+                      <DialogTitle id="responsive-dialog-title">
+                        {"Delete confirmation"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Are you sure you want to delete this comment?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          autoFocus
+                          onClick={handleClose}
+                          sx={{ color: "#F22C35", fontWeight: 600 }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={handleDeleteComment}
+                          autoFocus
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Confirm
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                ) : null}
+              </Box>{" "}
+            </>
+          )}
+        </Paper>
+      ) : (
+        <Paper
+          sx={{
+            p: 1.5,
+            flexGrow: 1,
+            bgcolor: "background.neutral",
+            maxWidth: "100%",
+          }}
+        >
+          <Stack
+            direction="row"
+            alignItems={{ sm: "center" }}
+            justifyContent="space-between"
+            sx={{ mb: 0.5 }}
+          >
+            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+              {comment.author?.name}
+            </Typography>
+            <Typography variant="caption" sx={{ color: "text.disabled" }}>
+              {fToNow(comment.createdAt)}
+            </Typography>
+          </Stack>
+          {isEditing ? (
+            <CommentEditForm
+              comment={comment}
+              handleMenuClose={handleMenuClose}
+              toggleEdit={toggleEditComment}
+            />
+          ) : (
+            <>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "text.secondary",
+                  wordWrap: "break-word",
+                }}
+              >
+                {comment.content}
+              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                {comment.author._id === user._id ? (
+                  <>
+                    <IconButton>
+                      <MoreHorizIcon
+                        onClick={handleProfileMenuOpen}
+                        sx={{ fontSize: 30 }}
+                      />
+                    </IconButton>
+                    {renderMenu}
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="responsive-dialog-title"
+                    >
+                      <DialogTitle id="responsive-dialog-title">
+                        {"Delete confirmation"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Are you sure you want to delete this comment?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          autoFocus
+                          onClick={handleClose}
+                          sx={{ color: "#F22C35", fontWeight: 600 }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={handleDeleteComment}
+                          autoFocus
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Confirm
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                ) : null}
+              </Box>{" "}
+            </>
+          )}
+        </Paper>
+      )}
     </Stack>
   );
 }

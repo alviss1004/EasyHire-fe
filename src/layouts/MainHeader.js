@@ -12,7 +12,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/misc/Logo";
 import { useDispatch } from "react-redux";
-import { updateUserProfile } from "../features/user/userSlice";
+import { becomeFreelancer } from "../features/user/userSlice";
 
 function MainHeader() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -72,7 +72,7 @@ function MainHeader() {
 
   const handleBecomeFreelancer = async () => {
     handleMenuClose();
-    await dispatch(updateUserProfile({ userId: user._id, isFreelancer: true }));
+    await dispatch(becomeFreelancer({ userId: user._id, isFreelancer: true }));
   };
 
   const renderMenu = (
@@ -95,6 +95,12 @@ function MainHeader() {
         <Typography variant="subtitle2" noWrap>
           {user?.name}
         </Typography>
+        {user?.isFreelancer && (
+          <Typography variant="subtitle2" sx={{ color: "primary.main" }} noWrap>
+            Freelancer
+          </Typography>
+        )}
+
         <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
           {user?.email}
         </Typography>

@@ -438,7 +438,7 @@ function JobDetailInfo({ job, loading }) {
               </Typography>
 
               <CommentPost jobId={job._id} />
-              <CommentList jobId={job._id} />
+              <CommentList job={job} />
             </Stack>
           ) : job?.status === "ongoing" ? (
             <Stack spacing={2} sx={{ mt: 3, mb: 1 }}>

@@ -55,7 +55,6 @@ function UserDetailInfo({ user, loading }) {
           >
             <Stack
               spacing={{ xs: 1, md: 2 }}
-              alignItems="center"
               sx={{
                 width: { xs: "60%", sm: "40%", md: "25%" },
               }}
@@ -72,7 +71,12 @@ function UserDetailInfo({ user, loading }) {
                   height: { xs: 125, sm: 170, md: 220 },
                 }}
               />
-              <Stack direction="row" spacing={3.5} sx={{ p: 1, mb: 1 }}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-evenly"
+                sx={{ p: 1, mb: 1 }}
+              >
                 {user.linkedinLink ? (
                   <Link
                     href={convertUrl(user.linkedinLink)}
@@ -188,6 +192,7 @@ function UserDetailInfo({ user, loading }) {
                 <Stack
                   direction="row"
                   spacing={1}
+                  alignItems="center"
                   sx={{ mt: { xs: 2, md: 0 } }}
                 >
                   {user?.rating ? (

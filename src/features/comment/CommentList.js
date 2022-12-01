@@ -7,7 +7,7 @@ import LoadingScreen from "../../components/misc/LoadingScreen";
 import CommentCard from "./CommentCard";
 import { getJobComments } from "./commentSlice";
 
-function CommentList({ jobId }) {
+function CommentList({ job }) {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const { commentsByJob, totalComments, totalPages, isLoading } = useSelector(
@@ -15,8 +15,10 @@ function CommentList({ jobId }) {
   );
 
   useEffect(() => {
-    dispatch(getJobComments({ page, limit: COMMENTS_PER_PAGE, jobId }));
-  }, [dispatch, page, jobId]);
+    dispatch(
+      getJobComments({ page, limit: COMMENTS_PER_PAGE, jobId: job._id })
+    );
+  }, [dispatch, page, job._id]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -40,7 +42,11 @@ function CommentList({ jobId }) {
         commentsByJob && (
           <Stack spacing={1.5}>
             {commentsByJob.map((comment) => (
-              <CommentCard key={comment._id} comment={comment} />
+              <CommentCard
+                key={comment._id}
+                comment={comment}
+                lister={job.lister}
+              />
             ))}
           </Stack>
         )

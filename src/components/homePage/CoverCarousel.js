@@ -14,11 +14,13 @@ theme.typography.h3 = {
   "@media (min-width:600px)": {
     fontSize: "1.2rem",
   },
-
   [theme.breakpoints.up("sm")]: {
-    fontSize: "1.7rem",
+    fontSize: "1.5rem",
   },
   [theme.breakpoints.up("md")]: {
+    fontSize: "1.7rem",
+  },
+  [theme.breakpoints.up("lg")]: {
     fontSize: "1.9rem",
   },
 };
@@ -28,11 +30,14 @@ theme.typography.body1 = {
   "@media (min-width:600px)": {
     fontSize: "1.2rem",
   },
-
   [theme.breakpoints.up("sm")]: {
+    fontSize: "1rem",
+  },
+
+  [theme.breakpoints.up("md")]: {
     fontSize: "1.2rem",
   },
-  [theme.breakpoints.up("md")]: {
+  [theme.breakpoints.up("lg")]: {
     fontSize: "1.4rem",
   },
 };
@@ -82,8 +87,8 @@ function CoverCarousel() {
                 flexDirection: "column",
               }}
             >
-              <li>Easy Signup</li>
-              <li>Various of Industries</li>
+              <li>Various of industries to select</li>
+              <li>No payment until job is done</li>
               <li>Experienced Freelancers</li>
             </Typography>
             <Button

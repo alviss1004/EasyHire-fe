@@ -83,6 +83,11 @@ const slice = createSlice({
       state.error = null;
       state.updatedProfile = action.payload.user;
     },
+    becomeFreelancerSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.updatedProfile = action.payload.user;
+    },
   },
 });
 
@@ -200,6 +205,24 @@ export const updateUserProfile =
       const response = await apiService.put(`/users/${userId}`, data);
       dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
       toast.success("Update Profile successfully");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+
+export const becomeFreelancer =
+  ({ userId, isFreelancer }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const data = {
+        userId,
+        isFreelancer,
+      };
+      const response = await apiService.put(`/users/${userId}`, data);
+      dispatch(slice.actions.becomeFreelancerSuccess(response.data.data));
+      toast.success("You have become a freelancer!");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
