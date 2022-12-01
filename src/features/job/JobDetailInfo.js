@@ -82,6 +82,7 @@ function JobDetailInfo({ job, loading }) {
     resolver: yupResolver(bidSchema),
     defaultValues,
   });
+
   const {
     handleSubmit,
     reset,
@@ -296,7 +297,7 @@ function JobDetailInfo({ job, loading }) {
                 sx={{ pr: { md: 1 } }}
               >
                 <ConstructionIcon fontSize="large" />
-                <Typography fontWeight={600} fontSize={18}>
+                <Typography textAlign="center" fontWeight={600} fontSize={18}>
                   Job in progress
                 </Typography>
               </Stack>
@@ -451,18 +452,15 @@ function JobDetailInfo({ job, loading }) {
                 is currently working on this job
               </Typography>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <Box
-                  component="img"
+                <Avatar
                   src={job.assignee.avatarUrl}
-                  height="10%"
-                  width="10%"
-                  alt="avatar"
+                  alt={job.assignee.name}
                   sx={{
-                    minWidth: { xs: "40%", sm: 150 },
-                    minHeight: { xs: "40%", sm: 150 },
-                    maxWidth: 150,
-                    maxHeight: 150,
-                    borderRadius: "50%",
+                    borderWidth: 2,
+                    borderStyle: "solid",
+                    borderColor: "common.white",
+                    width: { xs: 80, md: 150 },
+                    height: { xs: 80, md: 150 },
                   }}
                 />
                 <Stack spacing={{ xs: 1, md: 2 }}>

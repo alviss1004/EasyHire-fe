@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Stack } from "@mui/material";
+import AlertMsg from "../components/misc/AlertMsg";
 
 const HeaderStyle = styled("header")(({ theme }) => ({
   top: "10%",
@@ -13,6 +14,8 @@ function BlankLayout() {
   return (
     <Stack minHeight="100vh" justifyContent="center" alignItems="center">
       <HeaderStyle></HeaderStyle>
+
+      <AlertMsg />
       <Outlet />
     </Stack>
   );

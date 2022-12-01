@@ -193,7 +193,7 @@ function MainHeader() {
                 ":active": {
                   filter: "brightness(150%)",
                 },
-                fontSize: { xs: 12, sm: 16 },
+                fontSize: { xs: 14, sm: 16 },
                 textAlign: "center",
               }}
               color="inherit"
@@ -210,7 +210,7 @@ function MainHeader() {
                 ":active": {
                   filter: "brightness(150%)",
                 },
-                fontSize: { xs: 12, sm: 16 },
+                fontSize: { xs: 14, sm: 16 },
                 textAlign: "center",
               }}
               color="inherit"
@@ -227,7 +227,7 @@ function MainHeader() {
                 ":active": {
                   filter: "brightness(150%)",
                 },
-                fontSize: { xs: 12, sm: 16 },
+                fontSize: { xs: 14, sm: 16 },
                 textAlign: "center",
               }}
               color="inherit"
@@ -285,8 +285,8 @@ function MainHeader() {
             </Stack>
           ) : (
             <Stack
-              spacing={{ xs: 3, md: 4, lg: 5 }}
-              direction={"row"}
+              spacing={{ xs: 1, md: 4, lg: 5 }}
+              direction={{ xs: "column", md: "row" }}
               my={1}
               sx={{
                 display: "flex",
@@ -302,6 +302,7 @@ function MainHeader() {
                   ":active": {
                     filter: "brightness(150%)",
                   },
+                  fontSize: { xs: 14, md: 16 },
                 }}
                 color="inherit"
                 component={RouterLink}
@@ -317,6 +318,7 @@ function MainHeader() {
                   ":active": {
                     filter: "brightness(150%)",
                   },
+                  fontSize: { xs: 14, md: 16 },
                 }}
                 color="inherit"
                 component={RouterLink}

@@ -45,7 +45,7 @@ function AccountGeneral() {
     jobTitle: user?.jobTitle || "",
     company: user?.company || "",
     avatarUrl: user?.avatarUrl || "",
-    industry: user?.industry || "",
+    industry: user?.industry || "Arts & Entertainment",
     aboutMe: user?.aboutMe || "",
   };
 
@@ -128,13 +128,9 @@ function AccountGeneral() {
               <FTextField name="jobTitle" label="Job Title" />
               <FTextField name="company" label="Company" />
 
-              <FSelect
-                name="industry"
-                label="Industry"
-                helperText="Please select industry"
-              >
+              <FSelect name="industry" label="Industry">
                 {industries.map((industry) => (
-                  <option key={industry} value={industry} defaultValue={""}>
+                  <option key={industry} value={industry}>
                     {industry}
                   </option>
                 ))}

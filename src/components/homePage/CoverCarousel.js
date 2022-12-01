@@ -97,6 +97,7 @@ function CoverCarousel() {
                   filter: "brightness(120%)",
                   backgroundColor: "#E53838",
                 },
+                fontSize: { xs: 12, md: 15 },
               }}
             >
               Post a Job

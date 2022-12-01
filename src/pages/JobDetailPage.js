@@ -215,7 +215,7 @@ function JobDetailPage() {
             <Container
               sx={{
                 backgroundColor: "#FFF",
-                width: { xs: "75%", md: 680 },
+                width: { xs: "75%", md: 650 },
                 maxWidth: "75vw",
                 boxShadow: 2,
                 p: 2,
@@ -224,7 +224,7 @@ function JobDetailPage() {
                 display: "Flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 1.5,
+                gap: 2.5,
               }}
             >
               <Typography

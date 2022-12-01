@@ -2,6 +2,7 @@ import { createContext, useReducer, useEffect } from "react";
 import { useSelector } from "react-redux";
 import apiService from "../app/apiService";
 import { isValidToken } from "../utils/jwt";
+import { toast } from "react-toastify";
 
 const initialState = {
   isInitialized: false,
@@ -166,7 +167,7 @@ function AuthProvider({ children }) {
       type: REGISTER_SUCCESS,
       payload: { user },
     });
-
+    toast.success("Create account successfully");
     callback();
   };
 

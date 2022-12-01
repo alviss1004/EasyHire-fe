@@ -60,31 +60,18 @@ function UserDetailInfo({ user, loading }) {
                 width: { xs: "60%", sm: "40%", md: "25%" },
               }}
             >
-              {user?.avatarUrl ? (
-                <Avatar
-                  src={user.avatarUrl}
-                  alt={user.name}
-                  sx={{
-                    mx: "auto",
-                    borderWidth: 2,
-                    borderStyle: "solid",
-                    borderColor: "common.white",
-                    width: { xs: 125, sm: 170, md: 220 },
-                    height: { xs: 125, sm: 170, md: 220 },
-                  }}
-                />
-              ) : (
-                <Box
-                  height={{ xs: "70%", md: "20%" }}
-                  width={{ xs: "70%", md: "20%" }}
-                  sx={{
-                    minWidth: { xs: "70%", md: 220 },
-                    minHeight: { xs: "70%", md: 220 },
-                  }}
-                >
-                  <Typography sx={{ margin: "30%" }}>No image</Typography>
-                </Box>
-              )}
+              <Avatar
+                src={user.avatarUrl}
+                alt={user.name}
+                sx={{
+                  mx: "auto",
+                  borderWidth: 2,
+                  borderStyle: "solid",
+                  borderColor: "common.white",
+                  width: { xs: 125, sm: 170, md: 220 },
+                  height: { xs: 125, sm: 170, md: 220 },
+                }}
+              />
               <Stack direction="row" spacing={3.5} sx={{ p: 1, mb: 1 }}>
                 {user.linkedinLink ? (
                   <Link

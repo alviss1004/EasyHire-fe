@@ -40,7 +40,7 @@ function PopularFreelancers() {
         >
           Featured Freelancers
         </Typography>
-        <Marquee gradient={false} speed={30}>
+        <Marquee gradient={false} speed={20}>
           {featuredFreelancers.map((freelancer) => (
             <FreelancerCard key={freelancer._id} freelancer={freelancer} />
           ))}

@@ -1,5 +1,5 @@
 import {
-  Box,
+  Avatar,
   Card,
   CardActionArea,
   CardContent,
@@ -34,16 +34,16 @@ function FreelancerListCard({ freelancer }) {
           justifyContent={{ xs: "center", md: "stretch" }}
           alignItems={{ xs: "center", md: "stretch" }}
         >
-          <Box
-            component="img"
+          <Avatar
             src={freelancer.avatarUrl}
-            height={{ xs: "60%", md: "20%" }}
-            width={{ xs: "60%", md: "20%" }}
-            alt="avatar"
+            alt={freelancer.name}
             sx={{
-              minWidth: { xs: "60%", md: 220 },
-              minHeight: { xs: "60%", md: 220 },
-              borderRadius: "50%",
+              mx: "auto",
+              borderWidth: 2,
+              borderStyle: "solid",
+              borderColor: "common.white",
+              width: { xs: 125, sm: 170, md: 220 },
+              height: { xs: 125, sm: 170, md: 220 },
             }}
           />
           <CardContent>
