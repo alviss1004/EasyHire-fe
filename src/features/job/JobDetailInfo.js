@@ -92,7 +92,7 @@ function JobDetailInfo({ job, loading }) {
 
   const onSubmit = async (data) => {
     try {
-      dispatch(createBid({ ...data, jobId }));
+      await dispatch(createBid({ ...data, jobId }));
     } catch (error) {
       reset();
       setError("responseError", error);
@@ -143,11 +143,7 @@ function JobDetailInfo({ job, loading }) {
                   Posted {fToNow(job.createdAt)}
                 </Typography>
               </Stack>
-              <Typography
-                textAlign="justify"
-                variant="body1"
-                sx={{ overflow: "hidden" }}
-              >
+              <Typography variant="body1" sx={{ overflow: "hidden" }}>
                 {job?.description}
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: 600 }} gutterBottom>
@@ -315,7 +311,7 @@ function JobDetailInfo({ job, loading }) {
               </Stack>
             )}
           </Stack>
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 4 }} />
           {job && user._id === job.lister._id ? (
             ""
           ) : !user.isFreelancer ? (
@@ -408,6 +404,7 @@ function JobDetailInfo({ job, loading }) {
                     </Alert>
                   )}
                   <FTextField name="price" label="Your Bid In $" />
+                  {console.log("ISSUBMITTING", isSubmitting)}
                   <LoadingButton
                     fullWidth
                     size="large"
