@@ -130,7 +130,7 @@ function JobDetailInfo({ job, loading }) {
             // alignItems="center"
             spacing={{ xs: 5, md: 4 }}
           >
-            <Stack spacing={2} sx={{ width: { xs: "100%", md: "75%" } }}>
+            <Stack spacing={2} sx={{ width: "100%" }}>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Typography
                   variant="h6"
@@ -143,7 +143,11 @@ function JobDetailInfo({ job, loading }) {
                   Posted {fToNow(job.createdAt)}
                 </Typography>
               </Stack>
-              <Typography variant="body1" sx={{ overflow: "hidden" }}>
+              <Typography
+                textAlign="justify"
+                variant="body1"
+                sx={{ overflow: "hidden" }}
+              >
                 {job?.description}
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: 600 }} gutterBottom>
@@ -293,6 +297,7 @@ function JobDetailInfo({ job, loading }) {
               <Stack
                 direction="row"
                 alignItems="center"
+                justifyContent="center"
                 spacing={1}
                 sx={{ pr: { md: 1 } }}
               >
