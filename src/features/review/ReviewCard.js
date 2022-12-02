@@ -28,22 +28,22 @@ function ReviewCard({ review, loading }) {
       />
       <Stack spacing={1}>
         <Stack>
-          <Typography fontWeight={600}> {review.author.name}</Typography>
+          <Typography fontWeight={600}> {review?.author?.name}</Typography>
           <Typography variant="caption" sx={{ opacity: 0.8 }}>
             {fDate(review.createdAt)}
           </Typography>
         </Stack>
         <Stack direction="row" spacing={1}>
-          <Typography>Rating: {review.rating.toFixed(1)}</Typography>
+          <Typography>Rating: {review?.rating.toFixed(1)}</Typography>
           <Rating
             name="freelancer-rating"
-            value={review.rating}
+            value={review?.rating}
             precision={0.5}
             size="small"
             readOnly
           />
         </Stack>
-        <Typography>Comment: {review.comment}</Typography>
+        <Typography>Comment: {review?.comment}</Typography>
       </Stack>
     </Stack>
   );

@@ -37,7 +37,7 @@ function UserDetailInfo({ user, loading }) {
     <>
       <Container
         sx={{
-          backgroundColor: "",
+          backgroundColor: "background.paper",
           boxShadow: 1,
           p: 4,
         }}
