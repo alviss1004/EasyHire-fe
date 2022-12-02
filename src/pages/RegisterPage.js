@@ -21,7 +21,6 @@ import { FormProvider, FTextField } from "../components/form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { Helmet } from "react-helmet";
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -89,15 +88,12 @@ function RegisterPage() {
     <Container
       maxWidth="xs"
       sx={{
-        backgroundColor: "#FFF",
+        backgroundColor: "background.paper",
         width: "100%",
         padding: { xs: 3, md: 5 },
         boxShadow: 2,
       }}
     >
-      <Helmet>
-        <style>{"body { background-color: #EEE8E8; }"}</style>
-      </Helmet>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <StyledLink to="/" sx={{ textDecoration: "none" }}>
           <Box

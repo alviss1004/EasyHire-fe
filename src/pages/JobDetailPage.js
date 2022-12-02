@@ -19,7 +19,6 @@ import {
 import InfoIcon from "@mui/icons-material/Info";
 import PaidIcon from "@mui/icons-material/Paid";
 import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { deleteJob, getJobById } from "../features/job/jobSlice";
@@ -108,16 +107,13 @@ function JobDetailPage() {
         <>
           <Container
             sx={{
-              backgroundColor: "#FFF",
+              backgroundColor: "background.paper",
               minWidth: "75vw",
               maxWidth: "75vw",
               boxShadow: 1,
               p: 1.5,
             }}
           >
-            <Helmet>
-              <style>{"body { background-color: #F0F3F5; }"}</style>
-            </Helmet>
             {isEditing ? (
               selectedJob && (
                 <EditJobForm job={selectedJob} toggleEdit={toggleEdit} />
@@ -214,7 +210,7 @@ function JobDetailPage() {
           {selectedJob?.status === "finished" && selectedJob?.review && (
             <Container
               sx={{
-                backgroundColor: "#FFF",
+                backgroundColor: "background.paper",
                 width: { xs: "75%", md: 650 },
                 maxWidth: "75vw",
                 boxShadow: 2,

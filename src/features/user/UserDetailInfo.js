@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Helmet } from "react-helmet";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -38,14 +37,11 @@ function UserDetailInfo({ user, loading }) {
     <>
       <Container
         sx={{
-          backgroundColor: "#FFF",
+          backgroundColor: "",
           boxShadow: 1,
           p: 4,
         }}
       >
-        <Helmet>
-          <style>{"body { background-color: #F0F3F5; }"}</style>
-        </Helmet>
         {user && (
           <Stack
             direction={{ xs: "column", md: "row" }}
@@ -240,7 +236,7 @@ function UserDetailInfo({ user, loading }) {
         <Container
           justifyContent="center"
           sx={{
-            backgroundColor: "#FFF",
+            backgroundColor: "background.paper",
             boxShadow: 1,
             p: 2,
             mt: 3,

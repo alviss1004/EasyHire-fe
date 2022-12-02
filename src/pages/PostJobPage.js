@@ -1,6 +1,5 @@
 import { Breadcrumbs, Container, Link, Typography } from "@mui/material";
 import React from "react";
-import { Helmet } from "react-helmet";
 import { Link as RouterLink } from "react-router-dom";
 import JobForm from "../features/job/JobForm";
 
@@ -27,16 +26,13 @@ function PostJobPage() {
       </Breadcrumbs>
       <Container
         sx={{
-          backgroundColor: "#FFF",
+          backgroundColor: "background.paper",
           minWidth: "75vw",
           maxWidth: "75vw",
           boxShadow: 1,
           p: 3,
         }}
       >
-        <Helmet>
-          <style>{"body { background-color: #F0F3F5; }"}</style>
-        </Helmet>
         <JobForm />
       </Container>
     </>

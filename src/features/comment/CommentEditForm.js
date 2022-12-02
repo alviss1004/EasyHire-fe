@@ -47,7 +47,7 @@ function CommentEditForm({ comment, toggleEdit, handleMenuClose }) {
           multiline
           rows={4}
           inputProps={{ maxLength: 400 }}
-          sx={{ backgroundColor: "#FFF" }}
+          sx={{ backgroundColor: "background.paper" }}
         />
         <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
           <Button

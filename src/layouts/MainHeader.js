@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +13,10 @@ import useAuth from "../hooks/useAuth";
 import Logo from "../components/misc/Logo";
 import { useDispatch } from "react-redux";
 import { becomeFreelancer } from "../features/user/userSlice";
+import { useTheme } from "@emotion/react";
+import { ColorModeContext } from "../theme/index";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 function MainHeader() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -21,6 +25,8 @@ function MainHeader() {
   const [visible, setVisible] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -277,6 +283,19 @@ function MainHeader() {
                 />
               </Box>
               {renderMenu}
+              <IconButton
+                sx={{ ml: 1 }}
+                onClick={() => {
+                  colorMode.toggleColorMode();
+                }}
+                color="inherit"
+              >
+                {theme.palette.mode === "dark" ? (
+                  <Brightness7Icon />
+                ) : (
+                  <Brightness4Icon />
+                )}
+              </IconButton>
             </Stack>
           ) : (
             <Stack

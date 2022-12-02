@@ -16,7 +16,6 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
 import JobList from "../features/job/JobList";
-import { Helmet } from "react-helmet";
 import {
   Link as RouterLink,
   useLocation,
@@ -90,16 +89,13 @@ function JobListPage() {
           minWidth: "75vw",
         }}
       >
-        <Helmet>
-          <style>{"body { background-color: #F0F3F5; }"}</style>
-        </Helmet>
         <Stack sx={{ mr: 2 }}>
           <Stack
             justifyContent="center"
             alignItems={{ xs: "center", md: "stretch" }}
             spacing={{ xs: 3, sm: 7, md: 3 }}
             sx={{
-              backgroundColor: "#FFF",
+              backgroundColor: "background.paper",
               borderRadius: 1,
               boxShadow: 2,
               mb: { xs: 5 },

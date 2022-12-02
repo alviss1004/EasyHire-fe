@@ -4,6 +4,7 @@ import {
   createTheme,
   ThemeProvider as MUIThemeProvider,
 } from "@mui/material/styles";
+import { createContext, useMemo, useState } from "react";
 import customizeComponents from "./customizations";
 
 const PRIMARY = {
@@ -52,25 +53,50 @@ const GREY = {
   500_80: alpha("#919EAB", 0.8),
 };
 
-function ThemeProvider({ children }) {
-  const themeOptions = {
-    palette: {
-      primary: PRIMARY,
-      secondary: SECONDARY,
-      success: SUCCESS,
-      background: { paper: "#fff", default: "#fff", neutral: GREY[200] },
-    },
-    shape: { borderRadius: 8 },
-  };
+export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
-  const theme = createTheme(themeOptions);
+function ThemeProvider({ children }) {
+  const [mode, setMode] = useState("light");
+
+  const themeOptions = (mode) =>
+    mode === "light"
+      ? {
+          palette: {
+            primary: PRIMARY,
+            secondary: SECONDARY,
+            success: SUCCESS,
+            background: { paper: "#fff", default: "#F0F3F5" },
+          },
+          shape: { borderRadius: 8 },
+        }
+      : {
+          palette: {
+            mode: "dark",
+          },
+          background: { default: "#000" },
+        };
+
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        console.log("haha");
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+        console.log("MODE", mode);
+      },
+    }),
+    []
+  );
+
+  const theme = useMemo(() => createTheme(themeOptions(mode)), [mode]);
   theme.components = customizeComponents(theme);
 
   return (
-    <MUIThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </MUIThemeProvider>
+    <ColorModeContext.Provider value={colorMode}>
+      <MUIThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </MUIThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 

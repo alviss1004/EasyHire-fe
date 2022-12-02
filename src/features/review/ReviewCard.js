@@ -16,8 +16,8 @@ function ReviewCard({ review, loading }) {
       }}
     >
       <Avatar
-        src={review.author.avatarUrl}
-        alt={review.author.name}
+        src={review?.author?.avatarUrl}
+        alt={review?.author?.name}
         sx={{
           borderWidth: 2,
           borderStyle: "solid",

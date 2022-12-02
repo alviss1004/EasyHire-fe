@@ -18,7 +18,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import { Stack } from "@mui/system";
 import React from "react";
-import { Helmet } from "react-helmet";
 import {
   Link as RouterLink,
   useLocation,
@@ -125,10 +124,6 @@ function JobDetailInfo({ job, loading }) {
 
   return (
     <>
-      <Helmet>
-        <style>{"body { background-color: #F0F3F5; }"}</style>
-      </Helmet>
-
       {job && (
         <>
           <Stack

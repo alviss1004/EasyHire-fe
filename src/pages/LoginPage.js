@@ -21,7 +21,6 @@ import useAuth from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { Helmet } from "react-helmet";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -85,15 +84,12 @@ function LoginPage() {
     <Container
       maxWidth="xs"
       sx={{
-        backgroundColor: "#FFF",
+        backgroundColor: "background.paper",
         width: "100%",
         padding: { xs: 3, md: 5 },
         boxShadow: 2,
       }}
     >
-      <Helmet>
-        <style>{"body { background-color: #EEE8E8; }"}</style>
-      </Helmet>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3}>
           <StyledLink to="/" sx={{ textDecoration: "none" }}>

@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React from "react";
-import { Helmet } from "react-helmet";
 import { Link as RouterLink } from "react-router-dom";
 import LoadingScreen from "../../components/misc/LoadingScreen";
 import { fToNow } from "../../utils/formatTime";
@@ -29,9 +28,6 @@ function AccountAssignedJobs({ jobs, loading }) {
         width: "100%",
       }}
     >
-      <Helmet>
-        <style>{"body { background-color: #F0F3F5; }"}</style>
-      </Helmet>
       {loading ? (
         <LoadingScreen />
       ) : (

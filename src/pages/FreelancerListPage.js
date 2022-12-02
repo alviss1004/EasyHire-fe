@@ -1,6 +1,5 @@
 import { Breadcrumbs, Container, Link, Stack, Typography } from "@mui/material";
 import React from "react";
-import { Helmet } from "react-helmet";
 import FreelancerList from "../features/user/FreelancerList";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -23,9 +22,6 @@ function FreelancerListPage() {
           </Link>
           <Typography>Freelancers</Typography>
         </Breadcrumbs>
-        <Helmet>
-          <style>{"body { background-color: #F0F3F5; }"}</style>
-        </Helmet>
         <Stack sx={{ flexGrow: 1 }}>
           <FreelancerList />
         </Stack>

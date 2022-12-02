@@ -1,6 +1,5 @@
 import { Container, Stack, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserListings } from "./userSlice";
 import LoadingScreen from "../../components/misc/LoadingScreen";
@@ -48,9 +47,6 @@ function AccountListings() {
         gap: 2,
       }}
     >
-      <Helmet>
-        <style>{"body { background-color: #F0F3F5; }"}</style>
-      </Helmet>
       <TextField
         id="jobStatus"
         label="Status"

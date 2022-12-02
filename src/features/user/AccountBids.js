@@ -1,6 +1,5 @@
 import { Container, Grid } from "@mui/material";
 import React from "react";
-import { Helmet } from "react-helmet";
 import LoadingScreen from "../../components/misc/LoadingScreen";
 import AccountBidCard from "../bid/AccountBidCard";
 
@@ -13,9 +12,6 @@ function AccountBids({ bids, loading }) {
         width: "100%",
       }}
     >
-      <Helmet>
-        <style>{"body { background-color: #F0F3F5; }"}</style>
-      </Helmet>
       {loading ? (
         <LoadingScreen />
       ) : (
