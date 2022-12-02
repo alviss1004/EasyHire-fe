@@ -17,7 +17,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect, useState } from "react";
 import JobList from "../features/job/JobList";
 import { Helmet } from "react-helmet";
-import { Link as RouterLink } from "react-router-dom";
+import {
+  Link as RouterLink,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getJobs } from "../features/job/jobSlice";
 import { JOBS_PER_PAGE } from "../app/config";
@@ -46,9 +50,12 @@ const SORTBY_OPTIONS = [
 
 function JobListPage() {
   const dispatch = useDispatch();
+  const locationSearch = decodeURI(useLocation().search);
+  const industryQuery = locationSearch.split("=")[1];
+  const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState("Newest");
-  const [industry, setIndustry] = useState("All");
+  const [industry, setIndustry] = useState(industryQuery || "All");
   const [search, setSearch] = useState("");
   const { jobsById, currentPageJobs, totalPages, totalJobs, isLoading } =
     useSelector((state) => state.job);
@@ -107,10 +114,13 @@ function JobListPage() {
                 </Typography>
                 <Divider />
                 <RadioGroup
-                  onChange={(e) => setIndustry(e.target.value)}
+                  onChange={(e) => {
+                    setIndustry(e.target.value);
+                    setSearchParams("");
+                  }}
                   name="industry-radio-group"
                   row
-                  defaultValue="All"
+                  defaultValue={industryQuery || "All"}
                 >
                   {FILTER_INDUSTRY_OPTIONS.map((option) => (
                     <FormControlLabel

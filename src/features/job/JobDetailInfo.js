@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   Button,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -18,7 +19,12 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import { Stack } from "@mui/system";
 import React from "react";
 import { Helmet } from "react-helmet";
-import { Link as RouterLink, useLocation, useParams } from "react-router-dom";
+import {
+  Link as RouterLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { fCurrency } from "../../utils/numberFormat";
 import { FormProvider, FTextField } from "../../components/form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -63,7 +69,8 @@ const defaultValues = {
 };
 
 function JobDetailInfo({ job, loading }) {
-  let location = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useAuth();
   const params = useParams();
@@ -146,10 +153,20 @@ function JobDetailInfo({ job, loading }) {
               <Typography variant="body1" sx={{ overflow: "hidden" }}>
                 {job?.description}
               </Typography>
-              <Typography variant="body1" sx={{ fontWeight: 600 }} gutterBottom>
-                Industry: {job?.industry}
-              </Typography>
-
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: 600 }}
+                  gutterBottom
+                >
+                  Industry:
+                </Typography>
+                <Chip
+                  label={`${job?.industry}`}
+                  variant="filled"
+                  onClick={() => navigate(`/jobs?industry=${job.industry}`)}
+                />
+              </Stack>
               <Typography
                 variant="body1"
                 fontWeight={"bold"}
@@ -404,7 +421,6 @@ function JobDetailInfo({ job, loading }) {
                     </Alert>
                   )}
                   <FTextField name="price" label="Your Bid In $" />
-                  {console.log("ISSUBMITTING", isSubmitting)}
                   <LoadingButton
                     fullWidth
                     size="large"

@@ -26,7 +26,6 @@ import CommentEditForm from "./CommentEditForm";
 import { useDispatch } from "react-redux";
 import { deleteComment } from "./commentSlice";
 import { useParams } from "react-router-dom";
-import ManIcon from "@mui/icons-material/Man";
 
 function CommentCard({ comment, lister }) {
   const { user } = useAuth();

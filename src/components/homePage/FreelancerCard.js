@@ -12,7 +12,9 @@ function FreelancerCard({ freelancer }) {
   return (
     <Card
       variant="outlined"
-      sx={{ mr: 5 }}
+      sx={{
+        mr: 5,
+      }}
       onClick={() => navigate(`users/${freelancer._id}`)}
     >
       <CardActionArea>
@@ -20,7 +22,9 @@ function FreelancerCard({ freelancer }) {
           component="img"
           image={freelancer.avatarUrl}
           alt="avatar"
-          sx={{ height: { xs: "100px", md: "300px" } }}
+          sx={{
+            height: { xs: "100px", md: "300px" },
+          }}
         />
         <CardContent>
           <Stack
