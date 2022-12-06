@@ -38,7 +38,6 @@ function FreelancerListCard({ freelancer }) {
             src={freelancer.avatarUrl}
             alt={freelancer.name}
             sx={{
-              mx: "auto",
               borderWidth: 2,
               borderStyle: "solid",
               borderColor: "common.white",
