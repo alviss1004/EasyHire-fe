@@ -69,14 +69,22 @@ function FreelancerListCard({ freelancer }) {
                 spacing={{ xs: 1, md: 10 }}
               >
                 <Typography
-                  sx={{ fontWeight: 600, fontSize: { xs: 14, md: 16 } }}
+                  sx={{
+                    textAlign: { xs: "center", md: "left" },
+                    fontWeight: 600,
+                    fontSize: { xs: 14, md: 16 },
+                  }}
                   gutterBottom
                   fontFamily={"tahoma"}
                 >
                   Company: {freelancer?.company ? freelancer.company : "N/A"}
                 </Typography>
                 <Typography
-                  sx={{ fontWeight: 600, fontSize: { xs: 14, md: 16 } }}
+                  sx={{
+                    textAlign: { xs: "center", md: "left" },
+                    fontWeight: 600,
+                    fontSize: { xs: 14, md: 16 },
+                  }}
                   fontFamily={"tahoma"}
                   gutterBottom
                 >
@@ -85,7 +93,11 @@ function FreelancerListCard({ freelancer }) {
                 </Typography>
               </Stack>
               <Typography
-                sx={{ fontWeight: 600, fontSize: { xs: 14, md: 16 } }}
+                sx={{
+                  textAlign: { xs: "center", md: "left" },
+                  fontWeight: 600,
+                  fontSize: { xs: 14, md: 16 },
+                }}
                 fontFamily={"tahoma"}
                 gutterBottom
               >
