@@ -284,7 +284,6 @@ function MainHeader() {
               </Box>
               {renderMenu}
               <IconButton
-                sx={{ ml: 1 }}
                 onClick={() => {
                   colorMode.toggleColorMode();
                 }}
