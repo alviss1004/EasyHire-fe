@@ -30,7 +30,7 @@ function ReviewCard({ review, loading }) {
         <Stack>
           <Typography fontWeight={600}> {review?.author?.name}</Typography>
           <Typography variant="caption" sx={{ opacity: 0.8 }}>
-            {fDate(review.createdAt)}
+            {fDate(review?.createdAt)}
           </Typography>
         </Stack>
         <Stack direction="row" spacing={1}>
