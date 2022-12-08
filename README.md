@@ -43,3 +43,8 @@ EasyHire is a platform that connects freelancers with individual and businesses 
 - As a freelancer, I can view all my bids.
 - As a user, I can accept or reject bids on my job listings.
 - As a user, I can view all the bids on my job listings.
+
+### Comments
+
+- As a user, I can comment on a job.
+- As a user, I can see all the comments on a job.
