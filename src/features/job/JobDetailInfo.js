@@ -117,6 +117,7 @@ function JobDetailInfo({ job, loading }) {
   const getCurrentUserBid = () => {
     if (job) {
       const jobBids = job.bids;
+      console.log(jobBids);
       const userBid = jobBids.filter((bid) => bid.bidder._id === user._id);
       return userBid[0];
     }
@@ -126,12 +127,7 @@ function JobDetailInfo({ job, loading }) {
     <>
       {job && (
         <>
-          <Stack
-            // direction={{ xs: "column", md: "row" }}
-            // justifyContent="space-between"
-            // alignItems="center"
-            spacing={{ xs: 5, md: 4 }}
-          >
+          <Stack spacing={{ xs: 5, md: 4 }}>
             <Stack spacing={2} sx={{ width: "100%" }}>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Typography
