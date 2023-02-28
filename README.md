@@ -1,4 +1,4 @@
-# EasyHire-be
+# EasyHire-fe
 
 ## Project Description
 
