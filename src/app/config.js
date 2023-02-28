@@ -1,5 +1,5 @@
 export const BASE_URL =
-  "https://helpless-governor-production.up.railway.app/api";
+  "https://easyhire-be-production.up.railway.app/api";
 export const JOBS_PER_PAGE = 10;
 export const FREELANCERS_PER_PAGE = 10;
 export const COMMENTS_PER_PAGE = 5;
